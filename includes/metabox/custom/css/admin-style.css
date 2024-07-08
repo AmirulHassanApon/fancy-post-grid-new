@@ -1,0 +1,33 @@
+#fpg_metabox_tabs ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+#fpg_metabox_tabs ul li {
+    display: inline;
+    margin-right: 10px;
+}
+
+#fpg_metabox_tabs ul li a {
+    text-decoration: none;
+    padding: 5px 10px;
+    background-color: #f0f0f0;
+    color: #333;
+    border: 1px solid #ccc;
+    border-bottom: none;
+    border-radius: 5px 5px 0 0;
+}
+
+#fpg_metabox_tabs ul li.active a {
+    background-color: #fff;
+    border-bottom: 1px solid #fff;
+}
+
+#fpg_metabox_tabs div {
+    background-color: #fff;
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin-top: -1px;
+    border-radius: 0 5px 5px 5px;
+}
