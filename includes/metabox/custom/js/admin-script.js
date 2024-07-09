@@ -1,25 +1,21 @@
 jQuery(document).ready(function($) {
-    // Hide all tab content except the first one initially
-    $('#fpg_metabox_tabs div').not(':first').hide();
+    $('#fpg_metabox_tabs').tabs();
 
+    // Make the first tab active by default
+    $('#fpg_metabox_tabs ul li:first-child a').addClass('active');
+    $('#fpg_metabox_tabs div:first-child').addClass('active');
+    
     // Handle tab switching
-    $('#fpg_metabox_tabs ul li a').click(function(){
-        var tab_id = $(this).attr('href');
+    $('#fpg_metabox_tabs ul li a').on('click', function(e) {
+        e.preventDefault();
+        var target = $(this).attr('href');
 
-        // Hide all tabs
-        $('#fpg_metabox_tabs div').hide();
+        // Remove active class from all tabs and contents
+        $('#fpg_metabox_tabs ul li a').removeClass('active');
+        $('#fpg_metabox_tabs > div').removeClass('active');
 
-        // Show the selected tab
-        $(tab_id).show();
-
-        // Add active class to the current tab
-        $('#fpg_metabox_tabs ul li').removeClass('active');
-        $(this).parent('li').addClass('active');
-
-        // Prevent default anchor click behavior
-        return false;
+        // Add active class to the clicked tab and corresponding content
+        $(this).addClass('active');
+        $(target).addClass('active');
     });
-
-    // Trigger click on the first tab link to activate it initially
-    $('#fpg_metabox_tabs ul li:first-child a').click();
 });

@@ -1,33 +1,75 @@
+#fpg_metabox_tabs {
+    font-family: Arial, sans-serif;
+    margin: 20px 0;
+}
+
 #fpg_metabox_tabs ul {
-    list-style-type: none;
+    list-style: none;
     margin: 0;
     padding: 0;
+    display: flex;
+    border-bottom: 1px solid #ddd;
 }
 
 #fpg_metabox_tabs ul li {
-    display: inline;
     margin-right: 10px;
 }
 
 #fpg_metabox_tabs ul li a {
+    display: block;
+    padding: 10px 15px;
     text-decoration: none;
-    padding: 5px 10px;
-    background-color: #f0f0f0;
+    background: #f1f1f1;
     color: #333;
-    border: 1px solid #ccc;
+    border: 1px solid #ddd;
     border-bottom: none;
-    border-radius: 5px 5px 0 0;
+    border-radius: 4px 4px 0 0;
+    transition: background 0.3s, color 0.3s;
 }
 
-#fpg_metabox_tabs ul li.active a {
-    background-color: #fff;
-    border-bottom: 1px solid #fff;
+#fpg_metabox_tabs ul li a:hover, 
+#fpg_metabox_tabs ul li.ui-tabs-active a {
+    background: #0073aa;
+    color: #fff;
 }
 
-#fpg_metabox_tabs div {
-    background-color: #fff;
-    border: 1px solid #ccc;
-    padding: 10px;
-    margin-top: -1px;
-    border-radius: 0 5px 5px 5px;
+#fpg_metabox_tabs > div {
+    display: none;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-top: none;
+    background: #fff;
+    border-radius: 0 0 4px 4px;
+}
+
+#fpg_metabox_tabs > div.active {
+    display: block;
+}
+
+#fpg_metabox_tabs label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+}
+
+#fpg_metabox_tabs input[type="text"],
+#fpg_metabox_tabs select {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-sizing: border-box;
+    font-size: 14px;
+}
+
+#fpg_metabox_tabs input[type="color"] {
+    height: 40px;
+    padding: 0;
+    width: 15%;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-sizing: border-box;
+    font-size: 14px;
 }

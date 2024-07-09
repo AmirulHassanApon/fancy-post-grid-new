@@ -278,15 +278,17 @@
         <?php
 	}
 
-    function single_template_p_t_b_callback_fpg(){
+    function single_template_p_t_b_callback_fpg() {
         $settings_options = get_option( 'fpg_settings_option' );
-		printf(
-			'<label class="">
+        $value = isset( $settings_options['s_template_p_t_b'] ) ? $settings_options['s_template_p_t_b'] : '80px';
+        printf(
+            '<label class="">
                 <input type="text" name="fpg_settings_option[s_template_p_t_b]" id="s_template_p_t_b" value="%s">
-                    </label>',
-            isset($settings_options['s_template_p_t_b']) ? $settings_options['s_template_p_t_b'] : '80px'
-		);
+            </label>',
+            esc_attr( $value )
+        );
     }
+    
 
 	function details_page_enable_3_callback_fpg() {
         $settings_options = get_option( 'fpg_settings_option' );

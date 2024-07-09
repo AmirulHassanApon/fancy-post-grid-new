@@ -31,14 +31,10 @@ function fpg_shortcode( $atts ) {
 		$fpg_grid_style                = get_post_meta($post_id, 'fancy_post_grid_style', true);
 		$fancy_post_grid_column 	   = get_post_meta($post_id, 'fancy_post_grid_column', true);
 		
-		//tab-4
+		//tab-3
 		$fpg_slider_style              = get_post_meta($post_id, 'fancy_slider_style', true);
 		
-		$primary_color                 = get_post_meta($post_id, 'uteam_pcolor', true);
-		$secondary_color               = get_post_meta($post_id, 'uteam_scolor', true);	
-
-
-		//Tab-7 Title Settings
+		//Tab-4 Title Settings
 		$fpg_title_color               = get_post_meta($post_id, 'fpg_title_color', true);
 		$fpg_title_bg_color            = get_post_meta($post_id, 'fpg_title_bg_color', true);
 		//Description Settings

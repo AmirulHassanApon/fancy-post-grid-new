@@ -9,7 +9,8 @@ function fpg_admin_styles( $screen ) {
     wp_enqueue_style( 'fancy_post_grid_jquery_ui', plugins_url('/assets/css/jquery-ui.css', __FILE__), array(), $fpg_version, 'all' );
 	wp_enqueue_style( 'fancy_post_grid_main_admin', plugins_url('/assets/css/admin.css', __FILE__), array(), $fpg_version, 'all' );
 	wp_enqueue_style( 'fpg_admin-font-awesome', plugins_url('/assets/css/all.min.css', __FILE__), array(), $fpg_version, 'all' );
-	
+	wp_enqueue_style( 'fpg-bootstrap-admin', plugins_url('/assets/css/fpg_bootstrap.css', __FILE__), array(), $fpg_version, 'all' );
+
 }
 add_action( 'admin_enqueue_scripts', 'fpg_admin_styles' );
 
