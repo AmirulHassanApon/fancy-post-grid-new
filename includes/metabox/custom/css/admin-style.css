@@ -1,6 +1,8 @@
 #fpg_metabox_tabs {
     font-family: Arial, sans-serif;
     margin: 20px 0;
+    padding: 0;
+    border: 0;
 }
 
 #fpg_metabox_tabs ul {
@@ -8,38 +10,56 @@
     margin: 0;
     padding: 0;
     display: flex;
-    border-bottom: 1px solid #ddd;
+    border: 0;
+    background: transparent;
+    margin-bottom: 20px;
 }
 
 #fpg_metabox_tabs ul li {
     margin-right: 10px;
+    border: 0;
+    background: transparent;
 }
 
 #fpg_metabox_tabs ul li a {
     display: block;
-    padding: 10px 15px;
     text-decoration: none;
-    background: #f1f1f1;
-    color: #333;
-    border: 1px solid #ddd;
     border-bottom: none;
-    border-radius: 4px 4px 0 0;
-    transition: background 0.3s, color 0.3s;
+    border-radius: 4px 4px 4px 4px;
+    color: #00183D99;
+    background-color: #fff;
+    font-size: 14px;
+    font-weight: bold;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 16px 20px;
+    margin: 0;
+    border: 1px solid #cccccc7d;
+    position: relative;
+    z-index: 1;
+    transition: all 0.3s ease-in-out 0s;
+}
+
+#fpg_metabox_tabs ul li a:focus{
+    outline: 0;
+    box-shadow: none;
 }
 
 #fpg_metabox_tabs ul li a:hover, 
 #fpg_metabox_tabs ul li.ui-tabs-active a {
-    background: #0073aa;
-    color: #fff;
+    background: #0052da;
+    color: #ffffff;
+    border-color: #0052da;
 }
 
 #fpg_metabox_tabs > div {
     display: none;
-    padding: 15px;
-    border: 1px solid #ddd;
+    padding: 20px;
+    border: 0;
     border-top: none;
     background: #fff;
-    border-radius: 0 0 4px 4px;
+    border-radius: 5px;
+    border: 1px solid #cccccc7d;
 }
 
 #fpg_metabox_tabs > div.active {
@@ -49,27 +69,83 @@
 #fpg_metabox_tabs label {
     display: block;
     margin-bottom: 8px;
-    font-weight: bold;
+    font-weight: 600;
 }
 
 #fpg_metabox_tabs input[type="text"],
 #fpg_metabox_tabs select {
     width: 100%;
-    padding: 8px;
+    height: 50px;
+    padding: 0 0 0 20px;
     margin-bottom: 15px;
-    border: 1px solid #ddd;
+    border: 1px solid #cccccc7d;
     border-radius: 4px;
     box-sizing: border-box;
     font-size: 14px;
 }
 
 #fpg_metabox_tabs input[type="color"] {
-    height: 40px;
+    height: 100px;
+    width: 160px;
     padding: 0;
-    width: 15%;
     margin-bottom: 15px;
-    border: 1px solid #ddd;
+    border: 1px solid #cccccc7d;
     border-radius: 4px;
     box-sizing: border-box;
     font-size: 14px;
+    padding: 5px 6px;
+}
+
+
+#fpg_metabox_tabs .fpg-tab-content .fpg-common label{
+    font-size: 14px;
+    font-weight: 600;
+    color: #00183D99;
+    margin-bottom: 10px;
+    display: block;
+}
+
+#fpg_metabox_tabs .fpg-tab-content .fpg-common select{
+    height: 50px;
+    padding: 0 0 0 20px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #00183D99;
+}
+
+#fpg_metabox_tabs .fpg-tab-content .fpg-common select:focus{
+    border: 1px solid #0052da;
+    box-shadow: none;
+
+}
+
+#fpg_metabox_tabs .fpg-tab-content .fpg-common{
+    margin-top: 10px;
+}
+
+#fpg_metabox_tabs .fpg-tab-content .fpg-common.fancy-post-grid-title,
+#fpg_metabox_tabs .fpg-tab-content .fpg-common.fancy-post-grid-description,
+#fpg_metabox_tabs .fpg-tab-content .fpg-common.fancy-post-grid-read-more,
+#fpg_metabox_tabs .fpg-tab-content .fpg-common.fancy-post-grid-meta{
+    width: 100%;
+}
+
+#fpg_metabox_tabs .fpg-tab-content .fpg-common fieldset {
+    border: 1px solid #ddd;
+    padding: 20px 30px;
+    border-radius: 10px;
+    margin-bottom: 25px;
+}
+
+#fpg_metabox_tabs .fpg-tab-content .fpg-common fieldset legend {
+    font-size: 20px;
+    display: block;
+    color: #00183D99;
+    padding: 0 10px;
+    font-weight: 700;
+}
+
+#fpg_metabox_tabs .fpg-tab-content .fpg-common fieldset .fpg-color-box {
+    display: inline-block;
+    margin-right: 50px;
 }

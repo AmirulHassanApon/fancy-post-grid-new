@@ -85,9 +85,9 @@ input:checked + .slider-rs:after
 /*-------------------------------------------
   New admin setting style
 -------------------------------------------*/
-#wpcontent{
+/* #wpcontent{
   background-color: #eaedff;
-}
+} */
 /*----Header Section-----*/
 .fpg-setting-header{
   display: flex;

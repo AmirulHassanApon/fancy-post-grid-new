@@ -1,10 +1,7 @@
 # Fancy Post Grid #
   
 **Plugin Name:** Fancy Post Grid 
-**Plugin URI:** https://plugins.rstheme.com/fancy-post-grid/
-**Author:** RSTheme 
-**Author URI:** http://rstheme.com 
-**Contributors:** rstheme2017
+**Plugin URI:** https://wordpress.org/plugins/fancy-post-grid/
 **Tags:** Post Grid, Grid Layout, Responsive Grid, WordPress Grid Plugin, Customizable Grid   
 **Version:** 1.0.0
 **License:** GPLv2 or later

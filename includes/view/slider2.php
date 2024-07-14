@@ -10,13 +10,13 @@ ob_start();
                 <div class="swiper_wrap">
                     <div class="swiper rs-mySwiper" data-swiper='{
                         "spaceBetween":0,
-                        "slidesPerView":<?php echo esc_attr($cl_lg); ?>,
+                        "slidesPerView":3,
                         "freeMode":false,                        
                         "pagination":{"el":".swiper-pagination-1","clickable": false},
                         "breakpoints":{
                             
-                            "768":{"slidesPerView":<?php echo esc_attr($cl_md); ?>,"spaceBetween":0},
-                            "992":{"slidesPerView":<?php echo esc_attr($cl_lg); ?>,"spaceBetween":0}
+                            "768":{"slidesPerView":2,"spaceBetween":0},
+                            "992":{"slidesPerView":3,"spaceBetween":0}
                         }
                     }'>
                         <div class="swiper-wrapper">
