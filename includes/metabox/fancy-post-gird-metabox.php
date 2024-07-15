@@ -53,8 +53,8 @@ function fpg_metabox_shortcode_callback( $post ) {
     <div id="fpg_metabox_tabs">
         <ul>
             <li>
-                <a href="#tab-1">
-                    <div class="icon">
+                <a href="#tab-1" class="fpg-nav-tab active">
+                    <div class="fpg-icon">
                         <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="30" height="30" viewBox="0 0 256 256" xml:space="preserve">
 
                             <defs>
@@ -72,8 +72,8 @@ function fpg_metabox_shortcode_callback( $post ) {
                 </a>
             </li>
             <li>
-                <a href="#tab-2">
-                    <div class="icon">
+                <a href="#tab-2" class="fpg-nav-tab">
+                    <div class="fpg-icon">
                         <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="30" height="30" viewBox="0 0 256 256" xml:space="preserve">
 
                             <defs>
@@ -91,8 +91,8 @@ function fpg_metabox_shortcode_callback( $post ) {
                 </a>
             </li>
             <li>
-                <a href="#tab-3">
-                    <div class="icon">
+                <a href="#tab-3" class="fpg-nav-tab">
+                    <div class="fpg-icon">
                         <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="30" height="30" viewBox="0 0 256 256" xml:space="preserve">
 
                             <defs>
@@ -110,8 +110,8 @@ function fpg_metabox_shortcode_callback( $post ) {
                 </a>
             </li>
             <li>
-                <a href="#tab-4">
-                    <div class="icon">
+                <a href="#tab-4" class="fpg-nav-tab">
+                    <div class="fpg-icon">
                         <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="30" height="30" viewBox="0 0 256 256" xml:space="preserve">
 
                             <defs>
@@ -129,8 +129,8 @@ function fpg_metabox_shortcode_callback( $post ) {
                 </a>
             </li>
             <li>
-                <a href="#tab-5">
-                    <div class="icon">
+                <a href="#tab-5" class="fpg-nav-tab">
+                    <div class="fpg-icon">
                         <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="30" height="30" viewBox="0 0 256 256" xml:space="preserve">
 
                             <defs>
@@ -149,26 +149,25 @@ function fpg_metabox_shortcode_callback( $post ) {
             </li>
         </ul>
         
-        <div id="tab-1" class="fpg-tab-content">
-        <div class="fpg-layout-select-post fpg-common">
-            <label><?php esc_html_e( 'Select Post Type:', 'fancy-post-grid' ); ?></label>
-            <div>
-                <label for="fpg_layout_grid">
-                    <input type="radio" id="fpg_layout_grid" name="fpg_layout_select" value="grid" <?php checked( $fpg_layout_select, 'grid' ); ?> />
-                    <img class="fpg_logo" src="<?php echo plugins_url( 'img/grid_style_main.png', __FILE__ ); ?>" alt="Grid Style">
-                    <?php esc_html_e( 'Grid', 'fancy-post-grid' ); ?>
-                </label>
+        <div id="tab-1" class="fpg-tab-content active">
+            <div class="fpg-layout-select-post fpg-common">
+                <label><?php esc_html_e( 'Select Post Type:', 'fancy-post-grid' ); ?></label>
+                <div>
+                    <label for="fpg_layout_grid">
+                        <input type="radio" id="fpg_layout_grid" name="fpg_layout_select" value="grid" <?php checked( $fpg_layout_select, 'grid' ); ?> />
+                        <img class="fpg_logo" src="<?php echo plugins_url( 'img/grid_style_main.png', __FILE__ ); ?>" alt="Grid Style">
+                        <?php esc_html_e( 'Grid', 'fancy-post-grid' ); ?>
+                    </label>
+                </div>
+                <div>
+                    <label for="fpg_layout_slider">
+                        <input type="radio" id="fpg_layout_slider" name="fpg_layout_select" value="slider" <?php checked( $fpg_layout_select, 'slider' ); ?> />
+                        <img class="fpg_logo" src="<?php echo plugins_url( 'img/slider_style_main.png', __FILE__ ); ?>" alt="Slider Style">
+                        <?php esc_html_e( 'Slider', 'fancy-post-grid' ); ?>
+                    </label>
+                </div>
             </div>
-            <div>
-                <label for="fpg_layout_slider">
-                    <input type="radio" id="fpg_layout_slider" name="fpg_layout_select" value="slider" <?php checked( $fpg_layout_select, 'slider' ); ?> />
-                    <img class="fpg_logo" src="<?php echo plugins_url( 'img/slider_style_main.png', __FILE__ ); ?>" alt="Slider Style">
-                    <?php esc_html_e( 'Slider', 'fancy-post-grid' ); ?>
-                </label>
-            </div>
-        </div>
-
-            
+           
             <div class="fpg-post-per-page fpg-common">
                 <label for="fpg_post_per_page"><?php esc_html_e( 'Post Per Page:', 'fancy-post-grid' ); ?></label>
                 <input type="text" id="fpg_post_per_page" name="fpg_post_per_page" value="<?php echo esc_attr( $fpg_post_per_page ); ?>" placeholder="-1" />
@@ -222,9 +221,7 @@ function fpg_metabox_shortcode_callback( $post ) {
             </div>
         </div>
 
-        <div id="tab-3" class="fpg-tab-content">
-            
-
+        <div id="tab-3" class="fpg-tab-content">           
             <div class="fpg-slider-style fpg-common">
                 <label><?php esc_html_e( 'Style:', 'fancy-post-grid' ); ?></label>
                 <div>
@@ -244,8 +241,8 @@ function fpg_metabox_shortcode_callback( $post ) {
                         $image_url = plugins_url( 'img/' . $style_value . '.png', __FILE__ );
                     ?>
                         <div>
-                            <label for="fancy_post_grid_style_<?php echo esc_attr($style_value); ?>">
-                                <input type="radio" id="fancy_post_grid_style_<?php echo esc_attr($style_value); ?>" name="fancy_post_grid_style" value="<?php echo esc_attr($style_value); ?>" <?php checked($fancy_post_grid_style, $style_value); ?> />
+                            <label for="fancy_slider_style_<?php echo esc_attr($style_value); ?>">
+                                <input type="radio" id="fancy_slider_style_<?php echo esc_attr($style_value); ?>" name="fancy_slider_style" value="<?php echo esc_attr($style_value); ?>" <?php checked($fancy_slider_style, $style_value); ?> />
                                 <img src="<?php echo esc_url($image_url); ?>" alt="<?php echo esc_attr($style_label); ?>" style="max-width: 50px; max-height: 50px; vertical-align: middle;">
                                 <?php echo esc_html($style_label); ?>
                             </label>
@@ -256,11 +253,11 @@ function fpg_metabox_shortcode_callback( $post ) {
 
             <div class="fancy-post-grid-slider-column fpg-common">
                 <label for="fancy_post_grid_slider_column"><?php esc_html_e( 'Column:', 'fancy-post-grid' ); ?></label>
-                <select id="fancy_post_grid_slider_column" name="fancy_post_grid_slider_column">
-                    <option value="2" <?php selected( $fancy_post_grid_slider_column, '2' ); ?>><?php esc_html_e( '2 Column', 'fancy-post-grid' ); ?></option>
-                    <option value="3" <?php selected( $fancy_post_grid_slider_column, '3' ); ?>><?php esc_html_e( '3 Column', 'fancy-post-grid' ); ?></option>
-                    <option value="4" <?php selected( $fancy_post_grid_slider_column, '4' ); ?>><?php esc_html_e( '4 Column', 'fancy-post-grid' ); ?></option>
-                    <option value="6" <?php selected( $fancy_post_grid_slider_column, '6' ); ?>><?php esc_html_e( '6 Column', 'fancy-post-grid' ); ?></option>
+                <select id="fancy_post_grid_slider_column" name="fancy_post_grid_slider_column" style="width: 100%;">
+                    <option value="6" <?php selected( $fancy_post_grid_slider_column, '6' ); ?>><?php esc_html_e( '2 Column', 'fancy-post-grid' ); ?></option>
+                    <option value="4" <?php selected( $fancy_post_grid_slider_column, '4' ); ?>><?php esc_html_e( '3 Column', 'fancy-post-grid' ); ?></option>
+                    <option value="3" <?php selected( $fancy_post_grid_slider_column, '3' ); ?>><?php esc_html_e( '4 Column', 'fancy-post-grid' ); ?></option>
+                    <option value="2" <?php selected( $fancy_post_grid_slider_column, '6' ); ?>><?php esc_html_e( '6 Column', 'fancy-post-grid' ); ?></option>
                 </select>
             </div>
         </div>
@@ -271,21 +268,22 @@ function fpg_metabox_shortcode_callback( $post ) {
                     <legend><?php esc_html_e( 'Title Settings', 'fancy-post-grid' ); ?></legend>
                     <div class="fpg-color-box">
                         <label for="fpg_title_color"><?php esc_html_e( 'Title Color:', 'fancy-post-grid' ); ?></label>
-                        <input type="color" id="fpg_title_color" name="fpg_title_color" value="<?php echo esc_attr( $fpg_title_color ); ?>" />
+                        <input type="text" class="color-field" id="fpg_title_color" name="fpg_title_color" value="<?php echo esc_attr( $fpg_title_color ); ?>" />
                     </div>
                     <div class="fpg-color-box">
                         <label for="fpg_title_bg_color"><?php esc_html_e( 'Title Background Color:', 'fancy-post-grid' ); ?></label>
-                        <input type="color" id="fpg_title_bg_color" name="fpg_title_bg_color" value="<?php echo esc_attr( $fpg_title_bg_color ); ?>" />
+                        <input type="text" class="color-field" id="fpg_title_bg_color" name="fpg_title_bg_color" value="<?php echo esc_attr( $fpg_title_bg_color ); ?>" />
                     </div>
                 </fieldset>
             </div>
+
             
             <div class="fancy-post-grid-description fpg-common">
                 <fieldset>
                     <legend><?php esc_html_e( 'Description Settings', 'fancy-post-grid' ); ?></legend>
                     <div class="fpg-color-box">
                         <label for="fpg_description_color"><?php esc_html_e( 'Description Color:', 'fancy-post-grid' ); ?></label>
-                        <input type="color" id="fpg_description_color" name="fpg_description_color" value="<?php echo esc_attr( $fpg_description_color ); ?>" />
+                        <input type="text" class="color-field" id="fpg_description_color" name="fpg_description_color" value="<?php echo esc_attr( $fpg_description_color ); ?>" />
                     </div>
                 </fieldset>
             </div>
@@ -294,7 +292,7 @@ function fpg_metabox_shortcode_callback( $post ) {
                     <legend><?php esc_html_e( 'Read More Button', 'fancy-post-grid' ); ?></legend>
                     <div class="fpg-color-box">
                         <label for="fpg_read_more_color"><?php esc_html_e( 'Read More Color:', 'fancy-post-grid' ); ?></label>
-                        <input type="color" id="fpg_read_more_color" name="fpg_read_more_color" value="<?php echo esc_attr( $fpg_read_more_color ); ?>" />
+                        <input type="text" class="color-field" id="fpg_read_more_color" name="fpg_read_more_color" value="<?php echo esc_attr( $fpg_read_more_color ); ?>" />
                     </div>
                 </fieldset>
             </div>
@@ -303,19 +301,19 @@ function fpg_metabox_shortcode_callback( $post ) {
                     <legend><?php esc_html_e( 'Meta Settings', 'fancy-post-grid' ); ?></legend>
                     <div class="fpg-color-box">
                         <label for="fpg_meta_date_color"><?php esc_html_e( 'Meta Date Color:', 'fancy-post-grid' ); ?></label>
-                        <input type="color" id="fpg_meta_date_color" name="fpg_meta_date_color" value="<?php echo esc_attr( $fpg_meta_date_color ); ?>" />
+                        <input type="text" class="color-field" id="fpg_meta_date_color" name="fpg_meta_date_color" value="<?php echo esc_attr( $fpg_meta_date_color ); ?>" />
                     </div>
                     <div class="fpg-color-box">
                         <label for="fpg_meta_date_icon_color"><?php esc_html_e( 'Meta Date Icon Color:', 'fancy-post-grid' ); ?></label>
-                        <input type="color" id="fpg_meta_date_icon_color" name="fpg_meta_date_icon_color" value="<?php echo esc_attr( $fpg_meta_date_icon_color ); ?>" />
+                        <input type="text" class="color-field" id="fpg_meta_date_icon_color" name="fpg_meta_date_icon_color" value="<?php echo esc_attr( $fpg_meta_date_icon_color ); ?>" />
                     </div>
                     <div class="fpg-color-box">
                         <label for="fpg_meta_author_color"><?php esc_html_e( 'Meta Author Color:', 'fancy-post-grid' ); ?></label>
-                        <input type="color" id="fpg_meta_author_color" name="fpg_meta_author_color" value="<?php echo esc_attr( $fpg_meta_author_color ); ?>" />
+                        <input type="text" class="color-field" id="fpg_meta_author_color" name="fpg_meta_author_color" value="<?php echo esc_attr( $fpg_meta_author_color ); ?>" />
                     </div>
                     <div class="fpg-color-box">
                         <label for="fpg_meta_author_icon_color"><?php esc_html_e( 'Meta Author Icon Color:', 'fancy-post-grid' ); ?></label>
-                        <input type="color" id="fpg_meta_author_icon_color" name="fpg_meta_author_icon_color" value="<?php echo esc_attr( $fpg_meta_author_icon_color ); ?>" />
+                        <input type="text" class="color-field" id="fpg_meta_author_icon_color" name="fpg_meta_author_icon_color" value="<?php echo esc_attr( $fpg_meta_author_icon_color ); ?>" />
                     </div>
                 </fieldset>
             </div>
@@ -327,14 +325,14 @@ function fpg_metabox_shortcode_callback( $post ) {
                     <legend><?php esc_html_e( 'Text Hover Settings', 'fancy-post-grid' ); ?></legend>
                     <div class="fpg-color-box">
                         <label for="fpg_title_hover_color"><?php esc_html_e( 'Title Hover Color:', 'fancy-post-grid' ); ?></label>
-                        <input type="color" id="fpg_title_hover_color" name="fpg_title_hover_color" value="<?php echo esc_attr( $fpg_title_hover_color ); ?>" />
+                        <input type="text" class="color-field" id="fpg_title_hover_color" name="fpg_title_hover_color" value="<?php echo esc_attr( $fpg_title_hover_color ); ?>" />
                     </div>
                 </fieldset>
                 <fieldset>
                     <legend><?php esc_html_e( 'Description Hover Settings', 'fancy-post-grid' ); ?></legend>
                     <div class="fpg-color-box">
                         <label for="fpg_description_hover_color"><?php esc_html_e( 'Description Hover Color:', 'fancy-post-grid' ); ?></label>
-                        <input type="color" id="fpg_description_hover_color" name="fpg_description_hover_color" value="<?php echo esc_attr( $fpg_description_hover_color ); ?>" />
+                        <input type="text" class="color-field" id="fpg_description_hover_color" name="fpg_description_hover_color" value="<?php echo esc_attr( $fpg_description_hover_color ); ?>" />
                     </div>
                 </fieldset>
 

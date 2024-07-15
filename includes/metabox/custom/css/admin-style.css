@@ -64,6 +64,7 @@
 
 #fpg_metabox_tabs > div.active {
     display: block;
+    
 }
 
 #fpg_metabox_tabs label {

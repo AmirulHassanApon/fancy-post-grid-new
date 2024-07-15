@@ -23,8 +23,10 @@ add_action( 'admin_enqueue_scripts', 'fpg_admin_styles' );
 function fpg_admin_script( $screen ){
 	$fpg_version = defined( 'FPG_VERSION' ) ? FPG_VERSION : '1.0.0'; // Define version number
 
-    wp_enqueue_style( 'wp-color-picker' );  
-    wp_enqueue_script( 'select2-js', plugins_url('/assets/js/select2.min.js', __FILE__), array('jquery'), null, true );	
+    
+    wp_enqueue_style( 'wp-color-picker' ); // Enqueue WordPress core color picker stylesheet
+    wp_enqueue_script( 'fpg-color-picker', plugins_url( '/assets/js/color-picker.js', __FILE__ ), array( 'wp-color-picker' ),  $fpg_version, true );
+    wp_enqueue_script( 'select2-js', plugins_url('/assets/js/select2.min.js', __FILE__), array('jquery'), $fpg_version, null, true );	
     wp_enqueue_script( 'fpg-main', plugins_url('/assets/js/admin.js', __FILE__), array( 'jquery', 'jquery-ui-tabs', 'wp-color-picker','select2-js' ), $fpg_version, true );
 }
 add_action( 'admin_enqueue_scripts', 'fpg_admin_script' );
