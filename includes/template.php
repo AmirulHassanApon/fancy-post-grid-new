@@ -46,12 +46,9 @@ function fpg_shortcode( $atts ) {
 		$fpg_meta_author_color         = get_post_meta($post_id, 'fpg_meta_author_color', true);
 		$fpg_meta_author_icon_color    = get_post_meta($post_id, 'fpg_meta_author_icon_color', true);
 		
-		
 		//tab-8 Hover color
 		$fpg_title_hover_color         = get_post_meta($post_id, 'fpg_title_hover_color', true);
-		
 		$fpg_description_hover_color   = get_post_meta($post_id, 'fpg_description_hover_color', true);
-		
 
 		//setting for slider
 		$cl_lg                 = get_post_meta($post_id, 'fpg_cl_lg', true);
@@ -122,7 +119,6 @@ function fpg_shortcode( $atts ) {
 				return $grid13;		
 			}
 			
-
 		}
 
 		/*=====================================================================

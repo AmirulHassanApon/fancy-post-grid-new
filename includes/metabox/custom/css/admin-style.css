@@ -96,7 +96,6 @@
     padding: 5px 6px;
 }
 
-
 #fpg_metabox_tabs .fpg-tab-content .fpg-common label{
     font-size: 14px;
     font-weight: 600;
@@ -116,7 +115,6 @@
 #fpg_metabox_tabs .fpg-tab-content .fpg-common select:focus{
     border: 1px solid #0052da;
     box-shadow: none;
-
 }
 
 #fpg_metabox_tabs .fpg-tab-content .fpg-common{

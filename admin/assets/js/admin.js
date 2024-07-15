@@ -6,12 +6,11 @@
     /**
      *
      */
-    $(document).ready( function(){
-        /**
-         * Select team layout
-         */
-       
-
+    jQuery(document).ready(function($) {
+        $('#fancy_post_grid_slider_column').select2({
+            placeholder: 'Select Column',
+            allowClear: true
+        });
     });
 
 })(jQuery);

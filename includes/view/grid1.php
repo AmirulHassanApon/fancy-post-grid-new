@@ -17,7 +17,6 @@ ob_start();
 
             $query = new WP_Query($args);
             
-
             // Loop through the custom query
             while ($query->have_posts()) : $query->the_post();
                 
@@ -53,8 +52,6 @@ ob_start();
                                    <?php the_title(); ?>
                                 </a>
                             </h3>
-                            
-
 
                             <a class="rs-link" style="color: <?php echo esc_attr($fpg_read_more_color); ?>; " href="<?php the_permalink(); ?>">
                                 <?php esc_html_e('Continue Reading', 'fancy-post-grid'); ?> 
