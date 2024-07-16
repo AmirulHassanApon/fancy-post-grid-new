@@ -21,14 +21,27 @@ function fpg_metabox_shortcode_callback( $post ) {
 
     // Retrieve existing metabox fields
     // tab-1
+    
     $fpg_layout_select = get_post_meta( $post->ID, 'fpg_layout_select', true );
     $fpg_post_per_page = get_post_meta( $post->ID, 'fpg_post_per_page', true );
     // tab-2
     $fancy_post_grid_style = get_post_meta( $post->ID, 'fancy_post_grid_style', true );
     $fancy_post_grid_column = get_post_meta( $post->ID, 'fancy_post_grid_column', true );
+    $fancy_post_pagination = get_post_meta( $post->ID, 'fancy_post_pagination', true );
+    $fancy_post_cl_lg = get_post_meta( $post->ID, 'fancy_post_cl_lg', true );
+    $fancy_post_cl_md = get_post_meta( $post->ID, 'fancy_post_cl_md', true );
+    $fancy_post_cl_xs = get_post_meta( $post->ID, 'fancy_post_cl_xs', true );
+    $fancy_post_cl_mobile = get_post_meta( $post->ID, 'fancy_post_cl_mobile', true );
     // tab-3
     $fancy_slider_style = get_post_meta($post->ID, 'fancy_slider_style', true);
     $fancy_post_grid_slider_column = get_post_meta( $post->ID, 'fancy_post_grid_slider_column', true );
+    $fancy_post_grid_slider_dots = get_post_meta( $post->ID, 'fancy_post_grid_slider_dots', true );
+    $fancy_post_grid_slider_nav = get_post_meta( $post->ID, 'fancy_post_grid_slider_nav', true );
+    $fancy_post_grid_slider_autoplay = get_post_meta( $post->ID, 'fancy_post_grid_slider_autoplay', true );
+    $fancy_post_grid_slider_stop_on_hover = get_post_meta( $post->ID, 'fancy_post_grid_slider_stop_on_hover', true );
+    $fancy_post_grid_slider_interval = get_post_meta( $post->ID, 'fancy_post_grid_slider_interval', true );
+    $fancy_post_grid_slider_autoplay_speed = get_post_meta( $post->ID, 'fancy_post_grid_slider_autoplay_speed', true );
+    $fancy_post_grid_slider_loop = get_post_meta( $post->ID, 'fancy_post_grid_slider_loop', true );
 
     // tab-4 Title Settings
     $fpg_title_color               = get_post_meta($post->ID, 'fpg_title_color', true);
@@ -87,7 +100,7 @@ function fpg_metabox_shortcode_callback( $post ) {
                             </g>
                             </svg>
                     </div>
-                    <?php esc_html_e( 'Grid Settings', 'fancy-post-grid' ); ?>
+                    <?php esc_html_e( 'Layout Settings', 'fancy-post-grid' ); ?>
                 </a>
             </li>
             <li>
@@ -150,74 +163,122 @@ function fpg_metabox_shortcode_callback( $post ) {
         </ul>
         
         <div id="tab-1" class="fpg-tab-content active">
-            <div class="fpg-layout-select-post fpg-common">
-                <label><?php esc_html_e( 'Select Post Type:', 'fancy-post-grid' ); ?></label>
-                <div>
-                    <label for="fpg_layout_grid">
-                        <input type="radio" id="fpg_layout_grid" name="fpg_layout_select" value="grid" <?php checked( $fpg_layout_select, 'grid' ); ?> />
-                        <img class="fpg_logo" src="<?php echo plugins_url( 'img/grid_style_main.png', __FILE__ ); ?>" alt="Grid Style">
-                        <?php esc_html_e( 'Grid', 'fancy-post-grid' ); ?>
-                    </label>
-                </div>
-                <div>
-                    <label for="fpg_layout_slider">
-                        <input type="radio" id="fpg_layout_slider" name="fpg_layout_select" value="slider" <?php checked( $fpg_layout_select, 'slider' ); ?> />
-                        <img class="fpg_logo" src="<?php echo plugins_url( 'img/slider_style_main.png', __FILE__ ); ?>" alt="Slider Style">
-                        <?php esc_html_e( 'Slider', 'fancy-post-grid' ); ?>
-                    </label>
-                </div>
-            </div>
-           
+            
             <div class="fpg-post-per-page fpg-common">
-                <label for="fpg_post_per_page"><?php esc_html_e( 'Post Per Page:', 'fancy-post-grid' ); ?></label>
-                <input type="text" id="fpg_post_per_page" name="fpg_post_per_page" value="<?php echo esc_attr( $fpg_post_per_page ); ?>" placeholder="-1" />
+                <fieldset>
+                    <legend><?php esc_html_e( 'Post Per Page:', 'fancy-post-grid' ); ?></legend>
+                    <input type="text" id="fpg_post_per_page" name="fpg_post_per_page" value="<?php echo esc_attr( $fpg_post_per_page ); ?>" placeholder="-1" />
+                </fieldset>
             </div>
         </div>
 
         <div id="tab-2" class="fpg-tab-content">
-            
-            <div class="fancy-post-grid-style fpg-common">
-                <label><?php esc_html_e( 'Style:', 'fancy-post-grid' ); ?></label>
-                <div>
-                    <?php
-                    $styles = [
-                        'style1' => 'Style 01',
-                        'style2' => 'Style 02',
-                        'style3' => 'Style 03',
-                        'style4' => 'Style 04',
-                        'style5' => 'Style 05',
-                        'style6' => 'Style 06',
-                        'style7' => 'Style 07',
-                        'style8' => 'Style 08',
-                        'style9' => 'Style 09',
-                        'style10' => 'Style 10',
-                        'style11' => 'Style 11',
-                        'style12' => 'Style 12',
-                        'style13' => 'Style 13',
-                    ];
 
-                    foreach ($styles as $style_value => $style_label) :
-                        $image_url = plugins_url( 'img/' . $style_value . '.png', __FILE__ );
-                    ?>
-                        <div>
-                            <label for="fancy_post_grid_style_<?php echo esc_attr($style_value); ?>">
-                                <input type="radio" id="fancy_post_grid_style_<?php echo esc_attr($style_value); ?>" name="fancy_post_grid_style" value="<?php echo esc_attr($style_value); ?>" <?php checked($fancy_post_grid_style, $style_value); ?> />
-                                <img src="<?php echo esc_url($image_url); ?>" alt="<?php echo esc_attr($style_label); ?>" style="max-width: 50px; max-height: 50px; vertical-align: middle;">
-                                <?php echo esc_html($style_label); ?>
-                            </label>
-                        </div>
-                    <?php endforeach; ?>
-                </div>
+            
+            <!-- Layout Type -->
+<div class="fpg-layout-select-post fpg-common">
+    <fieldset>
+        <legend><?php esc_html_e( 'Layout Type:', 'fancy-post-grid' ); ?></legend>
+        <div class="fpg-radio-list">
+            <input type="radio" id="fpg_layout_grid" name="fpg_layout_select" value="grid" <?php checked( $fpg_layout_select, 'grid', true ); ?> />
+            <label for="fpg_layout_grid">
+                <span></span>
+                <img class="fpg_logo" src="<?php echo plugins_url( 'img/grid_style_main.png', __FILE__ ); ?>" alt="Grid Style">
+                <p><?php esc_html_e( 'Grid', 'fancy-post-grid' ); ?></p>
+            </label>
+        </div>
+        <div class="fpg-radio-list">
+            <input type="radio" id="fpg_layout_slider" name="fpg_layout_select" value="slider" <?php checked( $fpg_layout_select, 'slider' ); ?> />
+            <label for="fpg_layout_slider">
+                <span></span>
+                <img class="fpg_logo" src="<?php echo plugins_url( 'img/slider_style_main.png', __FILE__ ); ?>" alt="Slider Style">
+                <p><?php esc_html_e( 'Slider', 'fancy-post-grid' ); ?></p>
+            </label>
+        </div>
+    </fieldset>
+</div>
+
+<!-- Grid Layout Settings -->
+<div class="fancy-post-grid-style fpg-common" id="fancy_post_grid_style">
+    <fieldset>
+        <legend><?php esc_html_e( 'Grid Layout:', 'fancy-post-grid' ); ?></legend>
+        <?php
+        $styles = [
+            'style1' => 'Grid Layout 1',
+            'style2' => 'Grid Layout 2',
+            'style3' => 'Grid Layout 3',
+            'style4' => 'Grid Layout 4',
+            'style5' => 'Grid Layout 5',
+            'style6' => 'Grid Layout 6',
+            'style7' => 'Grid Layout 7',
+            'style8' => 'Grid Layout 8',
+            'style9' => 'Grid Layout 9',
+            'style10' => 'Grid Layout 10',
+            'style11' => 'Grid Layout 11',
+            'style12' => 'Grid Layout 12',
+            'style13' => 'Grid Layout 13',
+        ];
+
+        foreach ($styles as $style_value => $style_label) :
+            $image_url = plugins_url( 'img/' . $style_value . '.png', __FILE__ );
+        ?>
+            <div class="fpg-radio-list">
+                <input type="radio" id="fancy_post_grid_style_<?php echo esc_attr($style_value); ?>" name="fancy_post_grid_style" value="<?php echo esc_attr($style_value); ?>" <?php checked($fancy_post_grid_style, $style_value); ?> />
+                <label for="fancy_post_grid_style_<?php echo esc_attr($style_value); ?>">
+                    <span></span>
+                    <img src="<?php echo esc_url($image_url); ?>" alt="<?php echo esc_attr($style_label); ?>" style="max-width: 50px; max-height: 50px; vertical-align: middle;">
+                    <p><?php echo esc_html($style_label); ?></p>
+                </label>
             </div>
+        <?php endforeach; ?>
+    </fieldset>
+</div>
+
+<!-- Slider Layout Settings -->
+<div class="fancy-post-grid-style fpg-common" id="fancy_post_slider_style">
+    <fieldset>
+        <legend><?php esc_html_e( 'Slider Layout:', 'fancy-post-grid' ); ?></legend>
+        <?php
+        $styles = [
+            'style1' => 'Slider Layout 1',
+            'style2' => 'Slider Layout 2',
+            'style3' => 'Slider Layout 3',
+            'style4' => 'Slider Layout 4',
+            'style5' => 'Slider Layout 5',
+            'style6' => 'Slider Layout 6',
+            'style7' => 'Slider Layout 7',
+        ];
+
+        foreach ($styles as $style_value => $style_label) :
+            $image_url = plugins_url( 'img/' . $style_value . '.png', __FILE__ );
+        ?>
+            <div class="fpg-radio-list">
+                <input type="radio" id="fancy_slider_style_<?php echo esc_attr($style_value); ?>" name="fancy_slider_style" value="<?php echo esc_attr($style_value); ?>" <?php checked($fancy_slider_style, $style_value); ?> />
+                <label for="fancy_slider_style_<?php echo esc_attr($style_value); ?>">
+                    <span></span>
+                    <img src="<?php echo esc_url($image_url); ?>" alt="<?php echo esc_attr($style_label); ?>" style="max-width: 50px; max-height: 50px; vertical-align: middle;">
+                    <p><?php echo esc_html($style_label); ?></p>
+                </label>
+            </div>
+        <?php endforeach; ?>
+    </fieldset>
+</div>
+
+
+
 
             <div class="fancy-post-grid-column fpg-common">
-                <label for="fancy_post_grid_column"><?php esc_html_e( 'Column:', 'fancy-post-grid' ); ?></label>
-                <select id="fancy_post_grid_column" name="fancy_post_grid_column">
-                    <option value="6" <?php selected( $fancy_post_grid_column, '6' ); ?>><?php esc_html_e( 'Column 2', 'fancy-post-grid' ); ?></option>
-                    <option value="4" <?php selected( $fancy_post_grid_column, '4' ); ?>><?php esc_html_e( 'Column 3', 'fancy-post-grid' ); ?></option>
-                    <option value="3" <?php selected( $fancy_post_grid_column, '3' ); ?>><?php esc_html_e( 'Column 4', 'fancy-post-grid' ); ?></option>
-                    <option value="2" <?php selected( $fancy_post_grid_column, '2' ); ?>><?php esc_html_e( 'Column 6', 'fancy-post-grid' ); ?></option>
-                </select>
+                <fieldset>
+                    <legend><?php esc_html_e( 'Column:', 'fancy-post-grid' ); ?></legend>
+                    <div class="fpg-post-select">
+                        <select id="fancy_post_grid_column" name="fancy_post_grid_column" style="width: 100%;">
+                            <option value="6" <?php selected( $fancy_post_grid_column, '6' ); ?>><?php esc_html_e( 'Column 2', 'fancy-post-grid' ); ?></option>
+                            <option value="4" <?php selected( $fancy_post_grid_column, '4' ); ?>><?php esc_html_e( 'Column 3', 'fancy-post-grid' ); ?></option>
+                            <option value="3" <?php selected( $fancy_post_grid_column, '3' ); ?>><?php esc_html_e( 'Column 4', 'fancy-post-grid' ); ?></option>
+                            <option value="2" <?php selected( $fancy_post_grid_column, '2' ); ?>><?php esc_html_e( 'Column 6', 'fancy-post-grid' ); ?></option>
+                        </select>
+                    </div>
+                </fieldset>
             </div>
         </div>
 
@@ -227,13 +288,13 @@ function fpg_metabox_shortcode_callback( $post ) {
                 <div>
                     <?php
                     $styles = [
-                        'style1' => 'Style 01',
-                        'style2' => 'Style 02',
-                        'style3' => 'Style 03',
-                        'style4' => 'Style 04',
-                        'style5' => 'Style 05',
-                        'style6' => 'Style 06',
-                        'style7' => 'Style 07',
+                        'style1' => 'Slider Layout 1',
+                        'style2' => 'Slider Layout 2',
+                        'style3' => 'Slider Layout 3',
+                        'style4' => 'Slider Layout 4',
+                        'style5' => 'Slider Layout 5',
+                        'style6' => 'Slider Layout 6',
+                        'style7' => 'Slider Layout 7',
                         
                     ];
 
