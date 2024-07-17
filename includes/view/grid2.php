@@ -53,9 +53,12 @@ ob_start();
                                 </a>
                             </h3>
                             
+
+
                             <a class="rs-link" style="color: <?php echo esc_attr($fpg_read_more_color); ?>; " href="<?php the_permalink(); ?>">
                                 <?php esc_html_e('Continue Reading', 'fancy-post-grid'); ?> 
-                                <i class="ri-arrow-right-line"></i>                                
+                                <i class="ri-arrow-right-line"></i>
+                                
                             </a>
                         </div>
                     </div>

@@ -10,7 +10,7 @@ ob_start();
             <?php
             // Query posts from the custom post type 'your_custom_post_type'
             $args = array(
-                'post_type'      => $post_type,
+                'post_type'      => 'wp-fpg',
                 'post_status'    => 'publish',
                 'posts_per_page' => $posts_per_page, // Number of posts to display
             );
