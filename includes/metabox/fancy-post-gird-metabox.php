@@ -25,76 +25,84 @@ function fpg_metabox_shortcode_callback( $post ) {
     
     
     // tab-2
-    $fpg_layout_select = get_post_meta( $post->ID, 'fpg_layout_select', true );
+    $fpg_layout_select                          = get_post_meta( $post->ID, 'fpg_layout_select', true );
     if ( empty( $fpg_layout_select ) ) {
         $fpg_layout_select = 'grid'; // Set default to 'grid'
     }
-    $fancy_post_grid_style = get_post_meta( $post->ID, 'fancy_post_grid_style', true );
+    $fancy_post_grid_style                      = get_post_meta( $post->ID, 'fancy_post_grid_style', true );
     if ( empty( $fancy_post_grid_style ) ) {
         $fancy_post_grid_style = 'style1'; // Set default to 'style1'
     }
-    $fancy_slider_style = get_post_meta( $post->ID, 'fancy_slider_style', true );
+    $fancy_slider_style                         = get_post_meta( $post->ID, 'fancy_slider_style', true );
     if ( empty( $fancy_slider_style ) ) {
         $fancy_slider_style = 'style1'; // Set default to 'style1'
     }
     
-    $fancy_post_pagination = get_post_meta( $post->ID, 'fancy_post_pagination', true );
-    $fpg_post_per_page = get_post_meta( $post->ID, 'fpg_post_per_page', true );
+    $fancy_post_pagination                      = get_post_meta( $post->ID, 'fancy_post_pagination', true );
+    $fpg_post_per_page                          = get_post_meta( $post->ID, 'fpg_post_per_page', true );
     // Column
-    $fancy_post_cl_lg = get_post_meta( $post->ID, 'fancy_post_cl_lg', true );
-    $fancy_post_cl_md = get_post_meta( $post->ID, 'fancy_post_cl_md', true );
-    $fancy_post_cl_xs = get_post_meta( $post->ID, 'fancy_post_cl_xs', true );
-    $fancy_post_cl_mobile = get_post_meta( $post->ID, 'fancy_post_cl_mobile', true );
-    $fancy_link_details = get_post_meta( $post->ID, 'fancy_link_details', true );
-    $fancy_link_target = get_post_meta( $post->ID, 'fancy_link_target', true );
+    $fancy_post_cl_lg                           = get_post_meta( $post->ID, 'fancy_post_cl_lg', true );
+    $fancy_post_cl_md                           = get_post_meta( $post->ID, 'fancy_post_cl_md', true );
+    $fancy_post_cl_xs                           = get_post_meta( $post->ID, 'fancy_post_cl_xs', true );
+    $fancy_post_cl_mobile                       = get_post_meta( $post->ID, 'fancy_post_cl_mobile', true );
+    $fancy_link_details                         = get_post_meta( $post->ID, 'fancy_link_details', true );
+    $fancy_link_target                          = get_post_meta( $post->ID, 'fancy_link_target', true );
     if ( empty( $fancy_link_target ) ) {
         $fancy_link_target = 'same'; // Set default to 'grid'
     }
 
     // tab-3
     
-    $fancy_post_title_tag = get_post_meta( $post->ID, 'fancy_post_title_tag', true );
-    $fancy_post_title_limit_type = get_post_meta( $post->ID, 'fancy_post_title_limit_type', true );
+    $fancy_post_title_tag                       = get_post_meta( $post->ID, 'fancy_post_title_tag', true );
+    $fancy_post_title_limit_type                = get_post_meta( $post->ID, 'fancy_post_title_limit_type', true );
     if ( empty( $fancy_post_title_limit_type ) ) {
         $fancy_post_title_limit_type = 'character'; // character
     }
-    $fancy_post_title_limit = get_post_meta( $post->ID, 'fancy_post_title_limit', true );
-    $fancy_post_hide_feature_image = get_post_meta( $post->ID, 'fancy_post_hide_feature_image', true );
+    $fancy_post_title_limit                     = get_post_meta( $post->ID, 'fancy_post_title_limit', true );
+    $fancy_post_hide_feature_image              = get_post_meta( $post->ID, 'fancy_post_hide_feature_image', true );
     if ( empty( $fancy_post_hide_feature_image ) ) {
         $fancy_post_hide_feature_image = 'on'; // image
     }
-    $fancy_post_feature_image_size = get_post_meta( $post->ID, 'fancy_post_feature_image_size', true );
-    $fancy_post_media_source = get_post_meta( $post->ID, 'fancy_post_media_source', true );
+    $fancy_post_feature_image_size              = get_post_meta( $post->ID, 'fancy_post_feature_image_size', true );
+    $fancy_post_media_source                    = get_post_meta( $post->ID, 'fancy_post_media_source', true );
     if ( empty( $fancy_post_media_source ) ) {
         $fancy_post_media_source ="feature_image";
     }
-    $fancy_post_hover_animation = get_post_meta( $post->ID, 'fancy_post_hover_animation', true );
+    $fancy_post_hover_animation                 = get_post_meta( $post->ID, 'fancy_post_hover_animation', true );
+    $fancy_post_excerpt_limit                   = get_post_meta( $post->ID, 'fancy_post_excerpt_limit', true );
+    $fancy_post_excerpt_type                    = get_post_meta( $post->ID, 'fancy_post_excerpt_type', true );
+    $fancy_post_excerpt_more_text               = get_post_meta( $post->ID, 'fancy_post_excerpt_more_text', true );
+    $fancy_post_read_more_border_radius         = get_post_meta( $post->ID, 'fancy_post_read_more_border_radius', true );
+    $fancy_post_read_more_alignment             = get_post_meta( $post->ID, 'fancy_post_read_more_alignment', true );
+    $fancy_post_read_more_text                  = get_post_meta( $post->ID, 'fancy_post_read_more_text', true );
+    $fpg_field_group                            = get_post_meta( $post->ID, 'fpg_field_group', true );
 
 
-    $fancy_post_grid_slider_dots = get_post_meta( $post->ID, 'fancy_post_grid_slider_dots', true );
-    $fancy_post_grid_slider_nav = get_post_meta( $post->ID, 'fancy_post_grid_slider_nav', true );
-    $fancy_post_grid_slider_autoplay = get_post_meta( $post->ID, 'fancy_post_grid_slider_autoplay', true );
-    $fancy_post_grid_slider_stop_on_hover = get_post_meta( $post->ID, 'fancy_post_grid_slider_stop_on_hover', true );
-    $fancy_post_grid_slider_interval = get_post_meta( $post->ID, 'fancy_post_grid_slider_interval', true );
-    $fancy_post_grid_slider_autoplay_speed = get_post_meta( $post->ID, 'fancy_post_grid_slider_autoplay_speed', true );
-    $fancy_post_grid_slider_loop = get_post_meta( $post->ID, 'fancy_post_grid_slider_loop', true );
+
+    $fancy_post_grid_slider_dots                = get_post_meta( $post->ID, 'fancy_post_grid_slider_dots', true );
+    $fancy_post_grid_slider_nav                 = get_post_meta( $post->ID, 'fancy_post_grid_slider_nav', true );
+    $fancy_post_grid_slider_autoplay            = get_post_meta( $post->ID, 'fancy_post_grid_slider_autoplay', true );
+    $fancy_post_grid_slider_stop_on_hover       = get_post_meta( $post->ID, 'fancy_post_grid_slider_stop_on_hover', true );
+    $fancy_post_grid_slider_interval            = get_post_meta( $post->ID, 'fancy_post_grid_slider_interval', true );
+    $fancy_post_grid_slider_autoplay_speed      = get_post_meta( $post->ID, 'fancy_post_grid_slider_autoplay_speed', true );
+    $fancy_post_grid_slider_loop                = get_post_meta( $post->ID, 'fancy_post_grid_slider_loop', true );
 
     // tab-4 Title Settings
-    $fpg_title_color               = get_post_meta($post->ID, 'fpg_title_color', true);
-    $fpg_title_bg_color            = get_post_meta($post->ID, 'fpg_title_bg_color', true);
+    $fpg_title_color                            = get_post_meta($post->ID, 'fpg_title_color', true);
+    $fpg_title_bg_color                         = get_post_meta($post->ID, 'fpg_title_bg_color', true);
     // Description Settings
-    $fpg_description_color        = get_post_meta($post->ID, 'fpg_description_color', true);
+    $fpg_description_color                      = get_post_meta($post->ID, 'fpg_description_color', true);
     // More Post Section
-    $fpg_read_more_color           = get_post_meta($post->ID, 'fpg_read_more_color', true);
+    $fpg_read_more_color                        = get_post_meta($post->ID, 'fpg_read_more_color', true);
     // Meta Section
-    $fpg_meta_date_color           = get_post_meta($post->ID, 'fpg_meta_date_color', true);
-    $fpg_meta_date_icon_color      = get_post_meta($post->ID, 'fpg_meta_date_icon_color', true);
-    $fpg_meta_author_color         = get_post_meta($post->ID, 'fpg_meta_author_color', true);
-    $fpg_meta_author_icon_color    = get_post_meta($post->ID, 'fpg_meta_author_icon_color', true);
+    $fpg_meta_date_color                        = get_post_meta($post->ID, 'fpg_meta_date_color', true);
+    $fpg_meta_date_icon_color                   = get_post_meta($post->ID, 'fpg_meta_date_icon_color', true);
+    $fpg_meta_author_color                      = get_post_meta($post->ID, 'fpg_meta_author_color', true);
+    $fpg_meta_author_icon_color                 = get_post_meta($post->ID, 'fpg_meta_author_icon_color', true);
 
     // tab-5 Hover color
-    $fpg_title_hover_color         = get_post_meta($post->ID, 'fpg_title_hover_color', true);
-    $fpg_description_hover_color   = get_post_meta($post->ID, 'fpg_description_hover_color', true);
+    $fpg_title_hover_color                      = get_post_meta($post->ID, 'fpg_title_hover_color', true);
+    $fpg_description_hover_color                = get_post_meta($post->ID, 'fpg_description_hover_color', true);
 
 
     // Output for the metabox content
@@ -174,7 +182,7 @@ function fpg_metabox_shortcode_callback( $post ) {
                             </g>
                             </svg>
                     </div>
-                    <?php esc_html_e( 'Post Style', 'fancy-post-grid' ); ?>
+                    <?php esc_html_e( 'Field Selector', 'fancy-post-grid' ); ?>
                 </a>
             </li>
             <li>
@@ -200,12 +208,7 @@ function fpg_metabox_shortcode_callback( $post ) {
         
         <div id="tab-1" class="fpg-tab-content active">
             
-            <div class="fpg-post-per-page fpg-common">
-                <fieldset>
-                    <legend><?php esc_html_e( 'Post Per Page:', 'fancy-post-grid' ); ?></legend>
-                    <input type="text" id="fpg_post_per_page" name="fpg_post_per_page" value="<?php echo esc_attr( $fpg_post_per_page ); ?>" placeholder="-1" />
-                </fieldset>
-            </div>
+            
         </div>
 
         <div id="tab-2" class="fpg-tab-content">
@@ -527,11 +530,156 @@ function fpg_metabox_shortcode_callback( $post ) {
                 </fieldset>
             </div>
 
+            <div class="fpg-excerpt-settings fpg-common">
+                <fieldset>
+                    <legend><?php esc_html_e( 'Excerpt Settings', 'fancy-post-grid' ); ?></legend>
+                    
+                    <!-- Excerpt Limit -->
+                    <div class="fpg-excerpt-limit fpg-common">
+                        <label for="fancy_post_excerpt_limit"><?php esc_html_e( 'Excerpt Limit:', 'fancy-post-grid' ); ?></label>
+                        <input type="text" id="fancy_post_excerpt_limit" name="fancy_post_excerpt_limit" value="<?php echo esc_attr( $fancy_post_excerpt_limit ); ?>" />
+                    </div>
+
+                    <!-- Excerpt Type -->
+                    <div class="fpg-excerpt-type fpg-common">
+                        <legend><?php esc_html_e( 'Excerpt Type:', 'fancy-post-grid' ); ?></legend>
+                        <div class="fpg-container">
+                            <div class="fpg-radio-list-wrapper">
+                                <input type="radio" id="fancy_post_excerpt_type_character" name="fancy_post_excerpt_type" value="character" <?php checked( $fancy_post_excerpt_type, 'character', true ); ?> />
+                                <label for="fancy_post_excerpt_type_character">
+                                    <p><?php esc_html_e( 'Character', 'fancy-post-grid' ); ?></p>
+                                </label>
+                            </div>
+                            <div class="fpg-radio-list-wrapper">
+                                <input type="radio" id="fancy_post_excerpt_type_word" name="fancy_post_excerpt_type" value="word" <?php checked( $fancy_post_excerpt_type, 'word', true ); ?> />
+                                <label for="fancy_post_excerpt_type_word">
+                                    <p><?php esc_html_e( 'Word', 'fancy-post-grid' ); ?></p>
+                                </label>
+                            </div>
+                            <div class="fpg-radio-list-wrapper">
+                                <input type="radio" id="fancy_post_excerpt_type_full_content" name="fancy_post_excerpt_type" value="full_content" <?php checked( $fancy_post_excerpt_type, 'full_content', true ); ?> />
+                                <label for="fancy_post_excerpt_type_full_content">
+                                    <p><?php esc_html_e( 'Full Content', 'fancy-post-grid' ); ?></p>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Excerpt More Text -->
+                    <div class="fpg-excerpt-more-text fpg-common">
+                        <label for="fancy_post_excerpt_more_text"><?php esc_html_e( 'Excerpt More Text:', 'fancy-post-grid' ); ?></label>
+                        <input type="text" id="fancy_post_excerpt_more_text" name="fancy_post_excerpt_more_text" value="<?php echo esc_attr( $fancy_post_excerpt_more_text ); ?>" placeholder="..." />
+                    </div>
+                </fieldset>
+            </div>
+            <div class="fpg-read-more-button-settings fpg-common">
+                <fieldset>
+                    <legend><?php esc_html_e( 'Read More Button Settings', 'fancy-post-grid' ); ?></legend>
+                    
+                    <!-- Border Radius -->
+                    <div class="fpg-read-more-border-radius fpg-common">
+                        <label for="fancy_post_read_more_border_radius"><?php esc_html_e( 'Border Radius:', 'fancy-post-grid' ); ?></label>
+                        <input type="number" id="fancy_post_read_more_border_radius" name="fancy_post_read_more_border_radius" value="<?php echo esc_attr( $fancy_post_read_more_border_radius ); ?>" />
+                    </div>
+
+                    <!-- Alignment -->
+                    <div class="fpg-read-more-alignment fpg-common">
+                        <legend><?php esc_html_e( 'Alignment:', 'fancy-post-grid' ); ?></legend>
+                        <div class="fpg-container">
+                            <div class="fpg-radio-list-wrapper">
+                                <input type="radio" id="fancy_post_read_more_alignment_left" name="fancy_post_read_more_alignment" value="left" <?php checked( $fancy_post_read_more_alignment, 'left', true ); ?> />
+                                <label for="fancy_post_read_more_alignment_left">
+                                    <p><?php esc_html_e( 'Left', 'fancy-post-grid' ); ?></p>
+                                </label>
+                            </div>
+                            <div class="fpg-radio-list-wrapper">
+                                <input type="radio" id="fancy_post_read_more_alignment_center" name="fancy_post_read_more_alignment" value="center" <?php checked( $fancy_post_read_more_alignment, 'center', true ); ?> />
+                                <label for="fancy_post_read_more_alignment_center">
+                                    <p><?php esc_html_e( 'Center', 'fancy-post-grid' ); ?></p>
+                                </label>
+                            </div>
+                            <div class="fpg-radio-list-wrapper">
+                                <input type="radio" id="fancy_post_read_more_alignment_right" name="fancy_post_read_more_alignment" value="right" <?php checked( $fancy_post_read_more_alignment, 'right', true ); ?> />
+                                <label for="fancy_post_read_more_alignment_right">
+                                    <p><?php esc_html_e( 'Right', 'fancy-post-grid' ); ?></p>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Button Text -->
+                    <div class="fpg-read-more-text fpg-common">
+                        <label for="fancy_post_read_more_text"><?php esc_html_e( 'Read More Text:', 'fancy-post-grid' ); ?></label>
+                        <input type="text" id="fancy_post_read_more_text" name="fancy_post_read_more_text" value="<?php echo esc_attr( $fancy_post_read_more_text ); ?>" />
+                    </div>
+                </fieldset>
+            </div>
 
         </div>
 
         <div id="tab-4" class="fpg-tab-content">
-            
+            <div class="fpg-field-selection fpg-common">
+                <fieldset>
+                    <legend><?php esc_html_e( 'Field Selection', 'fancy-post-grid' ); ?></legend>
+
+                    <!-- Field Group Checkboxes -->
+                    <div class="fpg-field-group fpg-common">
+                        <label for="fpg_field_group_title">
+                            <input type="checkbox" id="fpg_field_group_title" name="fpg_field_group[]" value="title" <?php checked( in_array( 'title', (array) $fpg_field_group ) ); ?> />
+                            <?php esc_html_e( 'Title', 'fancy-post-grid' ); ?>
+                        </label>
+                    </div>
+                    <div class="fpg-field-group fpg-common">
+                        <label for="fpg_field_group_excerpt">
+                            <input type="checkbox" id="fpg_field_group_excerpt" name="fpg_field_group[]" value="excerpt" <?php checked( in_array( 'excerpt', (array) $fpg_field_group ) ); ?> />
+                            <?php esc_html_e( 'Excerpt', 'fancy-post-grid' ); ?>
+                        </label>
+                    </div>
+                    <div class="fpg-field-group fpg-common">
+                        <label for="fpg_field_group_read_more">
+                            <input type="checkbox" id="fpg_field_group_read_more" name="fpg_field_group[]" value="read_more" <?php checked( in_array( 'read_more', (array) $fpg_field_group ) ); ?> />
+                            <?php esc_html_e( 'Read More', 'fancy-post-grid' ); ?>
+                        </label>
+                    </div>
+                    <div class="fpg-field-group fpg-common">
+                        <label for="fpg_field_group_image">
+                            <input type="checkbox" id="fpg_field_group_image" name="fpg_field_group[]" value="image" <?php checked( in_array( 'image', (array) $fpg_field_group ) ); ?> />
+                            <?php esc_html_e( 'Image', 'fancy-post-grid' ); ?>
+                        </label>
+                    </div>
+                    <div class="fpg-field-group fpg-common">
+                        <label for="fpg_field_group_post_date">
+                            <input type="checkbox" id="fpg_field_group_post_date" name="fpg_field_group[]" value="post_date" <?php checked( in_array( 'post_date', (array) $fpg_field_group ) ); ?> />
+                            <?php esc_html_e( 'Post Date', 'fancy-post-grid' ); ?>
+                        </label>
+                    </div>
+                    <div class="fpg-field-group fpg-common">
+                        <label for="fpg_field_group_author">
+                            <input type="checkbox" id="fpg_field_group_author" name="fpg_field_group[]" value="author" <?php checked( in_array( 'author', (array) $fpg_field_group ) ); ?> />
+                            <?php esc_html_e( 'Author', 'fancy-post-grid' ); ?>
+                        </label>
+                    </div>
+                    <div class="fpg-field-group fpg-common">
+                        <label for="fpg_field_group_categories">
+                            <input type="checkbox" id="fpg_field_group_categories" name="fpg_field_group[]" value="categories" <?php checked( in_array( 'categories', (array) $fpg_field_group ) ); ?> />
+                            <?php esc_html_e( 'Categories', 'fancy-post-grid' ); ?>
+                        </label>
+                    </div>
+                    <div class="fpg-field-group fpg-common">
+                        <label for="fpg_field_group_tags">
+                            <input type="checkbox" id="fpg_field_group_tags" name="fpg_field_group[]" value="tags" <?php checked( in_array( 'tags', (array) $fpg_field_group ) ); ?> />
+                            <?php esc_html_e( 'Tags', 'fancy-post-grid' ); ?>
+                        </label>
+                    </div>
+                    <div class="fpg-field-group fpg-common">
+                        <label for="fpg_field_group_comment_count">
+                            <input type="checkbox" id="fpg_field_group_comment_count" name="fpg_field_group[]" value="comment_count" <?php checked( in_array( 'comment_count', (array) $fpg_field_group ) ); ?> />
+                            <?php esc_html_e( 'Comment Count', 'fancy-post-grid' ); ?>
+                        </label>
+                    </div>
+                </fieldset>
+            </div>
+
         </div>
 
         <div id="tab-5" class="fpg-tab-content">
@@ -695,6 +843,30 @@ function fpg_save_metabox_data( $post_id ) {
     }
     if ( isset( $_POST['fancy_post_hover_animation'] ) ) {
         update_post_meta( $post_id, 'fancy_post_hover_animation', sanitize_text_field( $_POST['fancy_post_hover_animation'] ) );
+    }
+    if ( isset( $_POST['fancy_post_excerpt_limit'] ) ) {
+        update_post_meta( $post_id, 'fancy_post_excerpt_limit', sanitize_text_field( $_POST['fancy_post_excerpt_limit'] ) );
+    }
+    if ( isset( $_POST['fancy_post_excerpt_type'] ) ) {
+        update_post_meta( $post_id, 'fancy_post_excerpt_type', sanitize_text_field( $_POST['fancy_post_excerpt_type'] ) );
+    }
+    if ( isset( $_POST['fancy_post_excerpt_more_text'] ) ) {
+        update_post_meta( $post_id, 'fancy_post_excerpt_more_text', sanitize_text_field( $_POST['fancy_post_excerpt_more_text'] ) );
+    }
+    if ( isset( $_POST['fancy_post_read_more_border_radius'] ) ) {
+        update_post_meta( $post_id, 'fancy_post_read_more_border_radius', sanitize_text_field( $_POST['fancy_post_read_more_border_radius'] ) );
+    }
+    if ( isset( $_POST['fancy_post_read_more_alignment'] ) ) {
+        update_post_meta( $post_id, 'fancy_post_read_more_alignment', sanitize_text_field( $_POST['fancy_post_read_more_alignment'] ) );
+    }
+    if ( isset( $_POST['fancy_post_read_more_text'] ) ) {
+        update_post_meta( $post_id, 'fancy_post_read_more_text', sanitize_text_field( $_POST['fancy_post_read_more_text'] ) );
+    }
+    if ( isset( $_POST['fpg_field_group'] ) ) {
+        $fpg_field_group = array_map( 'sanitize_text_field', $_POST['fpg_field_group'] );
+        update_post_meta( $post_id, 'fpg_field_group', $fpg_field_group );
+    } else {
+        delete_post_meta( $post_id, 'fpg_field_group' );
     }
     
 
