@@ -21,7 +21,7 @@ function fpg_metabox_shortcode_callback( $post ) {
 
     // Retrieve existing metabox fields
     // tab-1
-    
+    $fancy_post_type                          = get_post_meta( $post->ID, 'fancy_post_type', true );
     
     
     // tab-2
@@ -230,6 +230,45 @@ function fpg_metabox_shortcode_callback( $post ) {
         
         <div id="tab-1" class="fpg-tab-content active">
             
+            <!-- Layout Type -->
+        
+            <div class="fpg-post-type fpg-common">
+                <fieldset>
+                    <legend><?php esc_html_e( 'Post Type:', 'fancy-post-grid' ); ?></legend>
+                    
+                    <div class="fpg-post-select">
+                        <label for="fancy_post_type"><?php esc_html_e( 'Type:', 'fancy-post-grid' ); ?></label>
+                        <select id="fancy_post_type" name="fancy_post_type" style="width: 100%;">
+                            <option value="post" <?php selected( $fancy_post_type, 'post' ); ?>><?php esc_html_e( 'Posts', 'fancy-post-grid' ); ?></option>
+                            <option value="page" <?php selected( $fancy_post_type, 'page' ); ?>><?php esc_html_e( 'Pages', 'fancy-post-grid' ); ?></option>
+                            
+                        </select>
+                    </div> 
+                </fieldset>
+            </div> 
+
+            <!-- Filters -->
+            <div class="fpg-common-filters fpg-common">
+                <fieldset>
+                    <legend><?php esc_html_e( 'Common Filters:', 'fancy-post-grid' ); ?></legend>
+                    <div class="fpg-margin-box">
+                        <label for="fpg_section_margin"><?php esc_html_e( 'Include only:', 'fancy-post-grid' ); ?></label>
+                        <input type="text" id="fpg_section_margin" name="fpg_section_margin" value="<?php echo esc_attr( $fpg_section_margin ); ?>" placeholder="List of post IDs to show (comma-separated values, for example: 1,2,3)" />
+                    </div> 
+                    <div class="fpg-margin-box">
+                        <label for="fpg_section_margin"><?php esc_html_e( 'Exclude:', 'fancy-post-grid' ); ?></label>
+                        <input type="text" id="fpg_section_margin" name="fpg_section_margin" value="<?php echo esc_attr( $fpg_section_margin ); ?>" placeholder="List of post IDs to hide (comma-separated values, for example: 1,2,3)" />
+                    </div> 
+                    <div class="fpg-margin-box">
+                        <label for="fpg_section_margin"><?php esc_html_e( 'Include only:', 'fancy-post-grid' ); ?></label>
+                        <input type="number" id="fpg_section_margin" name="fpg_section_margin" value="<?php echo esc_attr( $fpg_section_margin ); ?>" placeholder="The number of posts to show. Set empty to show all found posts." />
+                    </div> 
+                    <div class="fpg-margin-box">
+                        <label for="fpg_section_margin"><?php esc_html_e( 'Offset:', 'fancy-post-grid' ); ?></label>
+                        <input type="text" id="fpg_section_margin" name="fpg_section_margin" value="<?php echo esc_attr( $fpg_section_margin ); ?>" placeholder="The number of posts to skip from start" />
+                    </div>  
+                </fieldset>
+            </div> 
             
         </div>
 
@@ -960,6 +999,9 @@ function fpg_save_metabox_data( $post_id ) {
 
     // Update or delete post meta data as necessary.
     
+    if ( isset( $_POST['fancy_post_type'] ) ) {
+        update_post_meta( $post_id, 'fancy_post_type', sanitize_text_field( $_POST['fancy_post_type'] ) );
+    }
     if ( isset( $_POST['fpg_post_per_page'] ) ) {
         update_post_meta( $post_id, 'fpg_post_per_page', sanitize_text_field( $_POST['fpg_post_per_page'] ) );
     }
