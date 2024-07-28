@@ -21,8 +21,23 @@ function fpg_metabox_shortcode_callback( $post ) {
 
     // Retrieve existing metabox fields
     // tab-1
-    
-    
+    $fancy_post_type                          = get_post_meta( $post->ID, 'fancy_post_type', true );
+    $fpg_include_only = get_post_meta( $post->ID, 'fpg_include_only', true );
+    $fpg_exclude = get_post_meta( $post->ID, 'fpg_exclude', true );
+    $fpg_limit = get_post_meta( $post->ID, 'fpg_limit', true );
+    $fpg_offset = get_post_meta( $post->ID, 'fpg_offset', true );
+    $fpg_filter_categories = get_post_meta( $post->ID, 'fpg_filter_categories', true );
+    $fpg_filter_tags = get_post_meta( $post->ID, 'fpg_filter_tags', true );
+    $fpg_field_group_taxonomy = get_post_meta( $post->ID, 'fpg_field_group_taxonomy', true );
+    $fpg_filter_category_terms = get_post_meta( $post->ID, 'fpg_filter_category_terms', true );
+    $fpg_filter_tags_terms = get_post_meta( $post->ID, 'fpg_filter_tags_terms', true );
+    $fpg_category_operator = get_post_meta( $post->ID, 'fpg_category_operator', true );
+    $fpg_tags_operator = get_post_meta( $post->ID, 'fpg_tags_operator', true );
+    $fpg_relation = get_post_meta( $post->ID, 'fpg_relation', true );
+    $fpg_order_by = get_post_meta( $post->ID, 'fpg_order_by', true );
+    $fpg_order = get_post_meta( $post->ID, 'fpg_order', true );
+    $fpg_filter_authors = get_post_meta( $post->ID, 'fpg_filter_authors', true );
+    $fpg_filter_statuses = get_post_meta( $post->ID, 'fpg_filter_statuses', true );
     
     // tab-2
     $fpg_layout_select                          = get_post_meta( $post->ID, 'fpg_layout_select', true );
@@ -230,7 +245,198 @@ function fpg_metabox_shortcode_callback( $post ) {
         
         <div id="tab-1" class="fpg-tab-content active">
             
-            
+            <!-- Layout Type -->
+            <div class="fpg-post-type fpg-common">
+                <fieldset>
+                    <legend><?php esc_html_e( 'Post Type:', 'fancy-post-grid' ); ?></legend>
+                    
+                    <div class="fpg-post-select">
+                        <label for="fancy_post_type"><?php esc_html_e( 'Type:', 'fancy-post-grid' ); ?></label>
+                        <select id="fancy_post_type" name="fancy_post_type" style="width: 100%;">
+                            <option value="post" <?php selected( $fancy_post_type, 'post' ); ?>><?php esc_html_e( 'Post', 'fancy-post-grid' ); ?></option>
+                            <option value="page" <?php selected( $fancy_post_type, 'page' ); ?>><?php esc_html_e( 'Page', 'fancy-post-grid' ); ?></option>
+                        </select>
+                    </div> 
+                </fieldset>
+            </div>
+
+            <!-- Filters -->
+            <div class="fpg-common-filters fpg-common">
+                <fieldset>
+                    <legend><?php esc_html_e( 'Common Filters:', 'fancy-post-grid' ); ?></legend>
+
+                    <div class="fpg-margin-box">
+                        <label for="fpg_include_only"><?php esc_html_e( 'Include only:', 'fancy-post-grid' ); ?></label>
+                        <input type="text" id="fpg_include_only" name="fpg_include_only" value="<?php echo esc_attr( $fpg_include_only ); ?>" placeholder="List of post IDs to show (comma-separated values, for example: 1,2,3)" />
+                    </div> 
+
+                    <div class="fpg-margin-box">
+                        <label for="fpg_exclude"><?php esc_html_e( 'Exclude:', 'fancy-post-grid' ); ?></label>
+                        <input type="text" id="fpg_exclude" name="fpg_exclude" value="<?php echo esc_attr( $fpg_exclude ); ?>" placeholder="List of post IDs to hide (comma-separated values, for example: 1,2,3)" />
+                    </div> 
+
+                    <div class="fpg-margin-box">
+                        <label for="fpg_limit"><?php esc_html_e( 'Limit:', 'fancy-post-grid' ); ?></label>
+                        <input type="number" id="fpg_limit" name="fpg_limit" value="<?php echo esc_attr( $fpg_limit ); ?>" placeholder="The number of posts to show. Set empty to show all found posts." />
+                    </div> 
+
+                    <div class="fpg-margin-box">
+                        <label for="fpg_offset"><?php esc_html_e( 'Offset:', 'fancy-post-grid' ); ?></label>
+                        <input type="number" id="fpg_offset" name="fpg_offset" value="<?php echo esc_attr( $fpg_offset ); ?>" placeholder="The number of posts to skip from start" />
+                    </div>  
+                </fieldset>
+            </div>
+
+            <!-- Advanced Filters -->
+            <div class="fpg-advanced-filters fpg-common">
+                <fieldset>
+                    <legend><?php esc_html_e( 'Advanced Filters:', 'fancy-post-grid' ); ?></legend>
+                        <!-- Taxonomy -->
+                        <fieldset>
+                            <legend><?php esc_html_e( 'Taxonomy:', 'fancy-post-grid' ); ?></legend>
+                            <div class="fpg-field-group fpg-common">
+                                <label for="fpg_field_group_category">
+                                    <input type="checkbox" id="fpg_field_group_category" name="fpg_field_group_taxonomy[]" value="category" <?php checked( in_array( 'category', (array) $fpg_field_group_taxonomy ) ); ?> />
+                                    <?php esc_html_e( 'Category', 'fancy-post-grid' ); ?>
+                                </label>
+                            </div>
+                            <div class="fpg-field-group fpg-common">
+                                <label for="fpg_field_group_tags">
+                                    <input type="checkbox" id="fpg_field_group_tags" name="fpg_field_group_taxonomy[]" value="tags" <?php checked( in_array( 'tags', (array) $fpg_field_group_taxonomy ) ); ?> />
+                                    <?php esc_html_e( 'Tags', 'fancy-post-grid' ); ?>
+                                </label>
+                            </div>
+                            <fieldset id="fpg-terms">
+                                <legend><?php esc_html_e( 'Terms:', 'fancy-post-grid' ); ?></legend>
+                                <!-- Category Terms -->
+                                <div id="fpg_category_terms" class="fpg-terms-select2" style="display: none;">
+                                    <label for="fpg_filter_category_terms"><?php esc_html_e( 'Select Categories:', 'fancy-post-grid' ); ?></label>
+                                    <select id="fpg_filter_category_terms" name="fpg_filter_category_terms[]" multiple="multiple" style="width: 100%;">
+                                        <?php
+                                        $categories = get_categories( array(
+                                            'hide_empty' => false,
+                                        ) );
+                                        foreach ( $categories as $category ) {
+                                            echo '<option value="' . esc_attr( $category->term_id ) . '" ' . (in_array( $category->term_id, (array) $fpg_filter_category_terms ) ? 'selected="selected"' : '') . '>' . esc_html( $category->name ) . '</option>';
+                                        }
+                                        ?>
+                                    </select>
+                                </div>
+
+                                <!-- Category Operator -->
+                                <div id="fpg_category_operator" class="fpg-terms-select2" style="display: none;">
+                                    <label for="fpg_category_operator"><?php esc_html_e( 'Category Operator:', 'fancy-post-grid' ); ?></label>
+                                    <select id="fpg_category_operator" name="fpg_category_operator" style="width: 100%;">
+                                        <option value="IN" <?php selected( $fpg_category_operator, 'IN' ); ?>><?php esc_html_e( 'IN — show posts which associate with one or more of selected terms', 'fancy-post-grid' ); ?></option>
+                                        <option value="NOT IN" <?php selected( $fpg_category_operator, 'NOT IN' ); ?>><?php esc_html_e( 'NOT IN — show posts which do not associate with any of selected terms', 'fancy-post-grid' ); ?></option>
+                                        <option value="AND" <?php selected( $fpg_category_operator, 'AND' ); ?>><?php esc_html_e( 'AND', 'fancy-post-grid' ); ?></option>
+                                    </select>
+                                </div>
+
+                                <!-- Tags Terms -->
+                                <div id="fpg_tags_terms" class="fpg-terms-select2" style="display: none;">
+                                    <label for="fpg_filter_tags_terms"><?php esc_html_e( 'Select Tags:', 'fancy-post-grid' ); ?></label>
+                                    <select id="fpg_filter_tags_terms" name="fpg_filter_tags_terms[]" multiple="multiple" style="width: 100%;">
+                                        <?php
+                                        $tags = get_tags( array(
+                                            'hide_empty' => false,
+                                        ) );
+                                        foreach ( $tags as $tag ) {
+                                            echo '<option value="' . esc_attr( $tag->term_id ) . '" ' . (in_array( $tag->term_id, (array) $fpg_filter_tags_terms ) ? 'selected="selected"' : '') . '>' . esc_html( $tag->name ) . '</option>';
+                                        }
+                                        ?>
+                                    </select>
+                                </div>
+
+                                <!-- Tags Operator -->
+                                <div id="fpg_tags_operator" class="fpg-terms-select2" style="display: none;">
+                                    <label for="fpg_tags_operator"><?php esc_html_e( 'Tags Operator:', 'fancy-post-grid' ); ?></label>
+                                    <select id="fpg_tags_operator" name="fpg_tags_operator" style="width: 100%;">
+                                        <option value="IN" <?php selected( $fpg_tags_operator, 'IN' ); ?>><?php esc_html_e( 'IN — show posts which associate with one or more of selected terms', 'fancy-post-grid' ); ?></option>
+                                        <option value="NOT IN" <?php selected( $fpg_tags_operator, 'NOT IN' ); ?>><?php esc_html_e( 'NOT IN — show posts which do not associate with any of selected terms', 'fancy-post-grid' ); ?></option>
+                                        <option value="AND" <?php selected( $fpg_tags_operator, 'AND' ); ?>><?php esc_html_e( 'AND — show posts which associate with all of selected terms', 'fancy-post-grid' ); ?></option>
+                                    </select>
+                                </div>
+                            </fieldset>    
+                            <!-- Relation -->
+                            <div id="fpg_relation" class="fpg-terms-select2" style="display: none;">
+                                <label for="fpg_relation"><?php esc_html_e( 'Relation:', 'fancy-post-grid' ); ?></label>
+                                <select id="fpg_relation" name="fpg_relation" style="width: 100%;">
+                                    <option value="OR" <?php selected( $fpg_relation, 'OR' ); ?>><?php esc_html_e( 'OR — show posts which match one or more settings', 'fancy-post-grid' ); ?></option>
+                                    
+                                    <option value="AND" <?php selected( $fpg_relation, 'AND' ); ?>><?php esc_html_e( 'AND — show posts which match all settings', 'fancy-post-grid' ); ?></option>
+                                </select>
+                            </div>
+                        </fieldset> 
+                        <!-- Order  -->
+                        <fieldset>
+                            <legend><?php esc_html_e( 'Order:', 'fancy-post-grid' ); ?></legend>
+                            <!-- Order By -->
+                            <div class="fpg-order-by fpg-common">
+                                <label for="fpg_order_by"><?php esc_html_e( 'Order By:', 'fancy-post-grid' ); ?></label>
+                                <select id="fpg_order_by" name="fpg_order_by" style="width: 100%;">
+                                    <option value="title" <?php selected( $fpg_order_by, 'title' ); ?>><?php esc_html_e( 'Title', 'fancy-post-grid' ); ?></option>
+                                    <option value="date" <?php selected( $fpg_order_by, 'date' ); ?>><?php esc_html_e( 'Create Date', 'fancy-post-grid' ); ?></option>
+                                    <option value="modified" <?php selected( $fpg_order_by, 'modified' ); ?>><?php esc_html_e( 'Modified Date', 'fancy-post-grid' ); ?></option>
+                                    <option value="menu_order" <?php selected( $fpg_order_by, 'menu_order' ); ?>><?php esc_html_e( 'Menu Order', 'fancy-post-grid' ); ?></option>
+                                </select>
+                            </div>
+
+                            <!-- Order -->
+                            <div class="fpg-order fpg-common">
+                                <label for="fpg_order"><?php esc_html_e( 'Order:', 'fancy-post-grid' ); ?></label>
+                                <select id="fpg_order" name="fpg_order" style="width: 100%;">
+                                    <option value="ASC" <?php selected( $fpg_order, 'ASC' ); ?>><?php esc_html_e( 'Ascending', 'fancy-post-grid' ); ?></option>
+                                    <option value="DESC" <?php selected( $fpg_order, 'DESC' ); ?>><?php esc_html_e( 'Descending', 'fancy-post-grid' ); ?></option>
+                                </select>
+                            </div>
+                        </fieldset>   
+                        <!-- Author  -->
+                        <fieldset>
+                            <legend><?php esc_html_e( 'Author:', 'fancy-post-grid' ); ?></legend>
+                            <!-- Author Terms -->
+                            <div id="fpg_author_terms" class="fpg-terms-select2">
+                                <label for="fpg_filter_authors"><?php esc_html_e( 'Select Authors:', 'fancy-post-grid' ); ?></label>
+                                <select id="fpg_filter_authors" name="fpg_filter_authors[]" multiple="multiple" style="width: 100%;">
+                                    <?php
+                                    $authors = get_users( array(
+                                        'who' => 'authors',
+                                    ) );
+                                    foreach ( $authors as $author ) {
+                                        echo '<option value="' . esc_attr( $author->ID ) . '" ' . (in_array( $author->ID, (array) $fpg_filter_authors ) ? 'selected="selected"' : '') . '>' . esc_html( $author->display_name ) . '</option>';
+                                    }
+                                    ?>
+                                </select>
+                            </div>
+                        </fieldset> 
+                        <!-- Status Terms -->
+                        <fieldset>
+                            <legend><?php esc_html_e( 'Status:', 'fancy-post-grid' ); ?></legend>
+                            <div id="fpg_status_terms" class="fpg-terms-select2">
+                                <label for="fpg_filter_statuses"><?php esc_html_e( 'Select Statuses:', 'fancy-post-grid' ); ?></label>
+                                <select id="fpg_filter_statuses" name="fpg_filter_statuses[]" multiple="multiple" style="width: 100%;">
+                                    <?php
+                                    $statuses = array(
+                                        'publish' => 'Published',
+                                        'pending' => 'Pending',
+                                        'draft' => 'Draft',
+                                        'private' => 'Private',
+                                        'trash' => 'Trash',
+                                        'auto-draft' => 'Auto Draft',
+                                    );
+                                    foreach ( $statuses as $status => $label ) {
+                                        echo '<option value="' . esc_attr( $status ) . '" ' . (in_array( $status, (array) $fpg_filter_statuses ) ? 'selected="selected"' : '') . '>' . esc_html( $label ) . '</option>';
+                                    }
+                                    ?>
+                                </select>
+                            </div>
+                        </fieldset>  
+                </fieldset>
+
+                   
+            </div>
+
+
         </div>
 
         <div id="tab-2" class="fpg-tab-content">
@@ -960,6 +1166,52 @@ function fpg_save_metabox_data( $post_id ) {
 
     // Update or delete post meta data as necessary.
     
+    if ( isset( $_POST['fancy_post_type'] ) ) {
+        update_post_meta( $post_id, 'fancy_post_type', sanitize_text_field( $_POST['fancy_post_type'] ) );
+    }
+    //Common Filters
+    if ( isset( $_POST['fpg_include_only'] ) ) {
+        update_post_meta( $post_id, 'fpg_include_only', sanitize_text_field( $_POST['fpg_include_only'] ) );
+    }
+    if ( isset( $_POST['fpg_exclude'] ) ) {
+        update_post_meta( $post_id, 'fpg_exclude', sanitize_text_field( $_POST['fpg_exclude'] ) );
+    }
+    if ( isset( $_POST['fpg_limit'] ) ) {
+        update_post_meta( $post_id, 'fpg_limit', sanitize_text_field( $_POST['fpg_limit'] ) );
+    }
+    if ( isset( $_POST['fpg_offset'] ) ) {
+        update_post_meta( $post_id, 'fpg_offset', sanitize_text_field( $_POST['fpg_offset'] ) );
+    }
+    // Advanced Filters
+    //Categories
+    if ( isset( $_POST['fpg_filter_categories'] ) ) {
+        update_post_meta( $post_id, 'fpg_filter_categories', sanitize_text_field( $_POST['fpg_filter_categories'] ) );
+    }
+    if ( isset( $_POST['fpg_filter_tags'] ) ) {
+        update_post_meta( $post_id, 'fpg_filter_tags', sanitize_text_field( $_POST['fpg_filter_tags'] ) );
+    }
+    
+    // Sanitize user input.
+    $new_category_terms = isset( $_POST['fpg_filter_category_terms'] ) ? array_map( 'sanitize_text_field', $_POST['fpg_filter_category_terms'] ) : array();
+    $new_tags_terms = isset( $_POST['fpg_filter_tags_terms'] ) ? array_map( 'sanitize_text_field', $_POST['fpg_filter_tags_terms'] ) : array();
+    $new_category_operator = isset( $_POST['fpg_category_operator'] ) ? sanitize_text_field( $_POST['fpg_category_operator'] ) : '';
+    $new_tags_operator = isset( $_POST['fpg_tags_operator'] ) ? sanitize_text_field( $_POST['fpg_tags_operator'] ) : '';
+    $new_filter_authors = isset( $_POST['fpg_filter_authors'] ) ? array_map( 'sanitize_text_field', $_POST['fpg_filter_authors'] ) : array();
+    $new_filter_statuses = isset( $_POST['fpg_filter_statuses'] ) ? array_map( 'sanitize_text_field', $_POST['fpg_filter_statuses'] ) : array();
+
+
+    // Update the meta fields.
+    update_post_meta( $post_id, 'fpg_filter_category_terms', $new_category_terms );
+    update_post_meta( $post_id, 'fpg_filter_tags_terms', $new_tags_terms );
+    update_post_meta( $post_id, 'fpg_category_operator', $new_category_operator );
+    update_post_meta( $post_id, 'fpg_tags_operator', $new_tags_operator );
+    update_post_meta( $post_id, 'fpg_filter_authors', $new_filter_authors );
+    update_post_meta( $post_id, 'fpg_filter_statuses', $new_filter_statuses );
+
+    if ( isset( $_POST['fpg_relation'] ) ) {
+        update_post_meta( $post_id, 'fpg_relation', sanitize_text_field( $_POST['fpg_relation'] ) );
+    }
+
     if ( isset( $_POST['fpg_post_per_page'] ) ) {
         update_post_meta( $post_id, 'fpg_post_per_page', sanitize_text_field( $_POST['fpg_post_per_page'] ) );
     }
@@ -1043,9 +1295,45 @@ function fpg_save_metabox_data( $post_id ) {
     } else {
         delete_post_meta( $post_id, 'fpg_field_group' );
     }
-    
+
+    if ( isset( $_POST['fpg_field_group_taxonomy'] ) ) {
+        $fpg_field_group_taxonomy = array_map( 'sanitize_text_field', $_POST['fpg_field_group_taxonomy'] );
+        update_post_meta( $post_id, 'fpg_field_group_taxonomy', $fpg_field_group_taxonomy );
+    } else {
+        delete_post_meta( $post_id, 'fpg_field_group_taxonomy' );
+    }
+    //Primary 
+    if ( isset( $_POST['fpg_primary_color'] ) ) {
+        update_post_meta( $post_id, 'fpg_primary_color', sanitize_hex_color( $_POST['fpg_primary_color'] ) );
+    }
+    //Button 
+    if ( isset( $_POST['fpg_button_background_color'] ) ) {
+        update_post_meta( $post_id, 'fpg_button_background_color', sanitize_hex_color( $_POST['fpg_button_background_color'] ) );
+    }
+    if ( isset( $_POST['fpg_button_hover_background_color'] ) ) {
+        update_post_meta( $post_id, 'fpg_button_hover_background_color', sanitize_hex_color( $_POST['fpg_button_hover_background_color'] ) );
+    }
+    if ( isset( $_POST['fpg_button_text_color'] ) ) {
+        update_post_meta( $post_id, 'fpg_button_text_color', sanitize_hex_color( $_POST['fpg_button_text_color'] ) );
+    }
+    if ( isset( $_POST['fpg_button_text_hover_color'] ) ) {
+        update_post_meta( $post_id, 'fpg_button_text_hover_color', sanitize_hex_color( $_POST['fpg_button_text_hover_color'] ) );
+    }
+    //Full Sections
+    if ( isset( $_POST['fpg_section_background_color'] ) ) {
+        update_post_meta( $post_id, 'fpg_section_background_color', sanitize_hex_color( $_POST['fpg_section_background_color'] ) );
+    }
+
+    if ( isset( $_POST['fpg_section_margin'] ) ) {
+        update_post_meta( $post_id, 'fpg_section_margin', sanitize_text_field( $_POST['fpg_section_margin'] ) );
+    }
+
+    if ( isset( $_POST['fpg_section_padding'] ) ) {
+        update_post_meta( $post_id, 'fpg_section_padding', sanitize_text_field( $_POST['fpg_section_padding'] ) );
+    }
 
 
+    //Title 
     if ( isset( $_POST['fpg_title_color'] ) ) {
         update_post_meta( $post_id, 'fpg_title_color', sanitize_hex_color( $_POST['fpg_title_color'] ) );
     }
