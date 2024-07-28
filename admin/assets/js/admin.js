@@ -80,6 +80,55 @@
             allowClear: true
         });
     });
+    jQuery(document).ready(function($) {
+    function toggleTermsFields() {
+        if ($('#fpg_field_group_category').is(':checked')) {
+            $('#fpg_category_terms').show();
+            $('#fpg_category_operator').show();
+        } else {
+            $('#fpg_category_terms').hide();
+            $('#fpg_category_operator').hide();
+        }
+
+        if ($('#fpg_field_group_tags').is(':checked')) {
+            $('#fpg_tags_terms').show();
+            $('#fpg_tags_operator').show();
+            
+        } else {
+            $('#fpg_tags_terms').hide();
+            $('#fpg_tags_operator').hide();
+        }
+
+        if ($('#fpg_field_group_category').is(':checked') && $('#fpg_field_group_tags').is(':checked')) {
+            $('#fpg_relation').show();
+        } else {
+            $('#fpg_relation').hide();
+        }
+        if ($('#fpg_field_group_category').is(':checked') || $('#fpg_field_group_tags').is(':checked')) {
+            $('#fpg-terms').show();
+        } else {
+            $('#fpg-terms').hide();
+        }
+        
+    }
+
+    // Initialize visibility on page load
+    toggleTermsFields();
+
+    // Change event for checkboxes
+    $('#fpg_field_group_category, #fpg_field_group_tags').change(function() {
+        toggleTermsFields();
+    });
+
+    // Initialize Select2 for the dropdowns
+    $('#fpg_filter_category_terms, #fpg_filter_tags_terms').select2({
+        placeholder: 'Select terms',
+        allowClear: true
+    });
+    
+    // Initialize Select2 for all select elements
+    $(' #fpg_filter_authors, #fpg_filter_statuses').select2();
+});
     
     
 })(jQuery);
