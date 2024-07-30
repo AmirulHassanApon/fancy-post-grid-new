@@ -10,7 +10,7 @@ ob_start();
             <?php
             // Query posts from the custom post type 'your_custom_post_type'
             $args = array(
-                'post_type'      => 'wp-fpg',
+                'post_type'      => 'post',
                 'post_status'    => 'publish',
                 'posts_per_page' => $posts_per_page, // Number of posts to display
             );
@@ -20,10 +20,13 @@ ob_start();
             // Loop through the custom query
             while ($query->have_posts()) : $query->the_post();
                 
-                $column_width_class = empty($fancy_post_grid_column) ? 'col-lg-4' : 'col-lg-' . $fancy_post_grid_column;
+                $main_cl_lg = empty($fancy_post_cl_lg) ? 'col-lg-4' : 'col-lg-' . $fancy_post_cl_lg;
+                $main_cl_md = empty($fancy_post_cl_md) ? 'col-md-4' : 'col-md-' . $fancy_post_cl_md;
+                $main_cl_sm = empty($fancy_post_cl_sm) ? 'cl-sm-6' : 'col-sm-' . $fancy_post_cl_sm;
+                $main_cl_mobile = empty($fancy_post_cl_mobile) ? 'col-sm-12' : 'col-sm-' . $fancy_post_cl_mobile;
             ?>
 
-                <div class="<?php echo esc_attr($column_width_class . ' col-md-6'); ?>">
+                <div class="<?php echo esc_attr($main_cl_lg . ' ' .  $main_cl_md . ' ' . $main_cl_sm . ' ' . $main_cl_mobile); ?>">
                     <div class="rs-blog__single mt-30">
                         <div class="rs-thumb">
                             <a href="<?php the_permalink(); ?>"><img src="<?php echo esc_url(get_the_post_thumbnail_url()); ?>" alt=""></a>

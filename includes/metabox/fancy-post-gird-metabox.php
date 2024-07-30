@@ -21,23 +21,24 @@ function fpg_metabox_shortcode_callback( $post ) {
 
     // Retrieve existing metabox fields
     // tab-1
-    $fancy_post_type                          = get_post_meta( $post->ID, 'fancy_post_type', true );
-    $fpg_include_only = get_post_meta( $post->ID, 'fpg_include_only', true );
-    $fpg_exclude = get_post_meta( $post->ID, 'fpg_exclude', true );
-    $fpg_limit = get_post_meta( $post->ID, 'fpg_limit', true );
-    $fpg_offset = get_post_meta( $post->ID, 'fpg_offset', true );
-    $fpg_filter_categories = get_post_meta( $post->ID, 'fpg_filter_categories', true );
-    $fpg_filter_tags = get_post_meta( $post->ID, 'fpg_filter_tags', true );
-    $fpg_field_group_taxonomy = get_post_meta( $post->ID, 'fpg_field_group_taxonomy', true );
-    $fpg_filter_category_terms = get_post_meta( $post->ID, 'fpg_filter_category_terms', true );
-    $fpg_filter_tags_terms = get_post_meta( $post->ID, 'fpg_filter_tags_terms', true );
-    $fpg_category_operator = get_post_meta( $post->ID, 'fpg_category_operator', true );
-    $fpg_tags_operator = get_post_meta( $post->ID, 'fpg_tags_operator', true );
-    $fpg_relation = get_post_meta( $post->ID, 'fpg_relation', true );
-    $fpg_order_by = get_post_meta( $post->ID, 'fpg_order_by', true );
-    $fpg_order = get_post_meta( $post->ID, 'fpg_order', true );
-    $fpg_filter_authors = get_post_meta( $post->ID, 'fpg_filter_authors', true );
-    $fpg_filter_statuses = get_post_meta( $post->ID, 'fpg_filter_statuses', true );
+    $fancy_post_type                            = get_post_meta( $post->ID, 'fancy_post_type', true );
+    $fpg_include_only                           = get_post_meta( $post->ID, 'fpg_include_only', true );
+    $fpg_exclude                                = get_post_meta( $post->ID, 'fpg_exclude', true );
+    $fpg_limit                                  = get_post_meta( $post->ID, 'fpg_limit', true );
+    $fpg_offset                                 = get_post_meta( $post->ID, 'fpg_offset', true );
+    $fpg_filter_categories                      = get_post_meta( $post->ID, 'fpg_filter_categories', true );
+    $fpg_filter_tags                            = get_post_meta( $post->ID, 'fpg_filter_tags', true );
+    $fpg_field_group_taxonomy                   = get_post_meta( $post->ID, 'fpg_field_group_taxonomy', true );
+    $fpg_filter_category_terms                  = get_post_meta( $post->ID, 'fpg_filter_category_terms', true );
+    $fpg_filter_tags_terms                      = get_post_meta( $post->ID, 'fpg_filter_tags_terms', true );
+    $fpg_category_operator                      = get_post_meta( $post->ID, 'fpg_category_operator', true );
+    $fpg_tags_operator                          = get_post_meta( $post->ID, 'fpg_tags_operator', true );
+    $fpg_relation                               = get_post_meta( $post->ID, 'fpg_relation', true );
+    $fpg_order_by                               = get_post_meta( $post->ID, 'fpg_order_by', true );
+    $fpg_order                                  = get_post_meta( $post->ID, 'fpg_order', true );
+    $fpg_filter_authors                         = get_post_meta( $post->ID, 'fpg_filter_authors', true );
+    $fpg_filter_statuses                        = get_post_meta( $post->ID, 'fpg_filter_statuses', true );
+    $fpg_search                                 = get_post_meta( $post->ID, 'fpg_search', true );
     
     // tab-2
     $fpg_layout_select                          = get_post_meta( $post->ID, 'fpg_layout_select', true );
@@ -55,11 +56,28 @@ function fpg_metabox_shortcode_callback( $post ) {
     
     $fancy_post_pagination                      = get_post_meta( $post->ID, 'fancy_post_pagination', true );
     $fpg_post_per_page                          = get_post_meta( $post->ID, 'fpg_post_per_page', true );
+
     // Column
     $fancy_post_cl_lg                           = get_post_meta( $post->ID, 'fancy_post_cl_lg', true );
+    if ( empty( $fancy_post_cl_lg ) ) {
+        $fancy_post_cl_lg = '4'; 
+    }
+
     $fancy_post_cl_md                           = get_post_meta( $post->ID, 'fancy_post_cl_md', true );
-    $fancy_post_cl_xs                           = get_post_meta( $post->ID, 'fancy_post_cl_xs', true );
+    if ( empty( $fancy_post_cl_md ) ) {
+        $fancy_post_cl_md = '4'; 
+    }
+
+    $fancy_post_cl_sm                           = get_post_meta( $post->ID, 'fancy_post_cl_sm', true );
+    if ( empty( $fancy_post_cl_sm ) ) {
+        $fancy_post_cl_sm = '6'; 
+    }
+
     $fancy_post_cl_mobile                       = get_post_meta( $post->ID, 'fancy_post_cl_mobile', true );
+    if ( empty( $fancy_post_cl_mobile ) ) {
+        $fancy_post_cl_mobile = '12'; 
+    }
+
     $fancy_link_details                         = get_post_meta( $post->ID, 'fancy_link_details', true );
     $fancy_link_target                          = get_post_meta( $post->ID, 'fancy_link_target', true );
     if ( empty( $fancy_link_target ) ) {
@@ -91,9 +109,6 @@ function fpg_metabox_shortcode_callback( $post ) {
     $fancy_post_read_more_alignment             = get_post_meta( $post->ID, 'fancy_post_read_more_alignment', true );
     $fancy_post_read_more_text                  = get_post_meta( $post->ID, 'fancy_post_read_more_text', true );
     $fpg_field_group                            = get_post_meta( $post->ID, 'fpg_field_group', true );
-
-
-
     $fancy_post_grid_slider_dots                = get_post_meta( $post->ID, 'fancy_post_grid_slider_dots', true );
     $fancy_post_grid_slider_nav                 = get_post_meta( $post->ID, 'fancy_post_grid_slider_nav', true );
     $fancy_post_grid_slider_autoplay            = get_post_meta( $post->ID, 'fancy_post_grid_slider_autoplay', true );
@@ -104,41 +119,41 @@ function fpg_metabox_shortcode_callback( $post ) {
 
     // tab-4 Title Settings
     // Primary Color
-    $fpg_primary_color = get_post_meta( $post->ID,'fpg_primary_color', true); 
+    $fpg_primary_color                          = get_post_meta( $post->ID,'fpg_primary_color', true); 
     //Button
-    $fpg_button_background_color = get_post_meta( $post->ID,'fpg_button_background_color', true); 
-    $fpg_button_hover_background_color = get_post_meta( $post->ID,'fpg_button_hover_background_color', true); 
-    $fpg_button_text_color = get_post_meta( $post->ID,'fpg_button_text_color', true ); 
-    $fpg_button_text_hover_color = get_post_meta( $post->ID,'fpg_button_text_hover_color', true ); 
+    $fpg_button_background_color                = get_post_meta( $post->ID,'fpg_button_background_color', true); 
+    $fpg_button_hover_background_color          = get_post_meta( $post->ID,'fpg_button_hover_background_color', true); 
+    $fpg_button_text_color                      = get_post_meta( $post->ID,'fpg_button_text_color', true ); 
+    $fpg_button_text_hover_color                = get_post_meta( $post->ID,'fpg_button_text_hover_color', true ); 
     //full Section
-    $fpg_section_background_color = get_post_meta( $post->ID, 'fpg_section_background_color', true );
-    $fpg_section_margin = get_post_meta( $post->ID, 'fpg_section_margin', true );
-    $fpg_section_padding = get_post_meta( $post->ID, 'fpg_section_padding', true );
+    $fpg_section_background_color               = get_post_meta( $post->ID, 'fpg_section_background_color', true );
+    $fpg_section_margin                         = get_post_meta( $post->ID, 'fpg_section_margin', true );
+    $fpg_section_padding                        = get_post_meta( $post->ID, 'fpg_section_padding', true );
 
 
     // Title
-    $fpg_title_color = get_post_meta( $post->ID,'fpg_title_color', true); // Default to black if not set
-    $fpg_title_font_size = get_post_meta( $post->ID,'fpg_title_font_size', true); // Default to 16px if not set
-    $fpg_title_font_weight = get_post_meta( $post->ID,'fpg_title_font_weight', true ); // Default to 400 if not set
-    $fpg_title_alignment = get_post_meta( $post->ID,'fpg_title_alignment', true ); // Default to left if not set
+    $fpg_title_color                            = get_post_meta( $post->ID,'fpg_title_color', true); // Default to black if not set
+    $fpg_title_font_size                        = get_post_meta( $post->ID,'fpg_title_font_size', true); // Default to 16px if not set
+    $fpg_title_font_weight                      = get_post_meta( $post->ID,'fpg_title_font_weight', true ); // Default to 400 if not set
+    $fpg_title_alignment                        = get_post_meta( $post->ID,'fpg_title_alignment', true ); // Default to left if not set
 
     //Title Hover
-    $fpg_title_hover_color = get_post_meta( $post->ID,'fpg_title_hover_color', true); // Default to black if not set
-    $fpg_title_hover_font_size = get_post_meta( $post->ID,'fpg_title_hover_font_size', true); // Default to 16px if not set
-    $fpg_title_hover_font_weight = get_post_meta( $post->ID,'fpg_title_hover_font_weight', true ); // Default to 400 if not set
-    $fpg_title_hover_alignment = get_post_meta( $post->ID,'fpg_title_hover_alignment', true ); // Default to left if not set
+    $fpg_title_hover_color                      = get_post_meta( $post->ID,'fpg_title_hover_color', true); // Default to black if not set
+    $fpg_title_hover_font_size                  = get_post_meta( $post->ID,'fpg_title_hover_font_size', true); // Default to 16px if not set
+    $fpg_title_hover_font_weight                = get_post_meta( $post->ID,'fpg_title_hover_font_weight', true ); // Default to 400 if not set
+    $fpg_title_hover_alignment                  = get_post_meta( $post->ID,'fpg_title_hover_alignment', true ); // Default to left if not set
 
     //Excerpt
-    $fpg_excerpt_color = get_post_meta( $post->ID,'fpg_excerpt_color', true); // Default to black if not set
-    $fpg_excerpt_size = get_post_meta( $post->ID,'fpg_excerpt_size', true); // Default to 16px if not set
-    $fpg_excerpt_font_weight = get_post_meta( $post->ID,'fpg_excerpt_font_weight', true ); // Default to 400 if not set
-    $fpg_excerpt_alignment = get_post_meta( $post->ID,'fpg_excerpt_alignment', true ); // Default to left if not set
+    $fpg_excerpt_color                          = get_post_meta( $post->ID,'fpg_excerpt_color', true); // Default to black if not set
+    $fpg_excerpt_size                           = get_post_meta( $post->ID,'fpg_excerpt_size', true); // Default to 16px if not set
+    $fpg_excerpt_font_weight                    = get_post_meta( $post->ID,'fpg_excerpt_font_weight', true ); // Default to 400 if not set
+    $fpg_excerpt_alignment                      = get_post_meta( $post->ID,'fpg_excerpt_alignment', true ); // Default to left if not set
 
     //Meta Data
-    $fpg_meta_color = get_post_meta( $post->ID,'fpg_meta_color', true); // Default to black if not set
-    $fpg_meta_size = get_post_meta( $post->ID,'fpg_meta_size', true); // Default to 16px if not set
-    $fpg_meta_font_weight = get_post_meta( $post->ID,'fpg_meta_font_weight', true ); // Default to 400 if not set
-    $fpg_meta_alignment = get_post_meta( $post->ID,'fpg_meta_alignment', true ); // Default to left if not set
+    $fpg_meta_color                             = get_post_meta( $post->ID,'fpg_meta_color', true); // Default to black if not set
+    $fpg_meta_size                              = get_post_meta( $post->ID,'fpg_meta_size', true); // Default to 16px if not set
+    $fpg_meta_font_weight                       = get_post_meta( $post->ID,'fpg_meta_font_weight', true ); // Default to 400 if not set
+    $fpg_meta_alignment                         = get_post_meta( $post->ID,'fpg_meta_alignment', true ); // Default to left if not set
 
 
 
@@ -431,12 +446,16 @@ function fpg_metabox_shortcode_callback( $post ) {
                                 </select>
                             </div>
                         </fieldset>  
-                </fieldset>
-
-                   
+                        <!-- Search -->
+                        <fieldset>
+                            <legend><?php esc_html_e( 'Search:', 'fancy-post-grid' ); ?></legend>
+                            <div id="fpg_search" >
+                                <label for="fpg_search"><?php esc_html_e( 'Keyword:', 'fancy-post-grid' ); ?></label>
+                                <input type="text" id="fpg_search" name="fpg_search" value="<?php echo esc_attr( $fpg_search ); ?>" />
+                            </div>
+                        </fieldset>  
+                </fieldset>                  
             </div>
-
-
         </div>
 
         <div id="tab-2" class="fpg-tab-content">
@@ -538,37 +557,39 @@ function fpg_metabox_shortcode_callback( $post ) {
                         <div class="fpg-post-select">
                             <label for="fancy_post_cl_lg"><?php esc_html_e( 'Large Screen Column:', 'fancy-post-grid' ); ?></label>
                             <select id="fancy_post_cl_lg" name="fancy_post_cl_lg" style="width: 100%;">
-                                <option value="1" <?php selected( $fancy_post_cl_lg, '1' ); ?>><?php esc_html_e( '1 Column', 'fancy-post-grid' ); ?></option>
-                                <option value="2" <?php selected( $fancy_post_cl_lg, '2' ); ?>><?php esc_html_e( '2 Columns', 'fancy-post-grid' ); ?></option>
-                                <option value="3" <?php selected( $fancy_post_cl_lg, '3' ); ?>><?php esc_html_e( '3 Columns', 'fancy-post-grid' ); ?></option>
-                                <option value="4" <?php selected( $fancy_post_cl_lg, '4' ); ?>><?php esc_html_e( '4 Columns', 'fancy-post-grid' ); ?></option>
+                                <option value="12" <?php selected( $fancy_post_cl_lg, '12' ); ?>><?php esc_html_e( '1 Column', 'fancy-post-grid' ); ?></option>
+                                <option value="6" <?php selected( $fancy_post_cl_lg, '6' ); ?>><?php esc_html_e( '2 Columns', 'fancy-post-grid' ); ?></option>
+                                <option value="4" <?php selected( $fancy_post_cl_lg, '4' ); ?>><?php esc_html_e( '3 Columns', 'fancy-post-grid' ); ?></option>
+                                <option value="3" <?php selected( $fancy_post_cl_lg, '3' ); ?>><?php esc_html_e( '4 Columns', 'fancy-post-grid' ); ?></option>
+                                <option value="2" <?php selected( $fancy_post_cl_lg, '2' ); ?>><?php esc_html_e( '6 Columns', 'fancy-post-grid' ); ?></option>
                             </select>
                         </div>
                         <div class="fpg-post-select">
                             <label for="fancy_post_cl_md"><?php esc_html_e( 'Medium Screen Column:', 'fancy-post-grid' ); ?></label>
                             <select id="fancy_post_cl_md" name="fancy_post_cl_md" style="width: 100%;">
-                                <option value="1" <?php selected( $fancy_post_cl_md, '1' ); ?>><?php esc_html_e( '1 Column', 'fancy-post-grid' ); ?></option>
-                                <option value="2" <?php selected( $fancy_post_cl_md, '2' ); ?>><?php esc_html_e( '2 Columns', 'fancy-post-grid' ); ?></option>
-                                <option value="3" <?php selected( $fancy_post_cl_md, '3' ); ?>><?php esc_html_e( '3 Columns', 'fancy-post-grid' ); ?></option>
-                                <option value="4" <?php selected( $fancy_post_cl_md, '4' ); ?>><?php esc_html_e( '4 Columns', 'fancy-post-grid' ); ?></option>
+                                <option value="12" <?php selected( $fancy_post_cl_lg, '12' ); ?>><?php esc_html_e( '1 Column', 'fancy-post-grid' ); ?></option>
+                                <option value="6" <?php selected( $fancy_post_cl_lg, '6' ); ?>><?php esc_html_e( '2 Columns', 'fancy-post-grid' ); ?></option>
+                                <option value="4" <?php selected( $fancy_post_cl_lg, '4' ); ?>><?php esc_html_e( '3 Columns', 'fancy-post-grid' ); ?></option>
+                                <option value="3" <?php selected( $fancy_post_cl_lg, '3' ); ?>><?php esc_html_e( '4 Columns', 'fancy-post-grid' ); ?></option>
+                                <option value="2" <?php selected( $fancy_post_cl_lg, '2' ); ?>><?php esc_html_e( '6 Columns', 'fancy-post-grid' ); ?></option>
                             </select>
                         </div>
                         <div class="fpg-post-select">
-                            <label for="fancy_post_cl_xs"><?php esc_html_e( 'Small Screen Column:', 'fancy-post-grid' ); ?></label>
-                            <select id="fancy_post_cl_xs" name="fancy_post_cl_xs" style="width: 100%;">
-                                <option value="1" <?php selected( $fancy_post_cl_xs, '1' ); ?>><?php esc_html_e( '1 Column', 'fancy-post-grid' ); ?></option>
-                                <option value="2" <?php selected( $fancy_post_cl_xs, '2' ); ?>><?php esc_html_e( '2 Columns', 'fancy-post-grid' ); ?></option>
-                                <option value="3" <?php selected( $fancy_post_cl_xs, '3' ); ?>><?php esc_html_e( '3 Columns', 'fancy-post-grid' ); ?></option>
-                                <option value="4" <?php selected( $fancy_post_cl_xs, '4' ); ?>><?php esc_html_e( '4 Columns', 'fancy-post-grid' ); ?></option>
+                            <label for="fancy_post_cl_sm"><?php esc_html_e( 'Small Screen Column:', 'fancy-post-grid' ); ?></label>
+                            <select id="fancy_post_cl_sm" name="fancy_post_cl_sm" style="width: 100%;">
+
+                                <option value="12" <?php selected( $fancy_post_cl_sm, '12' ); ?>><?php esc_html_e( '1 Column', 'fancy-post-grid' ); ?></option>
+                                <option value="6" <?php selected( $fancy_post_cl_sm, '6' ); ?>><?php esc_html_e( '2 Columns', 'fancy-post-grid' ); ?></option>
+                                <option value="4" <?php selected( $fancy_post_cl_sm, '4' ); ?>><?php esc_html_e( '3 Columns', 'fancy-post-grid' ); ?></option>
+                                
                             </select>
                         </div>
                         <div class="fpg-post-select">
                             <label for="fancy_post_cl_mobile"><?php esc_html_e( 'Mobile Screen Column:', 'fancy-post-grid' ); ?></label>
                             <select id="fancy_post_cl_mobile" name="fancy_post_cl_mobile" style="width: 100%;">
-                                <option value="1" <?php selected( $fancy_post_cl_mobile, '1' ); ?>><?php esc_html_e( '1 Column', 'fancy-post-grid' ); ?></option>
-                                <option value="2" <?php selected( $fancy_post_cl_mobile, '2' ); ?>><?php esc_html_e( '2 Columns', 'fancy-post-grid' ); ?></option>
-                                <option value="3" <?php selected( $fancy_post_cl_mobile, '3' ); ?>><?php esc_html_e( '3 Columns', 'fancy-post-grid' ); ?></option>
-                                <option value="4" <?php selected( $fancy_post_cl_mobile, '4' ); ?>><?php esc_html_e( '4 Columns', 'fancy-post-grid' ); ?></option>
+                                <option value="12" <?php selected( $fancy_post_cl_mobile, '12' ); ?>><?php esc_html_e( '1 Column', 'fancy-post-grid' ); ?></option>
+                                <option value="6" <?php selected( $fancy_post_cl_mobile, '6' ); ?>><?php esc_html_e( '2 Columns', 'fancy-post-grid' ); ?></option>
+                                <option value="4" <?php selected( $fancy_post_cl_mobile, '4' ); ?>><?php esc_html_e( '3 Columns', 'fancy-post-grid' ); ?></option>                                
                             </select>
                         </div>
                     </div>                    
@@ -641,7 +662,7 @@ function fpg_metabox_shortcode_callback( $post ) {
                 <fieldset>
                     <legend><?php esc_html_e( 'Title Settings', 'fancy-post-grid' ); ?></legend>
                     <div class="fpg-post-select-main">
-                    <!-- Title Tag Select -->
+                        <!-- Title Tag Select -->
                         <div class="fpg-post-select">
                             <label for="fancy_post_title_tag"><?php esc_html_e( 'Title Tag:', 'fancy-post-grid' ); ?></label>
                             <select id="fancy_post_title_tag" name="fancy_post_title_tag" style="width: 100%;">
@@ -846,7 +867,6 @@ function fpg_metabox_shortcode_callback( $post ) {
                     </div>    
                 </fieldset>
             </div>
-
         </div>
 
         <div id="tab-4" class="fpg-tab-content">
@@ -911,7 +931,6 @@ function fpg_metabox_shortcode_callback( $post ) {
                     </div>
                 </fieldset>
             </div>
-
         </div>
 
         <div id="tab-5" class="fpg-tab-content">
@@ -1211,6 +1230,9 @@ function fpg_save_metabox_data( $post_id ) {
     if ( isset( $_POST['fpg_relation'] ) ) {
         update_post_meta( $post_id, 'fpg_relation', sanitize_text_field( $_POST['fpg_relation'] ) );
     }
+    if ( isset( $_POST['fpg_search'] ) ) {
+        update_post_meta( $post_id, 'fpg_search', sanitize_text_field( $_POST['fpg_search'] ) );
+    }
 
     if ( isset( $_POST['fpg_post_per_page'] ) ) {
         update_post_meta( $post_id, 'fpg_post_per_page', sanitize_text_field( $_POST['fpg_post_per_page'] ) );
@@ -1232,8 +1254,8 @@ function fpg_save_metabox_data( $post_id ) {
     if ( isset( $_POST['fancy_post_cl_md'] ) ) {
         update_post_meta( $post_id, 'fancy_post_cl_md', sanitize_text_field( $_POST['fancy_post_cl_md'] ) );
     }
-    if ( isset( $_POST['fancy_post_cl_xs'] ) ) {
-        update_post_meta( $post_id, 'fancy_post_cl_xs', sanitize_text_field( $_POST['fancy_post_cl_xs'] ) );
+    if ( isset( $_POST['fancy_post_cl_sm'] ) ) {
+        update_post_meta( $post_id, 'fancy_post_cl_sm', sanitize_text_field( $_POST['fancy_post_cl_sm'] ) );
     }
     if ( isset( $_POST['fancy_post_cl_mobile'] ) ) {
         update_post_meta( $post_id, 'fancy_post_cl_mobile', sanitize_text_field( $_POST['fancy_post_cl_mobile'] ) );

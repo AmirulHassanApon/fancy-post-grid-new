@@ -27,7 +27,7 @@ ob_start();
                             <?php
                             // Custom query to fetch posts
                             $args = array(
-                                'post_type'      => 'wp-fpg',
+                                'post_type'      => 'post',
                                 'post_status'    => 'publish',
                                 'posts_per_page' => $posts_per_page, // Number of posts to display
                             );

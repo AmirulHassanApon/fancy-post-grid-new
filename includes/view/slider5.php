@@ -26,7 +26,7 @@ ob_start();
                             <?php
                             // Assuming you have a custom post type named 'your_custom_post_type'
                             $args = array(
-                                'post_type'      => 'wp-fpg',
+                                'post_type'      => 'post',
                                 'post_status'    => 'publish',
                                 'posts_per_page' => $posts_per_page, // Number of posts to display
                             );

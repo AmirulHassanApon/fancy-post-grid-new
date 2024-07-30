@@ -1,8 +1,3 @@
-*,
-::after,
-::before {
-    box-sizing: border-box
-}
 .cl-row {
     display: -webkit-box;
     display: -ms-flexbox;

@@ -51,8 +51,11 @@ function fpg_shortcode( $atts ) {
 		$fpg_description_hover_color   = get_post_meta($post_id, 'fpg_description_hover_color', true);
 
 		//setting for slider
-		$cl_lg                 = get_post_meta($post_id, 'fpg_cl_lg', true);
-		$cl_md                 = get_post_meta($post_id, 'fpg_cl_md', true);
+		
+		$fancy_post_cl_lg                           = get_post_meta( $post_id, 'fancy_post_cl_lg', true );
+	    $fancy_post_cl_md                           = get_post_meta( $post_id, 'fancy_post_cl_md', true );
+	    $fancy_post_cl_xs                           = get_post_meta( $post_id, 'fancy_post_cl_xs', true );
+	    $fancy_post_cl_mobile                       = get_post_meta( $post_id, 'fancy_post_cl_mobile', true );
 
 		$dir = plugin_dir_path( __FILE__ );
 

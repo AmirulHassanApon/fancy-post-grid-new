@@ -7,7 +7,7 @@ ob_start();
         <div class="row">
             <?php
             $args = array(
-                'post_type'      => 'wp-fpg',
+                'post_type'      => 'post',
                 'post_status'    => 'publish',
                 'posts_per_page' => $posts_per_page, // Number of posts to display
             );
@@ -16,8 +16,12 @@ ob_start();
 
             if ($query->have_posts()) :
                 while ($query->have_posts()) : $query->the_post();
+                $main_cl_lg = empty($fancy_post_cl_lg) ? 'col-lg-4' : 'col-lg-' . $fancy_post_cl_lg;
+                $main_cl_md = empty($fancy_post_cl_md) ? 'col-md-4' : 'col-md-' . $fancy_post_cl_md;
+                $main_cl_sm = empty($fancy_post_cl_sm) ? 'cl-sm-6' : 'col-sm-' . $fancy_post_cl_sm;
+                $main_cl_mobile = empty($fancy_post_cl_mobile) ? 'col-sm-12' : 'col-sm-' . $fancy_post_cl_mobile;
             ?>
-                    <div class="col-lg-4">
+                    <div class="<?php echo esc_attr($main_cl_lg . ' ' .  $main_cl_md . ' ' . $main_cl_sm . ' ' . $main_cl_mobile); ?>">
                         <div class="rs-blog-layout-30-item">
                             <div class="rs-thumb">
                                 <img src="<?php echo get_the_post_thumbnail_url(); ?>" alt="">

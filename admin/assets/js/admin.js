@@ -42,7 +42,7 @@
         });
     
         // Initialize Select2 for the dropdowns
-        $('#fancy_post_cl_lg, #fancy_post_cl_md, #fancy_post_cl_xs, #fancy_post_cl_mobile').select2({
+        $('#fancy_post_cl_lg, #fancy_post_cl_md, #fancy_post_cl_sm, #fancy_post_cl_mobile').select2({
             placeholder: 'Select Column',
             allowClear: true
         });
