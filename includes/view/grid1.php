@@ -17,6 +17,7 @@ ob_start();
 
             $query = new WP_Query($args);
             
+            
             // Loop through the custom query
             while ($query->have_posts()) : $query->the_post();
                 
