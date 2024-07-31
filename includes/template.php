@@ -21,15 +21,7 @@ function fpg_shortcode( $atts ) {
  /*===========================================================
        //retrive settings value form settings page
    ============================================================*/
-		//tab-1
-		
-		
-        
-        
-		
-		//tab-3
-		
-		
+
 		
 		//Tab-4 Title Settings
 		$fpg_title_color               = get_post_meta($post_id, 'fpg_title_color', true);
@@ -78,8 +70,16 @@ function fpg_shortcode( $atts ) {
 	    $fancy_post_feature_image_size              = get_post_meta( $post_id, 'fancy_post_feature_image_size', true );
 	    $fancy_post_media_source                    = get_post_meta( $post_id, 'fancy_post_media_source', true ); 
 	    $fancy_post_hover_animation                 = get_post_meta( $post_id, 'fancy_post_hover_animation', true );
-    
 
+	    //Excerpt
+	    $fancy_post_excerpt_limit                   = get_post_meta( $post_id, 'fancy_post_excerpt_limit', true );
+	    $fancy_post_excerpt_type                    = get_post_meta( $post_id, 'fancy_post_excerpt_type', true );
+	    $fancy_post_excerpt_more_text               = get_post_meta( $post_id, 'fancy_post_excerpt_more_text', true );
+    	
+    	//Field Selector
+    	$fpg_field_group                            = get_post_meta( $post_id, 'fpg_field_group', true );
+    	
+       
 		$dir = plugin_dir_path( __FILE__ );
 
 	 	/*=====================================================================

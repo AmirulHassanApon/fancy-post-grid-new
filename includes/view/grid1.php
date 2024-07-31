@@ -16,6 +16,7 @@ ob_start();
                 $posts_per_page = $default_posts_per_page;
             }
 
+
             // Query posts from the custom post type 'your_custom_post_type'
             $args = array(
                 'post_type'      => 'post',
@@ -55,17 +56,20 @@ ob_start();
                 
                 // Get the feature image or first image from content
                 if ($media_source === 'first_image') {
+
                     $content = get_the_content();
                     preg_match_all('/<img[^>]+>/i', $content, $matches);
                     $first_image = !empty($matches[0][0]) ? $matches[0][0] : '';
                     preg_match('/src="([^"]+)"/i', $first_image, $img_src);
-                    $feature_image_url = !empty($img_src[1]) ? $img_src[1] : '';
+                    $feature_image_url = !empty($img_src[1]) ? $img_src[1] : get_the_post_thumbnail_url(get_the_ID(), $feature_image_size);
                 } else {
                     $feature_image_url = get_the_post_thumbnail_url(get_the_ID(), $feature_image_size);
                 }
 
                 // Apply hover animation class if needed
                 $hover_class = $hover_animation !== 'none' ? 'hover-' . esc_attr($hover_animation) : '';
+
+
             ?>
 
                 <div class="<?php echo esc_attr($main_cl_lg . ' ' .  $main_cl_md . ' ' . $main_cl_sm . ' ' . $main_cl_mobile); ?>">
@@ -104,6 +108,9 @@ ob_start();
                                 <?php endif; ?>
                             </<?php echo esc_attr($title_tag); ?>>
 
+                            <?php the_excerpt(); ?>
+                            <p></p> 
+                             <!-- Display the custom excerpt here -->
                             <?php if ($fancy_link_details === 'on') : ?>
                                 <a class="rs-link" style="color: <?php echo esc_attr($fpg_read_more_color); ?>;" href="<?php the_permalink(); ?>" <?php echo esc_html_e($target_blank); ?>>
                                     <?php esc_html_e('Continue Reading', 'fancy-post-grid'); ?>
@@ -121,7 +128,7 @@ ob_start();
         </div>
 
         <?php if ($fancy_post_pagination === 'on') : ?>
-            <div class="pagination">
+            <div class="fpg-pagination">
                 <?php
                 echo paginate_links(array(
                     'total'   => $query->max_num_pages,

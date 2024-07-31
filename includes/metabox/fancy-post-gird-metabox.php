@@ -105,20 +105,19 @@ function fpg_metabox_shortcode_callback( $post ) {
     }
 
     $fancy_post_hover_animation                 = get_post_meta( $post->ID, 'fancy_post_hover_animation', true );
+
     $fancy_post_excerpt_limit                   = get_post_meta( $post->ID, 'fancy_post_excerpt_limit', true );
     $fancy_post_excerpt_type                    = get_post_meta( $post->ID, 'fancy_post_excerpt_type', true );
     $fancy_post_excerpt_more_text               = get_post_meta( $post->ID, 'fancy_post_excerpt_more_text', true );
+
+    // Button
     $fancy_post_read_more_border_radius         = get_post_meta( $post->ID, 'fancy_post_read_more_border_radius', true );
     $fancy_post_read_more_alignment             = get_post_meta( $post->ID, 'fancy_post_read_more_alignment', true );
     $fancy_post_read_more_text                  = get_post_meta( $post->ID, 'fancy_post_read_more_text', true );
+    
+    //Field Selector
     $fpg_field_group                            = get_post_meta( $post->ID, 'fpg_field_group', true );
-    $fancy_post_grid_slider_dots                = get_post_meta( $post->ID, 'fancy_post_grid_slider_dots', true );
-    $fancy_post_grid_slider_nav                 = get_post_meta( $post->ID, 'fancy_post_grid_slider_nav', true );
-    $fancy_post_grid_slider_autoplay            = get_post_meta( $post->ID, 'fancy_post_grid_slider_autoplay', true );
-    $fancy_post_grid_slider_stop_on_hover       = get_post_meta( $post->ID, 'fancy_post_grid_slider_stop_on_hover', true );
-    $fancy_post_grid_slider_interval            = get_post_meta( $post->ID, 'fancy_post_grid_slider_interval', true );
-    $fancy_post_grid_slider_autoplay_speed      = get_post_meta( $post->ID, 'fancy_post_grid_slider_autoplay_speed', true );
-    $fancy_post_grid_slider_loop                = get_post_meta( $post->ID, 'fancy_post_grid_slider_loop', true );
+    
 
     // tab-4 Title Settings
     // Primary Color
