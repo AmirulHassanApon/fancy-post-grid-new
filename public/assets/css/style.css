@@ -3664,3 +3664,15 @@ img {
 }
 
 /* all responsive css */
+
+
+/* Pagination */
+.fpg-pagination {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.fpg-pagination ul.page-numbers {
+    display: inline-flex;
+    gap: 20px;
+}

@@ -22,16 +22,14 @@ function fpg_shortcode( $atts ) {
        //retrive settings value form settings page
    ============================================================*/
 		//tab-1
-		$layout_type                   = get_post_meta($post_id, 'fpg_layout_select', true);
-		$posts_per_page                = get_post_meta($post_id, 'fpg_post_per_page', true);
+		
+		
         
-        //tab-2
-		$fpg_grid_style                = get_post_meta($post_id, 'fancy_post_grid_style', true);
-		$fancy_post_grid_column 	   = get_post_meta($post_id, 'fancy_post_grid_column', true);
+        
 		
 		//tab-3
-		$fancy_slider_style              = get_post_meta($post_id, 'fancy_slider_style', true);
-		$fancy_post_grid_slider_column = get_post_meta( $post_id, 'fancy_post_grid_slider_column', true );
+		
+		
 		
 		//Tab-4 Title Settings
 		$fpg_title_color               = get_post_meta($post_id, 'fpg_title_color', true);
@@ -50,12 +48,37 @@ function fpg_shortcode( $atts ) {
 		$fpg_title_hover_color         = get_post_meta($post_id, 'fpg_title_hover_color', true);
 		$fpg_description_hover_color   = get_post_meta($post_id, 'fpg_description_hover_color', true);
 
-		//setting for slider
-		
+		//tab-2-Layout Settings
+		//Start
+		$layout_type                   = get_post_meta($post_id, 'fpg_layout_select', true);
+		$fpg_grid_style                = get_post_meta($post_id, 'fancy_post_grid_style', true);
+		$fancy_slider_style              = get_post_meta($post_id, 'fancy_slider_style', true);
+
+		//Columns		
 		$fancy_post_cl_lg                           = get_post_meta( $post_id, 'fancy_post_cl_lg', true );
 	    $fancy_post_cl_md                           = get_post_meta( $post_id, 'fancy_post_cl_md', true );
 	    $fancy_post_cl_xs                           = get_post_meta( $post_id, 'fancy_post_cl_xs', true );
 	    $fancy_post_cl_mobile                       = get_post_meta( $post_id, 'fancy_post_cl_mobile', true );
+
+	    //Pagination
+	    $fancy_post_pagination                      = get_post_meta( $post_id, 'fancy_post_pagination', true );
+	    $posts_per_page                				= get_post_meta($post_id, 'fpg_post_per_page', true);
+
+	    //Link
+	    $fancy_link_details                         = get_post_meta( $post_id, 'fancy_link_details', true );
+    	$fancy_link_target                          = get_post_meta( $post_id, 'fancy_link_target', true );
+
+    	//tab-3 Advanced Settings
+    	$fancy_post_title_tag                       = get_post_meta( $post_id, 'fancy_post_title_tag', true );
+    	$fancy_post_title_limit_type                = get_post_meta( $post_id, 'fancy_post_title_limit_type', true );
+    	$fancy_post_title_limit                     = get_post_meta( $post_id, 'fancy_post_title_limit', true );
+
+    	//feature-image
+    	$fancy_post_hide_feature_image              = get_post_meta( $post_id, 'fancy_post_hide_feature_image', true );	    
+	    $fancy_post_feature_image_size              = get_post_meta( $post_id, 'fancy_post_feature_image_size', true );
+	    $fancy_post_media_source                    = get_post_meta( $post_id, 'fancy_post_media_source', true ); 
+	    $fancy_post_hover_animation                 = get_post_meta( $post_id, 'fancy_post_hover_animation', true );
+    
 
 		$dir = plugin_dir_path( __FILE__ );
 

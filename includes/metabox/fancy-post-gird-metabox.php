@@ -81,10 +81,10 @@ function fpg_metabox_shortcode_callback( $post ) {
     $fancy_link_details                         = get_post_meta( $post->ID, 'fancy_link_details', true );
     $fancy_link_target                          = get_post_meta( $post->ID, 'fancy_link_target', true );
     if ( empty( $fancy_link_target ) ) {
-        $fancy_link_target = 'same'; // Set default to 'grid'
+        $fancy_link_target = 'same'; 
     }
 
-    // tab-3
+    // tab-3-Advanced-Settings
     
     $fancy_post_title_tag                       = get_post_meta( $post->ID, 'fancy_post_title_tag', true );
     $fancy_post_title_limit_type                = get_post_meta( $post->ID, 'fancy_post_title_limit_type', true );
@@ -92,6 +92,8 @@ function fpg_metabox_shortcode_callback( $post ) {
         $fancy_post_title_limit_type = 'character'; // character
     }
     $fancy_post_title_limit                     = get_post_meta( $post->ID, 'fancy_post_title_limit', true );
+
+    //Feature-image
     $fancy_post_hide_feature_image              = get_post_meta( $post->ID, 'fancy_post_hide_feature_image', true );
     if ( empty( $fancy_post_hide_feature_image ) ) {
         $fancy_post_hide_feature_image = 'on'; // image
@@ -101,6 +103,7 @@ function fpg_metabox_shortcode_callback( $post ) {
     if ( empty( $fancy_post_media_source ) ) {
         $fancy_post_media_source ="feature_image";
     }
+
     $fancy_post_hover_animation                 = get_post_meta( $post->ID, 'fancy_post_hover_animation', true );
     $fancy_post_excerpt_limit                   = get_post_meta( $post->ID, 'fancy_post_excerpt_limit', true );
     $fancy_post_excerpt_type                    = get_post_meta( $post->ID, 'fancy_post_excerpt_type', true );
@@ -708,7 +711,7 @@ function fpg_metabox_shortcode_callback( $post ) {
                     <div class="fpg-post-select-main">
                         <!-- Hide Feature Image -->
                         <div class="fpg-hide-feature-image fpg-common">                       
-                            <legend><?php esc_html_e( 'Hide Feature Image', 'fancy-post-grid' ); ?></legend>
+                            <legend><?php esc_html_e( 'Feature Image', 'fancy-post-grid' ); ?></legend>
                             <div class="fpg-container">
                                 <div class="fpg-radio-list-wrapper">
                                     <input type="radio" id="fancy_post_hide_feature_image_off" name="fancy_post_hide_feature_image" value="off" <?php checked( $fancy_post_hide_feature_image, 'off', true ); ?> />
@@ -732,12 +735,11 @@ function fpg_metabox_shortcode_callback( $post ) {
                                 <?php 
                                 
                                 $sizes = [
-                                    'thumbnail' => 'Thumbnail',
-                                    'medium' => 'Medium',
-                                    'medium_large' => 'Medium Large',
-                                    'large' => 'Large',
-                                    '1536x1536' => '1536x1536',
-                                    '2048x2048' => '2048x2048',
+                                    'thumbnail' => 'thumbnail',
+                                    'medium' => 'medium',
+                                    'medium_large' => 'medium_large',
+                                    'large' => 'large',
+                                    'full' => 'full',                                    
                                     
                                 ];
                                 foreach ($sizes as $size) {
