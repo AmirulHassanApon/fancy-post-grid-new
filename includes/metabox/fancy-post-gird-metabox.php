@@ -86,12 +86,7 @@ function fpg_metabox_shortcode_callback( $post ) {
 
     // tab-3-Advanced-Settings
     
-    $fancy_post_title_tag                       = get_post_meta( $post->ID, 'fancy_post_title_tag', true );
-    $fancy_post_title_limit_type                = get_post_meta( $post->ID, 'fancy_post_title_limit_type', true );
-    if ( empty( $fancy_post_title_limit_type ) ) {
-        $fancy_post_title_limit_type = 'character'; // character
-    }
-    $fancy_post_title_limit                     = get_post_meta( $post->ID, 'fancy_post_title_limit', true );
+    $fancy_post_title_tag                       = get_post_meta( $post->ID, 'fancy_post_title_tag', true );    
 
     //Feature-image
     $fancy_post_hide_feature_image              = get_post_meta( $post->ID, 'fancy_post_hide_feature_image', true );
@@ -106,8 +101,6 @@ function fpg_metabox_shortcode_callback( $post ) {
 
     $fancy_post_hover_animation                 = get_post_meta( $post->ID, 'fancy_post_hover_animation', true );
 
-    $fancy_post_excerpt_limit                   = get_post_meta( $post->ID, 'fancy_post_excerpt_limit', true );
-    $fancy_post_excerpt_type                    = get_post_meta( $post->ID, 'fancy_post_excerpt_type', true );
     $fancy_post_excerpt_more_text               = get_post_meta( $post->ID, 'fancy_post_excerpt_more_text', true );
 
     // Button
@@ -116,7 +109,16 @@ function fpg_metabox_shortcode_callback( $post ) {
     $fancy_post_read_more_text                  = get_post_meta( $post->ID, 'fancy_post_read_more_text', true );
     
     //Field Selector
-    $fpg_field_group                            = get_post_meta( $post->ID, 'fpg_field_group', true );
+    
+    $fpg_field_group_title                      = get_post_meta( $post->ID, 'fpg_field_group_title', true );
+    $fpg_field_group_excerpt                    = get_post_meta( $post->ID, 'fpg_field_group_excerpt', true );
+    $fpg_field_group_read_more                  = get_post_meta( $post->ID, 'fpg_field_group_read_more', true );
+    $fpg_field_group_image                      = get_post_meta( $post->ID, 'fpg_field_group_image', true );
+    $fpg_field_group_post_date                  = get_post_meta( $post->ID, 'fpg_field_group_post_date', true );
+    $fpg_field_group_author                     = get_post_meta( $post->ID, 'fpg_field_group_author', true );
+    $fpg_field_group_categories                 = get_post_meta( $post->ID, 'fpg_field_group_categories', true );
+    $fpg_field_group_tags                       = get_post_meta( $post->ID, 'fpg_field_group_tags', true );
+    $fpg_field_group_comment_count              = get_post_meta( $post->ID, 'fpg_field_group_comment_count', true );
     
 
     // tab-4 Title Settings
@@ -127,6 +129,7 @@ function fpg_metabox_shortcode_callback( $post ) {
     $fpg_button_hover_background_color          = get_post_meta( $post->ID,'fpg_button_hover_background_color', true); 
     $fpg_button_text_color                      = get_post_meta( $post->ID,'fpg_button_text_color', true ); 
     $fpg_button_text_hover_color                = get_post_meta( $post->ID,'fpg_button_text_hover_color', true ); 
+
     //full Section
     $fpg_section_background_color               = get_post_meta( $post->ID, 'fpg_section_background_color', true );
     $fpg_section_margin                         = get_post_meta( $post->ID, 'fpg_section_margin', true );
@@ -676,31 +679,7 @@ function fpg_metabox_shortcode_callback( $post ) {
                                 <option value="h6" <?php selected( $fancy_post_title_tag, 'h6' ); ?>><?php esc_html_e( 'H6', 'fancy-post-grid' ); ?></option>
                             </select>
                         </div>
-
-                        <!-- Title Limit Type -->
-                        <div class="fpg-title-limit-type fpg-common">                        
-                            <legend><?php esc_html_e( 'Title Limit Type', 'fancy-post-grid' ); ?></legend>                        
-                            <div class="fpg-container">
-                                <div class="fpg-radio-list-wrapper">
-                                    <input type="radio" id="fancy_post_title_limit_character" name="fancy_post_title_limit_type" value="character" <?php checked( $fancy_post_title_limit_type, 'character', true ); ?> />
-                                    <label for="fancy_post_title_limit_character">
-                                        <p><?php esc_html_e( 'Character', 'fancy-post-grid' ); ?></p>
-                                    </label>
-                                </div>
-                                <div class="fpg-radio-list-wrapper">
-                                    <input type="radio" id="fancy_post_title_limit_word" name="fancy_post_title_limit_type" value="word" <?php checked( $fancy_post_title_limit_type, 'word',true ); ?> />
-                                    <label for="fancy_post_title_limit_word">
-                                        <p><?php esc_html_e( 'Word', 'fancy-post-grid' ); ?></p>
-                                    </label>
-                                </div>
-                            </div>                       
-                        </div>
-
-                        <!-- Title Limit -->
-                        <div class="fpg-title-limit fpg-common">
-                            <label for="fancy_post_title_limit"><?php esc_html_e( 'Title Limit:', 'fancy-post-grid' ); ?></label>
-                            <input type="text" id="fancy_post_title_limit" name="fancy_post_title_limit" value="<?php echo esc_attr( $fancy_post_title_limit ); ?>" placeholder="Enter limit" />
-                        </div>
+                        
                     </div>    
                 </fieldset>
             </div>
@@ -786,36 +765,7 @@ function fpg_metabox_shortcode_callback( $post ) {
                 <fieldset>
                     <legend><?php esc_html_e( 'Excerpt Settings', 'fancy-post-grid' ); ?></legend>
                     <div class="fpg-post-select-main">
-                        <!-- Excerpt Limit -->
-                        <div class="fpg-excerpt-limit fpg-common">
-                            <label for="fancy_post_excerpt_limit"><?php esc_html_e( 'Excerpt Limit:', 'fancy-post-grid' ); ?></label>
-                            <input type="text" id="fancy_post_excerpt_limit" name="fancy_post_excerpt_limit" value="<?php echo esc_attr( $fancy_post_excerpt_limit ); ?>" />
-                        </div>
-
-                        <!-- Excerpt Type -->
-                        <div class="fpg-excerpt-type fpg-common">
-                            <legend><?php esc_html_e( 'Excerpt Type:', 'fancy-post-grid' ); ?></legend>
-                            <div class="fpg-container">
-                                <div class="fpg-radio-list-wrapper">
-                                    <input type="radio" id="fancy_post_excerpt_type_character" name="fancy_post_excerpt_type" value="character" <?php checked( $fancy_post_excerpt_type, 'character', true ); ?> />
-                                    <label for="fancy_post_excerpt_type_character">
-                                        <p><?php esc_html_e( 'Character', 'fancy-post-grid' ); ?></p>
-                                    </label>
-                                </div>
-                                <div class="fpg-radio-list-wrapper">
-                                    <input type="radio" id="fancy_post_excerpt_type_word" name="fancy_post_excerpt_type" value="word" <?php checked( $fancy_post_excerpt_type, 'word', true ); ?> />
-                                    <label for="fancy_post_excerpt_type_word">
-                                        <p><?php esc_html_e( 'Word', 'fancy-post-grid' ); ?></p>
-                                    </label>
-                                </div>
-                                <div class="fpg-radio-list-wrapper">
-                                    <input type="radio" id="fancy_post_excerpt_type_full_content" name="fancy_post_excerpt_type" value="full_content" <?php checked( $fancy_post_excerpt_type, 'full_content', true ); ?> />
-                                    <label for="fancy_post_excerpt_type_full_content">
-                                        <p><?php esc_html_e( 'Full Content', 'fancy-post-grid' ); ?></p>
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
+                        
 
                         <!-- Excerpt More Text -->
                         <div class="fpg-excerpt-more-text fpg-common">
@@ -878,61 +828,62 @@ function fpg_metabox_shortcode_callback( $post ) {
                     <!-- Field Group Checkboxes -->
                     <div class="fpg-field-group fpg-common">
                         <label for="fpg_field_group_title">
-                            <input type="checkbox" id="fpg_field_group_title" name="fpg_field_group[]" value="title" <?php checked( in_array( 'title', (array) $fpg_field_group ) ); ?> />
+                            <input type="checkbox" id="fpg_field_group_title" name="fpg_field_group_title" value="1" <?php checked( get_post_meta( $post->ID, 'fpg_field_group_title', true ), '1' ); ?> />
                             <?php esc_html_e( 'Title', 'fancy-post-grid' ); ?>
                         </label>
                     </div>
                     <div class="fpg-field-group fpg-common">
                         <label for="fpg_field_group_excerpt">
-                            <input type="checkbox" id="fpg_field_group_excerpt" name="fpg_field_group[]" value="excerpt" <?php checked( in_array( 'excerpt', (array) $fpg_field_group ) ); ?> />
+                            <input type="checkbox" id="fpg_field_group_excerpt" name="fpg_field_group_excerpt" value="1" <?php checked( get_post_meta( $post->ID, 'fpg_field_group_excerpt', true ), '1' ); ?> />
                             <?php esc_html_e( 'Excerpt', 'fancy-post-grid' ); ?>
                         </label>
                     </div>
                     <div class="fpg-field-group fpg-common">
                         <label for="fpg_field_group_read_more">
-                            <input type="checkbox" id="fpg_field_group_read_more" name="fpg_field_group[]" value="read_more" <?php checked( in_array( 'read_more', (array) $fpg_field_group ) ); ?> />
+                            <input type="checkbox" id="fpg_field_group_read_more" name="fpg_field_group_read_more" value="1" <?php checked( get_post_meta( $post->ID, 'fpg_field_group_read_more', true ), '1' ); ?> />
                             <?php esc_html_e( 'Read More', 'fancy-post-grid' ); ?>
                         </label>
                     </div>
                     <div class="fpg-field-group fpg-common">
                         <label for="fpg_field_group_image">
-                            <input type="checkbox" id="fpg_field_group_image" name="fpg_field_group[]" value="image" <?php checked( in_array( 'image', (array) $fpg_field_group ) ); ?> />
+                            <input type="checkbox" id="fpg_field_group_image" name="fpg_field_group_image" value="1" <?php checked( get_post_meta( $post->ID, 'fpg_field_group_image', true ), '1' ); ?> />
                             <?php esc_html_e( 'Image', 'fancy-post-grid' ); ?>
                         </label>
                     </div>
                     <div class="fpg-field-group fpg-common">
                         <label for="fpg_field_group_post_date">
-                            <input type="checkbox" id="fpg_field_group_post_date" name="fpg_field_group[]" value="post_date" <?php checked( in_array( 'post_date', (array) $fpg_field_group ) ); ?> />
+                            <input type="checkbox" id="fpg_field_group_post_date" name="fpg_field_group_post_date" value="1" <?php checked( get_post_meta( $post->ID, 'fpg_field_group_post_date', true ), '1' ); ?> />
                             <?php esc_html_e( 'Post Date', 'fancy-post-grid' ); ?>
                         </label>
                     </div>
                     <div class="fpg-field-group fpg-common">
                         <label for="fpg_field_group_author">
-                            <input type="checkbox" id="fpg_field_group_author" name="fpg_field_group[]" value="author" <?php checked( in_array( 'author', (array) $fpg_field_group ) ); ?> />
+                            <input type="checkbox" id="fpg_field_group_author" name="fpg_field_group_author" value="1" <?php checked( get_post_meta( $post->ID, 'fpg_field_group_author', true ), '1' ); ?> />
                             <?php esc_html_e( 'Author', 'fancy-post-grid' ); ?>
                         </label>
                     </div>
                     <div class="fpg-field-group fpg-common">
                         <label for="fpg_field_group_categories">
-                            <input type="checkbox" id="fpg_field_group_categories" name="fpg_field_group[]" value="categories" <?php checked( in_array( 'categories', (array) $fpg_field_group ) ); ?> />
+                            <input type="checkbox" id="fpg_field_group_categories" name="fpg_field_group_categories" value="1" <?php checked( get_post_meta( $post->ID, 'fpg_field_group_categories', true ), '1' ); ?> />
                             <?php esc_html_e( 'Categories', 'fancy-post-grid' ); ?>
                         </label>
                     </div>
                     <div class="fpg-field-group fpg-common">
                         <label for="fpg_field_group_tags">
-                            <input type="checkbox" id="fpg_field_group_tags" name="fpg_field_group[]" value="tags" <?php checked( in_array( 'tags', (array) $fpg_field_group ) ); ?> />
+                            <input type="checkbox" id="fpg_field_group_tags" name="fpg_field_group_tags" value="1" <?php checked( get_post_meta( $post->ID, 'fpg_field_group_tags', true ), '1' ); ?> />
                             <?php esc_html_e( 'Tags', 'fancy-post-grid' ); ?>
                         </label>
                     </div>
                     <div class="fpg-field-group fpg-common">
                         <label for="fpg_field_group_comment_count">
-                            <input type="checkbox" id="fpg_field_group_comment_count" name="fpg_field_group[]" value="comment_count" <?php checked( in_array( 'comment_count', (array) $fpg_field_group ) ); ?> />
+                            <input type="checkbox" id="fpg_field_group_comment_count" name="fpg_field_group_comment_count" value="1" <?php checked( get_post_meta( $post->ID, 'fpg_field_group_comment_count', true ), '1' ); ?> />
                             <?php esc_html_e( 'Comment Count', 'fancy-post-grid' ); ?>
                         </label>
                     </div>
                 </fieldset>
             </div>
         </div>
+
 
         <div id="tab-5" class="fpg-tab-content">
             <div class="fancy-post-grid-primary fpg-common">
@@ -984,14 +935,14 @@ function fpg_metabox_shortcode_callback( $post ) {
 
                         <!-- Margin -->
                         <div class="fpg-margin-box">
-                            <label for="fpg_section_margin"><?php esc_html_e( 'Margin (comma-separated):', 'fancy-post-grid' ); ?></label>
-                            <input type="text" id="fpg_section_margin" name="fpg_section_margin" value="<?php echo esc_attr( $fpg_section_margin ); ?>" placeholder="e.g., 12,0,5,10" />
+                            <label for="fpg_section_margin"><?php esc_html_e( 'Margin (space-separated):', 'fancy-post-grid' ); ?></label>
+                            <input type="text" id="fpg_section_margin" name="fpg_section_margin" value="<?php echo esc_attr( $fpg_section_margin ); ?>" placeholder="e.g., 120px 30px 40px 50px" />
                         </div>
 
                         <!-- Padding -->
                         <div class="fpg-padding-box">
-                            <label for="fpg_section_padding"><?php esc_html_e( 'Padding (comma-separated):', 'fancy-post-grid' ); ?></label>
-                            <input type="text" id="fpg_section_padding" name="fpg_section_padding" value="<?php echo esc_attr( $fpg_section_padding ); ?>" placeholder="e.g., 12,0,5,10" />
+                            <label for="fpg_section_padding"><?php esc_html_e( 'Padding (space-separated):', 'fancy-post-grid' ); ?></label>
+                            <input type="text" id="fpg_section_padding" name="fpg_section_padding" value="<?php echo esc_attr( $fpg_section_padding ); ?>" placeholder="e.g., 20px 30px 40px 50px" />
                         </div>
                     </div>    
                 </fieldset>
@@ -1275,12 +1226,7 @@ function fpg_save_metabox_data( $post_id ) {
     if ( isset( $_POST['fancy_post_title_tag'] ) ) {
         update_post_meta( $post_id, 'fancy_post_title_tag', sanitize_text_field( $_POST['fancy_post_title_tag'] ) );
     }
-    if ( isset( $_POST['fancy_post_title_limit_type'] ) ) {
-        update_post_meta( $post_id, 'fancy_post_title_limit_type', sanitize_text_field( $_POST['fancy_post_title_limit_type'] ) );
-    }
-    if ( isset( $_POST['fancy_post_title_limit'] ) ) {
-        update_post_meta( $post_id, 'fancy_post_title_limit', sanitize_text_field( $_POST['fancy_post_title_limit'] ) );
-    }
+    
     if ( isset( $_POST['fancy_post_hide_feature_image'] ) ) {
         update_post_meta( $post_id, 'fancy_post_hide_feature_image', sanitize_text_field( $_POST['fancy_post_hide_feature_image'] ) );
     }
@@ -1293,12 +1239,7 @@ function fpg_save_metabox_data( $post_id ) {
     if ( isset( $_POST['fancy_post_hover_animation'] ) ) {
         update_post_meta( $post_id, 'fancy_post_hover_animation', sanitize_text_field( $_POST['fancy_post_hover_animation'] ) );
     }
-    if ( isset( $_POST['fancy_post_excerpt_limit'] ) ) {
-        update_post_meta( $post_id, 'fancy_post_excerpt_limit', sanitize_text_field( $_POST['fancy_post_excerpt_limit'] ) );
-    }
-    if ( isset( $_POST['fancy_post_excerpt_type'] ) ) {
-        update_post_meta( $post_id, 'fancy_post_excerpt_type', sanitize_text_field( $_POST['fancy_post_excerpt_type'] ) );
-    }
+    
     if ( isset( $_POST['fancy_post_excerpt_more_text'] ) ) {
         update_post_meta( $post_id, 'fancy_post_excerpt_more_text', sanitize_text_field( $_POST['fancy_post_excerpt_more_text'] ) );
     }
@@ -1317,6 +1258,25 @@ function fpg_save_metabox_data( $post_id ) {
         update_post_meta( $post_id, 'fpg_field_group', $fpg_field_group );
     } else {
         delete_post_meta( $post_id, 'fpg_field_group' );
+    }
+    $fields = [
+        'fpg_field_group_title',
+        'fpg_field_group_excerpt',
+        'fpg_field_group_read_more',
+        'fpg_field_group_image',
+        'fpg_field_group_post_date',
+        'fpg_field_group_author',
+        'fpg_field_group_categories',
+        'fpg_field_group_tags',
+        'fpg_field_group_comment_count',
+    ];
+
+    foreach ( $fields as $field ) {
+        if ( isset( $_POST[$field] ) ) {
+            update_post_meta( $post_id, $field, '1' );
+        } else {
+            delete_post_meta( $post_id, $field );
+        }
     }
 
     if ( isset( $_POST['fpg_field_group_taxonomy'] ) ) {

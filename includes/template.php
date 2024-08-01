@@ -75,10 +75,59 @@ function fpg_shortcode( $atts ) {
 	    $fancy_post_excerpt_limit                   = get_post_meta( $post_id, 'fancy_post_excerpt_limit', true );
 	    $fancy_post_excerpt_type                    = get_post_meta( $post_id, 'fancy_post_excerpt_type', true );
 	    $fancy_post_excerpt_more_text               = get_post_meta( $post_id, 'fancy_post_excerpt_more_text', true );
+	    //Read Button
+	    $fancy_post_read_more_border_radius         = get_post_meta( $post_id, 'fancy_post_read_more_border_radius', true );
+    	$fancy_post_read_more_alignment             = get_post_meta( $post_id, 'fancy_post_read_more_alignment', true );
+    	$fancy_post_read_more_text                  = get_post_meta( $post_id, 'fancy_post_read_more_text', true );
     	
-    	//Field Selector
-    	$fpg_field_group                            = get_post_meta( $post_id, 'fpg_field_group', true );
-    	
+    	//Field Selector -Tab-4
+    	$fpg_field_group_title                      = get_post_meta( $post_id, 'fpg_field_group_title', true );
+	    $fpg_field_group_excerpt                    = get_post_meta( $post_id, 'fpg_field_group_excerpt', true );
+	    $fpg_field_group_read_more                  = get_post_meta( $post_id, 'fpg_field_group_read_more', true );
+	    $fpg_field_group_image                      = get_post_meta( $post_id, 'fpg_field_group_image', true );
+	    $fpg_field_group_post_date                  = get_post_meta( $post_id, 'fpg_field_group_post_date', true );
+	    $fpg_field_group_author                     = get_post_meta( $post_id, 'fpg_field_group_author', true );
+	    $fpg_field_group_categories                 = get_post_meta( $post_id, 'fpg_field_group_categories', true );
+	    $fpg_field_group_tags                       = get_post_meta( $post_id, 'fpg_field_group_tags', true );
+	    $fpg_field_group_comment_count              = get_post_meta( $post_id, 'fpg_field_group_comment_count', true );
+
+	    //Style
+	    $fpg_primary_color                          = get_post_meta( $post_id,'fpg_primary_color', true); 
+	    //Button
+	    $fpg_button_background_color                = get_post_meta( $post_id,'fpg_button_background_color', true); 
+	    $fpg_button_hover_background_color          = get_post_meta( $post_id,'fpg_button_hover_background_color', true); 
+	    $fpg_button_text_color                      = get_post_meta( $post_id,'fpg_button_text_color', true ); 
+	    $fpg_button_text_hover_color                = get_post_meta( $post_id,'fpg_button_text_hover_color', true ); 
+	    //full Section
+	    $fpg_section_background_color               = get_post_meta( $post_id, 'fpg_section_background_color', true );
+	    $fpg_section_margin                         = get_post_meta( $post_id, 'fpg_section_margin', true );
+	    $fpg_section_padding                        = get_post_meta( $post_id, 'fpg_section_padding', true );
+
+
+	    // Title
+	    $fpg_title_color                            = get_post_meta( $post_id,'fpg_title_color', true); 
+	    $fpg_title_font_size                        = get_post_meta( $post_id,'fpg_title_font_size', true); 
+	    $fpg_title_font_weight                      = get_post_meta( $post_id,'fpg_title_font_weight', true ); 
+	    $fpg_title_alignment                        = get_post_meta( $post_id,'fpg_title_alignment', true ); 
+
+	    //Title Hover
+	    $fpg_title_hover_color                      = get_post_meta( $post_id,'fpg_title_hover_color', true); 
+	    $fpg_title_hover_font_size                  = get_post_meta( $post_id,'fpg_title_hover_font_size', true); 
+	    $fpg_title_hover_font_weight                = get_post_meta( $post_id,'fpg_title_hover_font_weight', true ); 
+	    $fpg_title_hover_alignment                  = get_post_meta( $post_id,'fpg_title_hover_alignment', true ); 
+
+	    //Excerpt
+	    $fpg_excerpt_color                          = get_post_meta( $post_id,'fpg_excerpt_color', true); 
+	    $fpg_excerpt_size                           = get_post_meta( $post_id,'fpg_excerpt_size', true); 
+	    $fpg_excerpt_font_weight                    = get_post_meta( $post_id,'fpg_excerpt_font_weight', true ); 
+	    $fpg_excerpt_alignment                      = get_post_meta( $post_id,'fpg_excerpt_alignment', true ); 
+
+	    //Meta Data
+	    $fpg_meta_color                             = get_post_meta( $post_id,'fpg_meta_color', true); 
+	    $fpg_meta_size                              = get_post_meta( $post_id,'fpg_meta_size', true); 
+	    $fpg_meta_font_weight                       = get_post_meta( $post_id,'fpg_meta_font_weight', true ); 
+	    $fpg_meta_alignment                         = get_post_meta( $post_id,'fpg_meta_alignment', true ); 
+	    	
        
 		$dir = plugin_dir_path( __FILE__ );
 
