@@ -100,7 +100,6 @@ function fpg_metabox_shortcode_callback( $post ) {
     }
 
     $fancy_post_hover_animation                 = get_post_meta( $post->ID, 'fancy_post_hover_animation', true );
-
     $fancy_post_excerpt_more_text               = get_post_meta( $post->ID, 'fancy_post_excerpt_more_text', true );
 
     // Button
@@ -134,7 +133,6 @@ function fpg_metabox_shortcode_callback( $post ) {
     $fpg_section_background_color               = get_post_meta( $post->ID, 'fpg_section_background_color', true );
     $fpg_section_margin                         = get_post_meta( $post->ID, 'fpg_section_margin', true );
     $fpg_section_padding                        = get_post_meta( $post->ID, 'fpg_section_padding', true );
-
 
     // Title
     $fpg_title_color                            = get_post_meta( $post->ID,'fpg_title_color', true); // Default to black if not set
@@ -274,7 +272,7 @@ function fpg_metabox_shortcode_callback( $post ) {
                         <label for="fancy_post_type"><?php esc_html_e( 'Type:', 'fancy-post-grid' ); ?></label>
                         <select id="fancy_post_type" name="fancy_post_type" style="width: 100%;">
                             <option value="post" <?php selected( $fancy_post_type, 'post' ); ?>><?php esc_html_e( 'Post', 'fancy-post-grid' ); ?></option>
-                            <option value="page" <?php selected( $fancy_post_type, 'page' ); ?>><?php esc_html_e( 'Page', 'fancy-post-grid' ); ?></option>
+                            
                         </select>
                     </div> 
                 </fieldset>
@@ -683,6 +681,7 @@ function fpg_metabox_shortcode_callback( $post ) {
                     </div>    
                 </fieldset>
             </div>
+
             <div class="fpg-image-settings fpg-common">
                 <fieldset>
                     <legend><?php esc_html_e( 'Image Settings', 'fancy-post-grid' ); ?></legend>
@@ -1179,11 +1178,19 @@ function fpg_save_metabox_data( $post_id ) {
     update_post_meta( $post_id, 'fpg_filter_authors', $new_filter_authors );
     update_post_meta( $post_id, 'fpg_filter_statuses', $new_filter_statuses );
 
+
     if ( isset( $_POST['fpg_relation'] ) ) {
         update_post_meta( $post_id, 'fpg_relation', sanitize_text_field( $_POST['fpg_relation'] ) );
     }
     if ( isset( $_POST['fpg_search'] ) ) {
         update_post_meta( $post_id, 'fpg_search', sanitize_text_field( $_POST['fpg_search'] ) );
+    }
+
+    if ( isset( $_POST['fpg_order_by'] ) ) {
+        update_post_meta( $post_id, 'fpg_order_by', sanitize_text_field( $_POST['fpg_order_by'] ) );
+    }
+    if ( isset( $_POST['fpg_order'] ) ) {
+        update_post_meta( $post_id, 'fpg_order', sanitize_text_field( $_POST['fpg_order'] ) );
     }
 
     if ( isset( $_POST['fpg_post_per_page'] ) ) {

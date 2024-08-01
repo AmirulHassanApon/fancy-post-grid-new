@@ -15,14 +15,34 @@ ob_start();
             if ($fancy_post_pagination === 'off') {
                 $posts_per_page = $default_posts_per_page;
             }
+            $selected_authors = array(1, 2, 3); // Author IDs
+            $selected_statuses = array('publish', 'draft'); // Statuses
+            
+            // Serialized data
+            // $serialized_data = 'a:4:{i:0;s:7:"publish";i:1;s:7:"pending";i:2;s:5:"draft";i:3;s:5:"trash";}';
 
+            // // Step 1: Unserialize the data
+            // $data_array = unserialize($serialized_data);
+
+            // // Step 2: Extract values and format them
+            // $formatted_values = implode(',', $data_array);
+
+            // // Step 3: Create the final format
+            // $final_format = "($formatted_values)";
+
+            // // Output the result
+            // echo $final_format;
             // Query posts from the custom post type 'your_custom_post_type'
             $args = array(
                 'post_type'      => 'post',
-                'post_status'    => 'publish',
+                'post_status'    => $selected_statuses, // Add status filter
                 'posts_per_page' => $posts_per_page, // Number of posts to display
                 'paged'          => get_query_var('paged') ? get_query_var('paged') : 1, // Get current page number
+                'orderby'        => $fpg_order_by, // Order by
+                'order'          => $fpg_order,   // Order direction
+                'author__in'     => $selected_authors, // Add author filter
             );
+            
 
             $query = new WP_Query($args);
 
