@@ -17,22 +17,11 @@ ob_start();
             }
             $selected_authors = array(1, 2, 3); // Author IDs
             $selected_statuses = array('publish', 'draft'); // Statuses
+            $selected_post_in = array();
+            $selected_post_not_in = array();
+
+            // Get values from the form inputs
             
-            // Serialized data
-            // $serialized_data = 'a:4:{i:0;s:7:"publish";i:1;s:7:"pending";i:2;s:5:"draft";i:3;s:5:"trash";}';
-
-            // // Step 1: Unserialize the data
-            // $data_array = unserialize($serialized_data);
-
-            // // Step 2: Extract values and format them
-            // $formatted_values = implode(',', $data_array);
-
-            // // Step 3: Create the final format
-            // $final_format = "($formatted_values)";
-
-            // // Output the result
-            // echo $final_format;
-            // Query posts from the custom post type 'your_custom_post_type'
             $args = array(
                 'post_type'      => 'post',
                 'post_status'    => $selected_statuses, // Add status filter
@@ -41,8 +30,12 @@ ob_start();
                 'orderby'        => $fpg_order_by, // Order by
                 'order'          => $fpg_order,   // Order direction
                 'author__in'     => $selected_authors, // Add author filter
+                'post__in'       => $selected_post_in, // Include only specific posts
+                'post__not_in'   => $selected_post_not_in, // Exclude specific posts
+                // Static Taxonomy
+                
+                
             );
-            
 
             $query = new WP_Query($args);
 
