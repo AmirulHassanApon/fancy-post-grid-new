@@ -17,8 +17,12 @@ ob_start();
             }
             $selected_authors = array(1, 2, 3); // Author IDs
             $selected_statuses = array('publish', 'draft'); // Statuses
-            $selected_post_in = array();
-            $selected_post_not_in = array();
+
+            $selected_post_in = !empty($fpg_include_only) ? explode(',', $fpg_include_only) : array();
+            $selected_post_not_in = !empty($fpg_exclude) ? explode(',', $fpg_exclude) : array();
+
+            $excerpt_more_text = isset($fancy_post_excerpt_more_text) ? $fancy_post_excerpt_more_text : '...'; 
+            $title_more_text = isset($fancy_post_title_more_text) ? $fancy_post_title_more_text : '...'; 
 
             // Get values from the form inputs
             
@@ -30,12 +34,18 @@ ob_start();
                 'orderby'        => $fpg_order_by, // Order by
                 'order'          => $fpg_order,   // Order direction
                 'author__in'     => $selected_authors, // Add author filter
-                'post__in'       => $selected_post_in, // Include only specific posts
-                'post__not_in'   => $selected_post_not_in, // Exclude specific posts
-                // Static Taxonomy
-                
+                           
                 
             );
+            // Add 'post__in' to the query if not empty
+            if (!empty($selected_post_in)) {
+                $args['post__in'] = $selected_post_in;
+            }
+
+            // Add 'post__not_in' to the query if not empty
+            if (!empty($selected_post_not_in)) {
+                $args['post__not_in'] = $selected_post_not_in;
+            }
 
             $query = new WP_Query($args);
 
@@ -132,17 +142,17 @@ ob_start();
                                         <a href="<?php the_permalink(); ?>"
                                            <?php echo $target_blank; ?>
                                            class="title-link">
-                                            <?php the_title(); ?>
+                                            <?php echo wp_trim_words(get_the_title(), $fancy_post_title_limit, $title_more_text); ?>
                                         </a>
                                     <?php else : ?>
-                                        <?php the_title(); ?>
+                                        <?php echo wp_trim_words(get_the_title(), $fancy_post_title_limit, $title_more_text); ?>
                                     <?php endif; ?>
                                 </<?php echo esc_attr($title_tag); ?>>
                             <?php endif; ?>
 
                             <?php if ($fpg_field_group_excerpt) : ?>
                                 <div class="fpg-excerpt">
-                                    <?php the_excerpt(); ?>
+                                    <?php echo wp_trim_words(get_the_content(), $fancy_post_excerpt_limit, $excerpt_more_text); ?>
                                 </div>
                             <?php endif; ?>
                             
@@ -183,76 +193,76 @@ ob_start();
 </section>
 <style type="text/css">
     /* General Styles */
-.rs-blog-layout-5 {
-    background-color: <?php echo esc_attr($fpg_section_background_color); ?>;
-    margin: <?php echo esc_attr($fpg_section_margin); ?>;
-    padding: <?php echo esc_attr($fpg_section_padding); ?>;
-}
+    .rs-blog-layout-5 {
+        background-color: <?php echo esc_attr($fpg_section_background_color); ?>;
+        margin: <?php echo esc_attr($fpg_section_margin); ?>;
+        padding: <?php echo esc_attr($fpg_section_padding); ?>;
+    }
 
-/* Title Styles */
-.rs-blog-layout-5 .rs-blog__single .rs-content .title a {
-    color: <?php echo esc_attr($fpg_title_color); ?>;
-    font-size: <?php echo esc_attr($fpg_title_font_size); ?>px;
-    font-weight: <?php echo esc_attr($fpg_title_font_weight); ?>;
-}
-.rs-blog-layout-5 .rs-blog__single .rs-content .title {
-    text-align: <?php echo esc_attr($fpg_title_alignment); ?>;
-}
-.rs-blog-layout-5 .rs-blog__single .rs-content .title a:hover {
-    color: <?php echo esc_attr($fpg_title_hover_color); ?>;
-    font-size: <?php echo esc_attr($fpg_title_hover_font_size); ?>px;
-    font-weight: <?php echo esc_attr($fpg_title_hover_font_weight); ?>;
-}
-.rs-blog-layout-5 .rs-blog__single .rs-content .title:hover {
+    /* Title Styles */
+    .rs-blog-layout-5 .rs-blog__single .rs-content .title a {
+        color: <?php echo esc_attr($fpg_title_color); ?>;
+        font-size: <?php echo esc_attr($fpg_title_font_size); ?>px;
+        font-weight: <?php echo esc_attr($fpg_title_font_weight); ?>;
+    }
+    .rs-blog-layout-5 .rs-blog__single .rs-content .title {
+        text-align: <?php echo esc_attr($fpg_title_alignment); ?>;
+    }
+    .rs-blog-layout-5 .rs-blog__single .rs-content .title a:hover {
+        color: <?php echo esc_attr($fpg_title_hover_color); ?>;
+        font-size: <?php echo esc_attr($fpg_title_hover_font_size); ?>px;
+        font-weight: <?php echo esc_attr($fpg_title_hover_font_weight); ?>;
+    }
+    .rs-blog-layout-5 .rs-blog__single .rs-content .title:hover {
 
-    text-align: <?php echo esc_attr($fpg_title_hover_alignment); ?>;
-}
+        text-align: <?php echo esc_attr($fpg_title_hover_alignment); ?>;
+    }
 
-.rs-blog-layout-5 .title-link {
-    color: <?php echo esc_attr($fpg_title_color); ?>;
-}
+    .rs-blog-layout-5 .title-link {
+        color: <?php echo esc_attr($fpg_title_color); ?>;
+    }
 
-.rs-blog-layout-5 .title-link:hover {
-    color: <?php echo esc_attr($fpg_title_hover_color); ?>;
-}
+    .rs-blog-layout-5 .title-link:hover {
+        color: <?php echo esc_attr($fpg_title_hover_color); ?>;
+    }
 
-/* Excerpt Styles */
-.rs-blog-layout-5 .fpg-excerpt {
-    color: <?php echo esc_attr($fpg_excerpt_color); ?>;
-    font-size: <?php echo esc_attr($fpg_excerpt_size); ?>px;
-    font-weight: <?php echo esc_attr($fpg_excerpt_font_weight); ?>;
-    text-align: <?php echo esc_attr($fpg_excerpt_alignment); ?>;
-}
-.rs-blog-layout-5 .read-more {
-    border-radius: <?php echo esc_attr($fancy_post_read_more_border_radius); ?>;
-    text-align: <?php echo esc_attr($fancy_post_read_more_alignment); ?>;
-}
-/* Meta Data Styles */
-.rs-blog-layout-5 .rs-blog__single .rs-content ul li ,
-.rs-blog-layout-5 .rs-blog__single .rs-content ul li i,
-.rs-blog-layout-5 .rs-blog__single .rs-content ul li a,
-.rs-blog-layout-5 .meta-data-list .meta-date i,
-.rs-blog-layout-5 .meta-data-list .meta-author i,
-.rs-blog-layout-5 .meta-data-list .meta-categories i,
-.rs-blog-layout-5 .meta-data-list .meta-comment-count i,
-.rs-blog-layout-5 .meta-data-list .meta-tags i ,
-.rs-blog-layout-5 .fpg-pagination{
-    color: <?php echo esc_attr($fpg_meta_color); ?>;
-    font-size: <?php echo esc_attr($fpg_meta_size); ?>px;
-    font-weight: <?php echo esc_attr($fpg_meta_font_weight); ?>;
-    text-align: <?php echo esc_attr($fpg_meta_alignment); ?>;
-}
+    /* Excerpt Styles */
+    .rs-blog-layout-5 .fpg-excerpt {
+        color: <?php echo esc_attr($fpg_excerpt_color); ?>;
+        font-size: <?php echo esc_attr($fpg_excerpt_size); ?>px;
+        font-weight: <?php echo esc_attr($fpg_excerpt_font_weight); ?>;
+        text-align: <?php echo esc_attr($fpg_excerpt_alignment); ?>;
+    }
+    .rs-blog-layout-5 .read-more {
+        border-radius: <?php echo esc_attr($fancy_post_read_more_border_radius); ?>;
+        text-align: <?php echo esc_attr($fancy_post_read_more_alignment); ?>;
+    }
+    /* Meta Data Styles */
+    .rs-blog-layout-5 .rs-blog__single .rs-content ul li ,
+    .rs-blog-layout-5 .rs-blog__single .rs-content ul li i,
+    .rs-blog-layout-5 .rs-blog__single .rs-content ul li a,
+    .rs-blog-layout-5 .meta-data-list .meta-date i,
+    .rs-blog-layout-5 .meta-data-list .meta-author i,
+    .rs-blog-layout-5 .meta-data-list .meta-categories i,
+    .rs-blog-layout-5 .meta-data-list .meta-comment-count i,
+    .rs-blog-layout-5 .meta-data-list .meta-tags i ,
+    .rs-blog-layout-5 .fpg-pagination{
+        color: <?php echo esc_attr($fpg_meta_color); ?>;
+        font-size: <?php echo esc_attr($fpg_meta_size); ?>px;
+        font-weight: <?php echo esc_attr($fpg_meta_font_weight); ?>;
+        text-align: <?php echo esc_attr($fpg_meta_alignment); ?>;
+    }
 
-/* Button Styles */
-.rs-blog-layout-5 .rs-blog__single .rs-content .rs-link {
-    background-color: <?php echo esc_attr($fpg_button_background_color); ?>;
-    color: <?php echo esc_attr($fpg_button_text_color); ?>;
-}
+    /* Button Styles */
+    .rs-blog-layout-5 .rs-blog__single .rs-content .rs-link {
+        background-color: <?php echo esc_attr($fpg_button_background_color); ?>;
+        color: <?php echo esc_attr($fpg_button_text_color); ?>;
+    }
 
-.rs-blog-layout-5 .rs-blog__single .rs-content .rs-link:hover {
-    background-color: <?php echo esc_attr($fpg_button_hover_background_color); ?>;
-    color: <?php echo esc_attr($fpg_button_text_hover_color); ?>;
-}
+    .rs-blog-layout-5 .rs-blog__single .rs-content .rs-link:hover {
+        background-color: <?php echo esc_attr($fpg_button_hover_background_color); ?>;
+        color: <?php echo esc_attr($fpg_button_text_hover_color); ?>;
+    }
 
 </style>
 
