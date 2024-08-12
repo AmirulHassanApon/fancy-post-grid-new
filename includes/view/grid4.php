@@ -6,33 +6,109 @@ ob_start();
     <div class="container">
         <div class="row">
             <?php
-            // Default number of posts per page
-            $default_posts_per_page = -1;
-
             // Check if pagination is on or off
+            $fpg_post_per_page = -1;
             if ($fancy_post_pagination === 'off') {
-                $posts_per_page = $default_posts_per_page;
-            }
-            $selected_authors = array(1, 2, 3); // Author IDs
-            $selected_statuses = array('publish', 'draft'); // Statuses
-            $selected_post_in = array();
-            $selected_post_not_in = array();
+                $fpg_post_per_page = -1;
+            }  
 
-            // Get values from the form inputs
-            
-            $args = array(
-                'post_type'      => 'post',
-                'post_status'    => $selected_statuses, // Add status filter
-                'posts_per_page' => $posts_per_page, // Number of posts to display
-                'paged'          => get_query_var('paged') ? get_query_var('paged') : 1, // Get current page number
-                'orderby'        => $fpg_order_by, // Order by
-                'order'          => $fpg_order,   // Order direction
-                'author__in'     => $selected_authors, // Add author filter
-                'post__in'       => $selected_post_in, // Include only specific posts
-                'post__not_in'   => $selected_post_not_in, // Exclude specific posts
-                
-                               
-            );
+            //==============STATUS==============
+                // Ensure it's an array
+                if (!is_array($fpg_filter_statuses)) {
+                    // Convert string to array if necessary
+                    if (is_string($fpg_filter_statuses)) {
+                        $fpg_filter_statuses = explode(',', $fpg_filter_statuses);
+                    } else {
+                        $fpg_filter_statuses = array(); // Default to empty array if not an array or string
+                    }
+                }
+
+                // ==============AUTHOR==========
+                // Unserialize the data if necessary
+                if (is_string($fpg_filter_authors)) {
+                    $fpg_filter_authors = maybe_unserialize($fpg_filter_authors);
+                }
+
+                // Ensure it's an array
+                if (!is_array($fpg_filter_authors)) {
+                    $fpg_filter_authors = array(); // Default to empty array if not an array
+                }
+
+                // Sanitize and convert to integers
+                $selected_authors = array_map('intval', $fpg_filter_authors);
+
+                //==========Include only==========
+                $selected_post_in = !empty($fpg_include_only) ? explode(',', $fpg_include_only) : array();
+
+                //=======Exclude===============
+                $selected_post_not_in = !empty($fpg_exclude) ? explode(',', $fpg_exclude) : array();
+
+                //=================More Text==========
+                $excerpt_more_text = isset($fancy_post_excerpt_more_text) ? $fancy_post_excerpt_more_text : '...'; 
+                $title_more_text = isset($fancy_post_title_more_text) ? $fancy_post_title_more_text : '...'; 
+
+                // ===========Advanced Filter==============
+                // Capture and sanitize category terms if 'category' taxonomy is selected
+                $category_terms = array_map('intval', $fpg_filter_category_terms); 
+
+                // Capture and sanitize tag terms if 'tags' taxonomy is selected
+                $tag_terms = array_map('intval', $fpg_filter_tags_terms);   
+
+
+
+                // Get values from the form inputs           
+                $args = array(
+                    'post_type'      => $fancy_post_type,
+                    'post_status'    => $fpg_filter_statuses, // Add status filter
+                    'posts_per_page' => $fpg_post_per_page, // Number of posts to display
+                    'paged'          => get_query_var('paged') ? get_query_var('paged') : 1, // Get current page number
+                    'orderby'        => $fpg_order_by, // Order by
+                    'order'          => $fpg_order,   // Order direction
+                    'author__in'     => $selected_authors, // Add author filter                                          
+                );
+                // Add 'post__in' to the query if not empty
+                if (!empty($selected_post_in)) {
+                    $args['post__in'] = $selected_post_in;
+                }
+
+                // Add 'post__not_in' to the query if not empty
+                if (!empty($selected_post_not_in)) {
+                    $args['post__not_in'] = $selected_post_not_in;
+                }
+
+                // Run a preliminary query to get all matching post IDs
+                if ($fpg_limit > 0) {
+                    $pre_query = new WP_Query(array_merge($args, array('posts_per_page' => $fpg_limit, 'fields' => 'ids')));
+                    $post_ids = $pre_query->posts;
+
+                    // Modify the main query to limit the posts
+                    $args['post__in'] = $post_ids;
+                }
+
+                // Add taxonomy queries
+                $tax_query = array('relation' => $fpg_relation);
+                if (!empty($fpg_field_group_taxonomy) && in_array('category', $fpg_field_group_taxonomy) && !empty($category_terms)) {
+                    $tax_query[] = array(
+                        'taxonomy' => 'category',
+                        'field'    => 'term_id',
+                        'terms'    => $category_terms,
+                        'operator' => $fpg_category_operator,
+                    );
+                }
+
+                if (!empty($fpg_field_group_taxonomy) && in_array('tags', $fpg_field_group_taxonomy) && !empty($tag_terms)) {
+                    $tax_query[] = array(
+                        'taxonomy' => 'post_tag',
+                        'field'    => 'term_id',
+                        'terms'    => $tag_terms,
+                        'operator' => $fpg_tags_operator,
+                    );
+                }
+
+                if (!empty($tax_query)) {
+                    $args['tax_query'] = $tax_query;
+                }
+                // echo '<pre>' . print_r($args, true) . '</pre>';
 
             $query = new WP_Query($args);
 
@@ -116,7 +192,7 @@ ob_start();
                                             <?php comments_number('0 Comments', '1 Comment', '% Comments'); ?>
                                         </li>
                                     <?php endif; ?>
-                                    <?php if ($fpg_field_group_tags) : ?>
+                                    <?php if ($fpg_field_group_tag) : ?>
                                         <li class="meta-tags">
                                             <i class="ri-price-tag-3-line"></i>
                                             <?php the_tags('', ', ', ''); ?>
@@ -130,16 +206,25 @@ ob_start();
                                             <a href="<?php the_permalink(); ?>"
                                                <?php echo $target_blank; ?>
                                                class="title-link">
-                                                <?php the_title(); ?>
+
+                                                <?php echo wp_trim_words(get_the_title(), $fancy_post_title_limit, $title_more_text); ?>
                                             </a>
                                         <?php else : ?>
-                                            <?php the_title(); ?>
+                                            <?php echo wp_trim_words(get_the_title(), $fancy_post_title_limit, $title_more_text); ?>
+
+                                                <?php the_title(); ?>
+                                            </a>
+                                        
+
                                         <?php endif; ?>
                                     </<?php echo esc_attr($title_tag); ?>>
                                 <?php endif; ?>
 
                                 <?php if ($fpg_field_group_excerpt) : ?>
                                     <div class="fpg-excerpt">
+
+                                        <?php echo wp_trim_words(get_the_content(), $fancy_post_excerpt_limit, $excerpt_more_text); ?>
+
                                         <?php the_excerpt(); ?>
                                     </div>
                                 <?php endif; ?>
@@ -185,19 +270,31 @@ ob_start();
     }
 
     /* Title Styles */
+
+    
+
     .rs-blog-layout-30 .rs-blog__single .rs-content .title {
+
         color: <?php echo esc_attr($fpg_title_color); ?>;
         font-size: <?php echo esc_attr($fpg_title_font_size); ?>px;
         font-weight: <?php echo esc_attr($fpg_title_font_weight); ?>;
     }
+
+    .rs-blog-layout-30-item .rs-content .title {
+        text-align: <?php echo esc_attr($fpg_title_alignment); ?>;
+    }
+    
     .rs-blog-layout-30 .rs-blog__single .rs-content .title {
         text-align: <?php echo esc_attr($fpg_title_alignment); ?>;
     }
     .rs-blog-layout-30 .rs-blog__single .rs-content .title:hover {
+
         color: <?php echo esc_attr($fpg_title_hover_color); ?>;
         font-size: <?php echo esc_attr($fpg_title_hover_font_size); ?>px;
         font-weight: <?php echo esc_attr($fpg_title_hover_font_weight); ?>;
     }
+
+
     .rs-blog-layout-30 .rs-blog__single .rs-content .title:hover {
 
         text-align: <?php echo esc_attr($fpg_title_hover_alignment); ?>;
@@ -212,14 +309,18 @@ ob_start();
     }
 
     /* Excerpt Styles */
+
+
     .rs-blog-layout-30 .fpg-excerpt {
+
         color: <?php echo esc_attr($fpg_excerpt_color); ?>;
         font-size: <?php echo esc_attr($fpg_excerpt_size); ?>px;
         font-weight: <?php echo esc_attr($fpg_excerpt_font_weight); ?>;
         text-align: <?php echo esc_attr($fpg_excerpt_alignment); ?>;
     }
     .rs-blog-layout-30 .read-more {
-        border-radius: <?php echo esc_attr($fancy_post_read_more_border_radius); ?>;
+
+        border-radius: <?php echo esc_attr($fancy_post_read_more_border_radius); ?>px;
         text-align: <?php echo esc_attr($fancy_post_read_more_alignment); ?>;
     }
     /* Meta Data Styles */
@@ -239,7 +340,10 @@ ob_start();
     }
 
     /* Button Styles */
+
+
     .rs-blog-layout-30 .rs-blog__single .rs-content .rs-link {
+
         background-color: <?php echo esc_attr($fpg_button_background_color); ?>;
         color: <?php echo esc_attr($fpg_button_text_color); ?>;
     }
