@@ -113,10 +113,11 @@
 }
 
 #fpg_metabox_tabs input[type="text"],
+#fpg_metabox_tabs input[type="number"],
 #fpg_metabox_tabs select {
     width: 100%;
     height: 50px;
-    padding: 0 0 0 20px;
+    padding: 0 20px 0 20px;
     margin-bottom: 15px;
     border: 1px solid #e7e7e7;
     background: #0052da0d;
@@ -147,12 +148,13 @@
 
 #fpg_metabox_tabs .fpg-tab-content .fpg-common select{
     height: 50px;
-    padding: 0 0 0 20px;
+    padding: 0 20px 0 20px;
     font-size: 14px;
-    font-weight: 600;
+    font-weight: 500;
     color: #00183D99;
 }
-
+#fpg_metabox_tabs input[type="text"]:focus,
+#fpg_metabox_tabs input[type="number"]:focus,
 #fpg_metabox_tabs .fpg-tab-content .fpg-common select:focus{
     border: 1px solid #0052da;
     box-shadow: none;
@@ -253,49 +255,113 @@
   z-index: 5;
 }
 
+#fpg_metabox_tabs .fpg-tab-content .fpg-common-filters .fpg-common-filters-box{
+  display: flex;
+  gap: 30px;
+}
+
+#fpg_metabox_tabs .fpg-tab-content .fpg-common-filters .fpg-common-filters-box .fpg-margin-box{
+  width: 35%;
+}
+#fpg_metabox_tabs .fpg-tab-content .fpg-common-filters .fpg-common-filters-box .fpg-margin-box p{
+  margin: 0;
+  font-size: 12px;
+  color: #00183D99;
+}
+#fpg_metabox_tabs .fpg-tab-content #fpg_tags_terms,
+#fpg_metabox_tabs .fpg-tab-content #fpg_category_terms{
+  margin-bottom: 20px;
+}
+
+#fpg_metabox_tabs .fpg-tab-content .select2-container .select2-selection--multiple{
+  border-color: #e7e7e7;
+  background: #0052da0d;
+  height: auto;
+  border-radius: 4px;
+  padding: 12px 20px 12px;
+}
+#fpg_metabox_tabs .fpg-tab-content .select2-container .select2-selection--multiple:active,
+#fpg_metabox_tabs .fpg-tab-content .select2-container .select2-selection--multiple:focus{
+  border-color: #0052da !important;
+}
+
+#fpg_metabox_tabs .fpg-tab-content .select2-container .select2-selection--multiple .select2-selection__rendered{
+  margin-top: 2px;
+  background: transparent;
+}
+#fpg_metabox_tabs .fpg-tab-content .select2-container .select2-selection--multiple .select2-search__field{
+  margin: 2px 0 0 0;
+}
+
+#fpg_metabox_tabs .fpg-tab-content .select2-container .select2-selection--multiple .select2-selection__choice__remove{
+  padding: 6px 10px 7px;
+  color: #e7e7e7;
+  transition: all linear 0.2s;
+}
+#fpg_metabox_tabs .fpg-tab-content .select2-container .select2-selection--multiple .select2-selection__choice__remove:hover{
+  color: #000;
+}
+
+#fpg_metabox_tabs .fpg-tab-content .select2-container .select2-selection--multiple .select2-selection__clear{
+  font-size: 20px;
+  color: #00183D99;
+  margin-right: 20px;
+}
+#fpg_metabox_tabs .fpg-tab-content .select2-container .select2-selection--multiple .select2-selection__clear:hover{
+  color: #0052da;
+}
+#fpg_metabox_tabs .fpg-tab-content .select2-container .select2-selection--multiple .select2-selection__choice__display{
+  color: #fff;
+}
+
+#fpg_metabox_tabs .fpg-tab-content .select2-container .select2-selection--multiple .select2-selection__rendered .select2-selection__choice{
+  background: #0052da;
+  margin: 0 10px 0 0;
+  padding: 5px 5px 5px 40px;
+}
 
 
 /* radio check box  */
 
 
 .fpg-radio-list{
-    display: inline-flex;
-    align-items: flex-start;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 10px;
-    background: #0052da0d;
-    padding: 15px 15px 10px;
-    width: 8%;
-    margin-right: 15px;
-    margin-bottom: 15px;
-    cursor: pointer;
-    border-radius: 5px;
-    border: 1px solid #e7e7e7;
-  }
+  display: inline-flex;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  background: #0052da0d;
+  padding: 15px 15px 10px;
+  width: 8%;
+  margin-right: 15px;
+  margin-bottom: 15px;
+  cursor: pointer;
+  border-radius: 5px;
+  border: 1px solid #e7e7e7;
+}
 
-  .fpg-radio-list input[type="radio"] {
-    display: none;
-  }
-  .fpg-radio-list input[type="radio"]+label {
-    position: relative;
-    display: inline-block;
-    text-align: center;
-    margin-bottom: 0 !important;
-    cursor: pointer;
-  }
-  .fpg-radio-list input[type="radio"]+label span {
-    display: inline-block;
-    width: 30px;
-    height: 30px;
-    margin: 0;
+.fpg-radio-list input[type="radio"] {
+  display: none;
+}
+.fpg-radio-list input[type="radio"]+label {
+  position: relative;
+  display: inline-block;
+  text-align: center;
+  margin-bottom: 0 !important;
+  cursor: pointer;
+}
+.fpg-radio-list input[type="radio"]+label span {
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+  margin: 0;
     vertical-align: middle;
     cursor: pointer;
     -moz-border-radius: 50%;
     border-radius: 50%;
   }
   .fpg-radio-list input[type="radio"] + label span {
-  border-radius: 50%;
+    border-radius: 50%;
   }
   .fpg-radio-list input[type="radio"]+label span {
     border: 2px solid transparent;
@@ -379,3 +445,91 @@
     align-items: center;
     justify-content: center;
 }
+
+/* checkbox css  */
+
+#fpg_metabox_tabs .fpg-tab-content .fpg-field-group{
+
+}
+
+#fpg_metabox_tabs .fpg-tab-content .fpg-field-group label {
+  color: #00183D99;
+  font-size: 15px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  font-weight: 400;
+}
+
+#fpg_metabox_tabs .fpg-tab-content .fpg-field-group input[type="checkbox"] {
+  display: none;
+}
+
+#fpg_metabox_tabs .fpg-tab-content .fpg-field-group input[type="checkbox"]+label span {
+  display: inline-block;
+  width: 18px;
+  height: 18px;
+  margin: -1px 5px 0 0;
+  vertical-align: middle;
+  cursor: pointer;
+  -moz-border-radius: 50%;
+  border-radius: 50%;
+  border: 2px solid #a9b4c6;
+  position: relative;
+}
+
+#fpg_metabox_tabs .fpg-tab-content .fpg-field-group input[type="checkbox"]+label span:before {
+  color: #fff;
+  content: "\f00c";
+  font-family: "Font Awesome 5 Free";
+  font-weight: 600;
+  font-size: 12px;
+  position: absolute;
+  text-align: center;
+  left: 3px;
+  top: 1px;
+  -webkit-transform: scale(0);
+  -moz-transform: scale(0);
+  -ms-transform: scale(0);
+  -o-transform: scale(0);
+  transform: scale(0);
+  -webkit-transition: 0.2s;
+  -moz-transition: 0.2s;
+  -ms-transition: 0.2s;
+  -o-transition: 0.2s;
+  transition: 0.2s;
+}
+
+#fpg_metabox_tabs .fpg-tab-content .fpg-field-group input[type="checkbox"]:checked+label span {
+  background: #0052da;
+  border-color: #0052da;
+}
+
+#fpg_metabox_tabs .fpg-tab-content .fpg-field-group input[type="checkbox"]:checked+label span:before {
+  -webkit-transform: scale(1);
+  -moz-transform: scale(1);
+  -ms-transform: scale(1);
+  -o-transform: scale(1);
+  transform: scale(1);
+}
+
+#fpg_metabox_tabs .fpg-tab-content .fpg-field-group input[type="checkbox"]+label span,
+#fpg_metabox_tabs .fpg-tab-content .fpg-field-group input[type="checkbox"]:checked+label span {
+  -webkit-transition: background-color 0.2s linear;
+  -o-transition: background-color 0.2s linear;
+  -moz-transition: background-color 0.2s linear;
+  transition: background-color 0.2s linear;
+}
+
+
+#fpg_metabox_tabs .fpg-tab-content .fpg-field-group input[type="checkbox"] + label span::before {
+  color: #0052da;
+}
+#fpg_metabox_tabs .fpg-tab-content .fpg-field-group input[type="checkbox"] + label span {
+border-radius: 4px;
+}
+#fpg_metabox_tabs .fpg-tab-content .fpg-field-group input[type="checkbox"]:checked + label span {
+background: transparent;
+}
+
+
+
