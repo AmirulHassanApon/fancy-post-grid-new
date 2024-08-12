@@ -23,12 +23,12 @@ function fpg_shortcode( $atts ) {
    ============================================================*/
 
 		
-		//Tab-4 Title Settings
+		//Tab-1 Title Settings
 		$fancy_post_type                            = get_post_meta( $post_id, 'fancy_post_type', true );
 	    $fpg_include_only                           = get_post_meta( $post_id, 'fpg_include_only', true );
 	    $fpg_exclude                                = get_post_meta( $post_id, 'fpg_exclude', true );
 	    $fpg_limit                                  = get_post_meta( $post_id, 'fpg_limit', true );
-	    $fpg_offset                                 = get_post_meta( $post_id, 'fpg_offset', true );
+	    
 	    $fpg_filter_categories                      = get_post_meta( $post_id, 'fpg_filter_categories', true );
 	    $fpg_filter_tags                            = get_post_meta( $post_id, 'fpg_filter_tags', true );
 	    $fpg_field_group_taxonomy                   = get_post_meta( $post_id, 'fpg_field_group_taxonomy', true );
@@ -41,12 +41,6 @@ function fpg_shortcode( $atts ) {
 	    $fpg_order                                  = get_post_meta( $post_id, 'fpg_order', true );
 	    $fpg_filter_authors                         = get_post_meta( $post_id, 'fpg_filter_authors', true );
 	    $fpg_filter_statuses                        = get_post_meta( $post_id, 'fpg_filter_statuses', true );
-
-	    $fpg_search                                 = get_post_meta( $post_id, 'fpg_search', true );
-		
-		//tab-8 Hover color
-		$fpg_title_hover_color         = get_post_meta($post_id, 'fpg_title_hover_color', true);
-		$fpg_description_hover_color   = get_post_meta($post_id, 'fpg_description_hover_color', true);
 
 		//tab-2-Layout Settings
 		//Start
@@ -62,7 +56,7 @@ function fpg_shortcode( $atts ) {
 
 	    //Pagination
 	    $fancy_post_pagination                      = get_post_meta( $post_id, 'fancy_post_pagination', true );
-	    $posts_per_page                				= get_post_meta($post_id, 'fpg_post_per_page', true);
+	    $fpg_post_per_page                				= get_post_meta($post_id, 'fpg_post_per_page', true);
 
 	    //Link
 	    $fancy_link_details                         = get_post_meta( $post_id, 'fancy_link_details', true );
@@ -70,7 +64,7 @@ function fpg_shortcode( $atts ) {
 
     	//tab-3 Advanced Settings
     	$fancy_post_title_tag                       = get_post_meta( $post_id, 'fancy_post_title_tag', true );
-    	$fancy_post_title_limit_type                = get_post_meta( $post_id, 'fancy_post_title_limit_type', true );
+    	$fancy_post_title_more_text                = get_post_meta( $post_id, 'fancy_post_title_more_text', true );
     	$fancy_post_title_limit                     = get_post_meta( $post_id, 'fancy_post_title_limit', true );
 
     	//feature-image
@@ -96,11 +90,10 @@ function fpg_shortcode( $atts ) {
 	    $fpg_field_group_post_date                  = get_post_meta( $post_id, 'fpg_field_group_post_date', true );
 	    $fpg_field_group_author                     = get_post_meta( $post_id, 'fpg_field_group_author', true );
 	    $fpg_field_group_categories                 = get_post_meta( $post_id, 'fpg_field_group_categories', true );
-	    $fpg_field_group_tags                       = get_post_meta( $post_id, 'fpg_field_group_tags', true );
+	    $fpg_field_group_tag                       = get_post_meta( $post_id, 'fpg_field_group_tag', true );
 	    $fpg_field_group_comment_count              = get_post_meta( $post_id, 'fpg_field_group_comment_count', true );
 
-	    //Style
-	    $fpg_primary_color                          = get_post_meta( $post_id,'fpg_primary_color', true); 
+	    
 	    //Button
 	    $fpg_button_background_color                = get_post_meta( $post_id,'fpg_button_background_color', true); 
 	    $fpg_button_hover_background_color          = get_post_meta( $post_id,'fpg_button_hover_background_color', true); 
