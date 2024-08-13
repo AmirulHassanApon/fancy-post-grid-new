@@ -79,6 +79,8 @@ function fpg_shortcode( $atts ) {
 	    $fancy_post_excerpt_more_text               = get_post_meta( $post_id, 'fancy_post_excerpt_more_text', true );
 	    //Read Button
 	    $fancy_post_read_more_border_radius         = get_post_meta( $post_id, 'fancy_post_read_more_border_radius', true );
+	    $fancy_button_option         				= get_post_meta( $post_id, 'fancy_button_option', true );
+	    $fancy_button_border_style         			= get_post_meta( $post_id, 'fancy_button_border_style', true );
     	$fancy_post_read_more_alignment             = get_post_meta( $post_id, 'fancy_post_read_more_alignment', true );
     	$fancy_post_read_more_text                  = get_post_meta( $post_id, 'fancy_post_read_more_text', true );
     	
@@ -99,6 +101,7 @@ function fpg_shortcode( $atts ) {
 	    $fpg_button_hover_background_color          = get_post_meta( $post_id,'fpg_button_hover_background_color', true); 
 	    $fpg_button_text_color                      = get_post_meta( $post_id,'fpg_button_text_color', true ); 
 	    $fpg_button_text_hover_color                = get_post_meta( $post_id,'fpg_button_text_hover_color', true ); 
+	    $fpg_button_border_color                	= get_post_meta( $post_id,'fpg_button_border_color', true ); 
 	    //full Section
 	    $fpg_section_background_color               = get_post_meta( $post_id, 'fpg_section_background_color', true );
 	    $fpg_section_margin                         = get_post_meta( $post_id, 'fpg_section_margin', true );
@@ -190,10 +193,7 @@ function fpg_shortcode( $atts ) {
 				require  $dir.'view/grid12.php';	
 				return $grid12;		
 			}
-			if( $fpg_grid_style  == 'style13'){				
-				require  $dir.'view/grid13.php';	
-				return $grid13;		
-			}
+			
 			
 		}
 
