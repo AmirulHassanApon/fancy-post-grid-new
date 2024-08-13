@@ -299,8 +299,8 @@ ob_start();
         font-weight: <?php echo esc_attr($fpg_excerpt_font_weight); ?>;
         text-align: <?php echo esc_attr($fpg_excerpt_alignment); ?>;
     }
-    .rs-blog-layout-5 .read-more {
-        border-radius: <?php echo esc_attr($fancy_post_read_more_border_radius); ?>;
+    .rs-blog-layout-5 .rs-blog__single .rs-content .rs-link.read-more {
+        border-radius: <?php echo esc_attr($fancy_post_read_more_border_radius); ?>px;
         text-align: <?php echo esc_attr($fancy_post_read_more_alignment); ?>;
     }
     /* Meta Data Styles */
