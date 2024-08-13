@@ -17,6 +17,26 @@
                 $('#fancy_post_slider_style').show();
             }
         }
+        function toggleButtonFields() {
+            var selectedLayout = $('#fancy_button_option').val();
+            if (selectedLayout === 'filled') {
+                $('#fpg_post_select_button').show();
+                $('#fpg_button_br_color').hide();
+                $('#fpg_button_bg_color').show();
+                $('#fpg_button_bg_hover_color').show();
+            } else if (selectedLayout === 'flat') {
+                $('#fpg_post_select_button').hide();
+                $('#fpg_button_br_color').hide();
+                $('#fpg_button_bg_color').hide();
+                $('#fpg_button_bg_hover_color').hide();
+
+            } else {
+                $('#fpg_post_select_button').hide();
+                $('#fpg_button_br_color').show();
+                $('#fpg_button_bg_color').hide();
+                $('#fpg_button_bg_hover_color').hide();
+            }
+        }
     
         function togglePaginationFields() {
             var paginationStatus = $('input[name="fancy_post_pagination"]:checked').val();
@@ -29,11 +49,17 @@
     
         // Initialize the visibility on page load
         toggleLayoutFields();
+        toggleButtonFields();
         togglePaginationFields();
     
         // Change event for the layout selection
         $('input[name="fpg_layout_select"]').change(function() {
             toggleLayoutFields();
+        });
+
+        // Change event for the Button selection (updated to handle <select> dropdown)
+        $('#fancy_button_option').change(function() {
+            toggleButtonFields();
         });
     
         // Change event for the pagination
@@ -125,9 +151,15 @@
         placeholder: 'Select terms',
         allowClear: true
     });
-    
-    // Initialize Select2 for all select elements
-    $(' #fpg_filter_authors, #fpg_filter_statuses').select2();
+    $(' #fpg_filter_authors').select2({
+        placeholder: 'Select Authors',
+        allowClear: true
+    });
+    $(' #fpg_filter_statuses').select2({
+        placeholder: 'Select Status',
+        allowClear: true
+    });
+
 });
     
     
