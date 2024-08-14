@@ -44,19 +44,24 @@ function fpg_shortcode( $atts ) {
 
 		//tab-2-Layout Settings
 		//Start
-		$layout_type                   = get_post_meta($post_id, 'fpg_layout_select', true);
-		$fpg_grid_style                = get_post_meta($post_id, 'fancy_post_grid_style', true);
-		$fancy_slider_style              = get_post_meta($post_id, 'fancy_slider_style', true);
+		$layout_type                   				= get_post_meta($post_id, 'fpg_layout_select', true);
+		$fpg_grid_style                				= get_post_meta($post_id, 'fancy_post_grid_style', true);
+		$fancy_slider_style              			= get_post_meta($post_id, 'fancy_slider_style', true);
 
 		//Columns		
 		$fancy_post_cl_lg                           = get_post_meta( $post_id, 'fancy_post_cl_lg', true );
 	    $fancy_post_cl_md                           = get_post_meta( $post_id, 'fancy_post_cl_md', true );
-	    $fancy_post_cl_xs                           = get_post_meta( $post_id, 'fancy_post_cl_xs', true );
+	    $fancy_post_cl_sm                           = get_post_meta( $post_id, 'fancy_post_cl_sm', true );
 	    $fancy_post_cl_mobile                       = get_post_meta( $post_id, 'fancy_post_cl_mobile', true );
+
+	    $fancy_post_cl_lg_slider                    = get_post_meta( $post_id, 'fancy_post_cl_lg_slider', true );
+	    $fancy_post_cl_md_silder                    = get_post_meta( $post_id, 'fancy_post_cl_md_silder', true );
+	    $fancy_post_cl_sm_slider                    = get_post_meta( $post_id, 'fancy_post_cl_sm_slider', true );
+	    $fancy_post_cl_mobile_slider                = get_post_meta( $post_id, 'fancy_post_cl_mobile_slider', true );
 
 	    //Pagination
 	    $fancy_post_pagination                      = get_post_meta( $post_id, 'fancy_post_pagination', true );
-	    $fpg_post_per_page                				= get_post_meta($post_id, 'fpg_post_per_page', true);
+	    $fpg_post_per_page                			= get_post_meta($post_id, 'fpg_post_per_page', true);
 
 	    //Link
 	    $fancy_link_details                         = get_post_meta( $post_id, 'fancy_link_details', true );
@@ -110,6 +115,7 @@ function fpg_shortcode( $atts ) {
 
 	    // Title
 	    $fpg_title_color                            = get_post_meta( $post_id,'fpg_title_color', true); 
+
 	    $fpg_title_font_size                        = get_post_meta( $post_id,'fpg_title_font_size', true); 
 	    $fpg_title_font_weight                      = get_post_meta( $post_id,'fpg_title_font_weight', true ); 
 	    $fpg_title_alignment                        = get_post_meta( $post_id,'fpg_title_alignment', true ); 
