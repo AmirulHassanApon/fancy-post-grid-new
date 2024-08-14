@@ -11,10 +11,16 @@
             var selectedLayout = $('input[name="fpg_layout_select"]:checked').val();
             if (selectedLayout === 'grid') {
                 $('#fancy_post_grid_style').show();
+                $('#fancy_post_column_grid').show();
                 $('#fancy_post_slider_style').hide();
+                $('#fancy_post_column_slider').hide();
             } else if (selectedLayout === 'slider') {
                 $('#fancy_post_grid_style').hide();
+                $('#fpg_pagination').hide();
+                $('#fancy_post_column_grid').hide();
                 $('#fancy_post_slider_style').show();
+                $('#fancy_post_column_slider').show();
+
             }
         }
         function toggleButtonFields() {
