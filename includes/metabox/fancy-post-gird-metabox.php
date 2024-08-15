@@ -43,7 +43,7 @@ function fpg_metabox_shortcode_callback( $post ) {
     $fpg_filter_statuses                        = get_post_meta( $post->ID, 'fpg_filter_statuses', true );
     
     
-    // tab-2
+    // tab-3
     $fpg_layout_select                          = get_post_meta( $post->ID, 'fpg_layout_select', true );
     if ( empty( $fpg_layout_select ) ) {
         $fpg_layout_select = 'grid'; // Set default to 'grid'
@@ -106,6 +106,35 @@ function fpg_metabox_shortcode_callback( $post ) {
     if ( empty( $fancy_link_target ) ) {
         $fancy_link_target = 'same'; 
     }
+
+    $fancy_keyboard                          = get_post_meta( $post->ID, 'fancy_keyboard', true );
+    if ( empty( $fancy_keyboard ) ) {
+        $fancy_keyboard = 'false'; 
+    }
+
+    $fancy_loop                          = get_post_meta( $post->ID, 'fancy_loop', true );
+    if ( empty( $fancy_loop ) ) {
+        $fancy_loop = 'true'; 
+    }
+
+    $fancy_free_mode                          = get_post_meta( $post->ID, 'fancy_free_mode', true );
+    if ( empty( $fancy_free_mode ) ) {
+        $fancy_free_mode = 'false'; 
+    }
+    $fancy_pagination_clickable                          = get_post_meta( $post->ID, 'fancy_pagination_clickable', true );
+    if ( empty( $fancy_pagination_clickable ) ) {
+        $fancy_pagination_clickable = 'false'; 
+    }
+    $fancy_autoplay                          = get_post_meta( $post->ID, 'fancy_autoplay', true );
+    if ( empty( $fancy_autoplay ) ) {
+        $fancy_autoplay = '3000'; 
+    }
+    $fancy_spacebetween                          = get_post_meta( $post->ID, 'fancy_spacebetween', true );
+    if ( empty( $fancy_spacebetween ) ) {
+        $fancy_spacebetween = '10'; 
+    }
+
+
 
     // tab-3-Advanced-Settings
     
@@ -184,7 +213,7 @@ function fpg_metabox_shortcode_callback( $post ) {
     $fpg_field_group_comment_count              = get_post_meta( $post->ID, 'fpg_field_group_comment_count', true );
     
 
-    // tab-4 Title Settings
+    // tab-5 Title Settings
     
     //Button
     $fpg_button_background_color                = get_post_meta( $post->ID,'fpg_button_background_color', true); 
@@ -763,50 +792,144 @@ function fpg_metabox_shortcode_callback( $post ) {
             <!-- Column Slider Settings -->
             <div class="fancy-post-column fpg-common" id="fancy_post_column_slider">
                 <fieldset>
-                    <legend><?php esc_html_e( 'Column Settings:', 'fancy-post-grid' ); ?></legend>
+                    <legend><?php esc_html_e( 'Slider Item Settings:', 'fancy-post-grid' ); ?></legend>
                     <div class="fpg-post-select-main">
                         <div class="fpg-post-select">
-                            <label for="fancy_post_cl_lg_slider"><?php esc_html_e( 'Large Screen Column:', 'fancy-post-grid' ); ?></label>
+                            <label for="fancy_post_cl_lg_slider"><?php esc_html_e( 'Large Screen Items:', 'fancy-post-grid' ); ?></label>
                             <select id="fancy_post_cl_lg_slider" name="fancy_post_cl_lg_slider" style="width: 100%;">
-                                <option value="1" <?php selected( $fancy_post_cl_lg_slider, '1' ); ?>><?php esc_html_e( '1 Column', 'fancy-post-grid' ); ?></option>
-                                <option value="2" <?php selected( $fancy_post_cl_lg_slider, '2' ); ?>><?php esc_html_e( '2 Columns', 'fancy-post-grid' ); ?></option>
-                                <option value="3" <?php selected( $fancy_post_cl_lg_slider, '3' ); ?>><?php esc_html_e( '3 Columns', 'fancy-post-grid' ); ?></option>
-                                <option value="4" <?php selected( $fancy_post_cl_lg_slider, '4' ); ?>><?php esc_html_e( '4 Columns', 'fancy-post-grid' ); ?></option>
-                                <option value="6" <?php selected( $fancy_post_cl_lg_slider, '6' ); ?>><?php esc_html_e( '6 Columns', 'fancy-post-grid' ); ?></option>
+                                <option value="1" <?php selected( $fancy_post_cl_lg_slider, '1' ); ?>><?php esc_html_e( '1 Item', 'fancy-post-grid' ); ?></option>
+                                <option value="2" <?php selected( $fancy_post_cl_lg_slider, '2' ); ?>><?php esc_html_e( '2 Items', 'fancy-post-grid' ); ?></option>
+                                <option value="3" <?php selected( $fancy_post_cl_lg_slider, '3' ); ?>><?php esc_html_e( '3 Items', 'fancy-post-grid' ); ?></option>
+                                <option value="4" <?php selected( $fancy_post_cl_lg_slider, '4' ); ?>><?php esc_html_e( '4 Items', 'fancy-post-grid' ); ?></option>
+                                <option value="5" <?php selected( $fancy_post_cl_lg_slider, '5' ); ?>><?php esc_html_e( '5 Items', 'fancy-post-grid' ); ?></option>
+                                <option value="6" <?php selected( $fancy_post_cl_lg_slider, '6' ); ?>><?php esc_html_e( '6 Items', 'fancy-post-grid' ); ?></option>
                             </select>
                         </div>
                         <div class="fpg-post-select">
-                            <label for="fancy_post_cl_md_silder"><?php esc_html_e( 'Medium Screen Column:', 'fancy-post-grid' ); ?></label>
+                            <label for="fancy_post_cl_md_silder"><?php esc_html_e( 'Medium Screen Items:', 'fancy-post-grid' ); ?></label>
                             <select id="fancy_post_cl_md_silder" name="fancy_post_cl_md_silder" style="width: 100%;">
-                                <option value="1" <?php selected( $fancy_post_cl_md_silder, '1' ); ?>><?php esc_html_e( '1 Column', 'fancy-post-grid' ); ?></option>
-                                <option value="2" <?php selected( $fancy_post_cl_md_silder, '2' ); ?>><?php esc_html_e( '2 Columns', 'fancy-post-grid' ); ?></option>
-                                <option value="3" <?php selected( $fancy_post_cl_md_silder, '3' ); ?>><?php esc_html_e( '3 Columns', 'fancy-post-grid' ); ?></option>
-                                <option value="4" <?php selected( $fancy_post_cl_md_silder, '4' ); ?>><?php esc_html_e( '4 Columns', 'fancy-post-grid' ); ?></option>
-                                <option value="6" <?php selected( $fancy_post_cl_md_silder, '6' ); ?>><?php esc_html_e( '6 Columns', 'fancy-post-grid' ); ?></option>
+                                <option value="1" <?php selected( $fancy_post_cl_md_silder, '1' ); ?>><?php esc_html_e( '1 Item', 'fancy-post-grid' ); ?></option>
+                                <option value="2" <?php selected( $fancy_post_cl_md_silder, '2' ); ?>><?php esc_html_e( '2 Items', 'fancy-post-grid' ); ?></option>
+                                <option value="3" <?php selected( $fancy_post_cl_md_silder, '3' ); ?>><?php esc_html_e( '3 Items', 'fancy-post-grid' ); ?></option>
+                                <option value="4" <?php selected( $fancy_post_cl_md_silder, '4' ); ?>><?php esc_html_e( '4 Items', 'fancy-post-grid' ); ?></option>
+                                <option value="5" <?php selected( $fancy_post_cl_md_silder, '5' ); ?>><?php esc_html_e( '5 Items', 'fancy-post-grid' ); ?></option>
+                                <option value="6" <?php selected( $fancy_post_cl_md_silder, '6' ); ?>><?php esc_html_e( '6 Items', 'fancy-post-grid' ); ?></option>
                             </select>
                         </div>
                         <div class="fpg-post-select">
-                            <label for="fancy_post_cl_sm_slider"><?php esc_html_e( 'Small Screen Column:', 'fancy-post-grid' ); ?></label>
+                            <label for="fancy_post_cl_sm_slider"><?php esc_html_e( 'Small Screen Items:', 'fancy-post-grid' ); ?></label>
                             <select id="fancy_post_cl_sm_slider" name="fancy_post_cl_sm_slider" style="width: 100%;">
 
-                                <option value="1" <?php selected( $fancy_post_cl_sm_slider, '1' ); ?>><?php esc_html_e( '1 Column', 'fancy-post-grid' ); ?></option>
-                                <option value="2" <?php selected( $fancy_post_cl_sm_slider, '2' ); ?>><?php esc_html_e( '2 Columns', 'fancy-post-grid' ); ?></option>
-                                <option value="3" <?php selected( $fancy_post_cl_sm_slider, '3' ); ?>><?php esc_html_e( '3 Columns', 'fancy-post-grid' ); ?></option>
+                                <option value="1" <?php selected( $fancy_post_cl_sm_slider, '1' ); ?>><?php esc_html_e( '1 Item', 'fancy-post-grid' ); ?></option>
+                                <option value="2" <?php selected( $fancy_post_cl_sm_slider, '2' ); ?>><?php esc_html_e( '2 Items', 'fancy-post-grid' ); ?></option>
+                                <option value="3" <?php selected( $fancy_post_cl_sm_slider, '3' ); ?>><?php esc_html_e( '3 Items', 'fancy-post-grid' ); ?></option>
+                                <option value="4" <?php selected( $fancy_post_cl_sm_slider, '4' ); ?>><?php esc_html_e( '4 Items', 'fancy-post-grid' ); ?></option>
+                                <option value="5" <?php selected( $fancy_post_cl_sm_slider, '5' ); ?>><?php esc_html_e( '5 Items', 'fancy-post-grid' ); ?></option>
+                                <option value="6" <?php selected( $fancy_post_cl_sm_slider, '6' ); ?>><?php esc_html_e( '6 Items', 'fancy-post-grid' ); ?></option>
                                 
                             </select>
                         </div>
                         <div class="fpg-post-select">
-                            <label for="fancy_post_cl_mobile_slider"><?php esc_html_e( 'Mobile Screen Column:', 'fancy-post-grid' ); ?></label>
+                            <label for="fancy_post_cl_mobile_slider"><?php esc_html_e( 'Mobile Screen Items:', 'fancy-post-grid' ); ?></label>
                             <select id="fancy_post_cl_mobile_slider" name="fancy_post_cl_mobile_slider" style="width: 100%;">
-                                <option value="1" <?php selected( $fancy_post_cl_mobile_slider, '1' ); ?>><?php esc_html_e( '1 Column', 'fancy-post-grid' ); ?></option>
-                                <option value="2" <?php selected( $fancy_post_cl_mobile_slider, '2' ); ?>><?php esc_html_e( '2 Columns', 'fancy-post-grid' ); ?></option>
-                                <option value="3" <?php selected( $fancy_post_cl_mobile_slider, '3' ); ?>><?php esc_html_e( '3 Columns', 'fancy-post-grid' ); ?></option>                                
+                                <option value="1" <?php selected( $fancy_post_cl_mobile_slider, '1' ); ?>><?php esc_html_e( '1 Item', 'fancy-post-grid' ); ?></option>
+                                <option value="2" <?php selected( $fancy_post_cl_mobile_slider, '2' ); ?>><?php esc_html_e( '2 Items', 'fancy-post-grid' ); ?></option>
+                                <option value="3" <?php selected( $fancy_post_cl_mobile_slider, '3' ); ?>><?php esc_html_e( '3 Items', 'fancy-post-grid' ); ?></option>
+                                <option value="4" <?php selected( $fancy_post_cl_mobile_slider, '4' ); ?>><?php esc_html_e( '4 Item', 'fancy-post-grid' ); ?></option>
+                                <option value="5" <?php selected( $fancy_post_cl_mobile_slider, '5' ); ?>><?php esc_html_e( '5 Items', 'fancy-post-grid' ); ?></option>
+                                <option value="6" <?php selected( $fancy_post_cl_mobile_slider, '6' ); ?>><?php esc_html_e( '6 Items', 'fancy-post-grid' ); ?></option>                                
                             </select>
                         </div>
                     </div>                    
                 </fieldset>
             </div>
 
+            <!-- Keyboard Option -->
+            <div class="fpg-slider-option fpg-common" id="fpg_slider_option">
+                <fieldset>
+                    <legend><?php esc_html_e( 'Enable Slider Option:', 'fancy-post-grid' ); ?></legend>
+                    <div class="fpg-post-select-main">
+                        <!-- Keyboard Control -->
+                        <div class="fpg-container">
+                            <label for="fancy_keyboard"><?php esc_html_e( 'Enable Keyboard Control:', 'fancy-post-grid' ); ?></label>
+                            <div class="switch switch--horizontal">
+                                <input id="fancy_keyboard_false" type="radio" name="fancy_keyboard" value="false" <?php checked( $fancy_keyboard, 'false' ); ?> />
+                                <label for="fancy_keyboard_false"><?php esc_html_e( 'False', 'fancy-post-grid' ); ?></label>
+                                
+                                <input id="fancy_keyboard_true" type="radio" name="fancy_keyboard" value="true" <?php checked( $fancy_keyboard, 'true' ); ?> />
+                                <label for="fancy_keyboard_true"><?php esc_html_e( 'True', 'fancy-post-grid' ); ?></label>
+                                <span class="toggle-outside">
+                                    <span class="toggle-inside"></span>
+                                </span>                            
+                            </div>
+                        </div>
+
+                        <!-- Loop Option -->
+                        <div class="fpg-container">
+                            <label for="fancy_loop"><?php esc_html_e( 'Enable Looping:', 'fancy-post-grid' ); ?></label>
+                            <div class="switch switch--horizontal">
+                                <input id="fancy_loop_false" type="radio" name="fancy_loop" value="false" <?php checked( $fancy_loop, 'false' ); ?> />
+                                <label for="fancy_loop_false"><?php esc_html_e( 'False', 'fancy-post-grid' ); ?></label>
+                                
+                                <input id="fancy_loop_true" type="radio" name="fancy_loop" value="true" <?php checked( $fancy_loop, 'true' ); ?> />
+                                <label for="fancy_loop_true"><?php esc_html_e( 'True', 'fancy-post-grid' ); ?></label>
+                                <span class="toggle-outside">
+                                    <span class="toggle-inside"></span>
+                                </span>                            
+                            </div>
+                        </div>
+
+                        <!-- Free Mode Option -->
+                        <div class="fpg-container">
+                            <label for="fancy_free_mode"><?php esc_html_e( 'Enable Free Mode:', 'fancy-post-grid' ); ?></label>
+                            <div class="switch switch--horizontal">
+                                <input id="fancy_free_mode_false" type="radio" name="fancy_free_mode" value="false" <?php checked( $fancy_free_mode, 'false' ); ?> />
+                                <label for="fancy_free_mode_false"><?php esc_html_e( 'False', 'fancy-post-grid' ); ?></label>
+                                
+                                <input id="fancy_free_mode_true" type="radio" name="fancy_free_mode" value="true" <?php checked( $fancy_free_mode, 'true' ); ?> />
+                                <label for="fancy_free_mode_true"><?php esc_html_e( 'True', 'fancy-post-grid' ); ?></label>
+                                <span class="toggle-outside">
+                                    <span class="toggle-inside"></span>
+                                </span>                            
+                            </div>
+                        </div>
+
+                        <!-- Pagination Clickable Mode Option -->
+                        <div class="fpg-container">
+                            <label for="fancy_pagination_clickable"><?php esc_html_e( 'Pagination Clickable Mode:', 'fancy-post-grid' ); ?></label>
+                            <div class="switch switch--horizontal">
+                                <input id="fancy_pagination_clickable_false" type="radio" name="fancy_pagination_clickable" value="false" <?php checked( $fancy_pagination_clickable, 'false' ); ?> />
+                                <label for="fancy_pagination_clickable_false"><?php esc_html_e( 'False', 'fancy-post-grid' ); ?></label>
+                                
+                                <input id="fancy_pagination_clickable_true" type="radio" name="fancy_pagination_clickable" value="true" <?php checked( $fancy_pagination_clickable, 'true' ); ?> />
+                                <label for="fancy_pagination_clickable_true"><?php esc_html_e( 'True', 'fancy-post-grid' ); ?></label>
+                                <span class="toggle-outside">
+                                    <span class="toggle-inside"></span>
+                                </span>                            
+                            </div>
+                        </div>
+                        
+                        
+                    </div>
+                    <div class="fpg-post-select-main">                                                                    
+                        <!-- Auto Play Speed (ms) -->
+                        <div class="fpg-container">
+                            <label for="fancy_autoplay"><?php esc_html_e( 'Auto Play Speed (ms):', 'fancy-post-grid' ); ?></label>
+                            <select id="fancy_autoplay" name="fancy_autoplay" style="width: 100%;">
+                                <?php for ( $i = 1000; $i <= 10000; $i += 1000 ) : ?>
+                                    <option value="<?php echo $i; ?>" <?php selected( $fancy_autoplay, $i ); ?>>
+                                        <?php echo esc_html( $i . ' ms' ); ?>
+                                    </option>
+                                <?php endfor; ?>
+                            </select>
+                        </div>
+                        <div class="fpg-container">
+                            <label for="fancy_spacebetween"><?php esc_html_e( 'Pagination Clickable Mode:', 'fancy-post-grid' ); ?></label>
+                            <input type="number" id="fancy_spacebetween" name="fancy_spacebetween" value="<?php echo esc_attr( $fancy_spacebetween ); ?>" placeholder="10" />
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
             <!-- Pagination -->
             <div class="fpg-pagination fpg-common" id="fpg_pagination">
                 <fieldset>
@@ -829,6 +952,8 @@ function fpg_metabox_shortcode_callback( $post ) {
                     <input type="text" id="fpg_post_per_page" name="fpg_post_per_page" value="<?php echo esc_attr( $fpg_post_per_page ); ?>" placeholder="-1" />
                 </fieldset>
             </div>
+            
+
 
             <!-- link-page -->
             <div class="fpg-link-page fpg-common">
@@ -1432,6 +1557,24 @@ function fpg_save_metabox_data( $post_id ) {
     }
     if ( isset( $_POST['fancy_link_target'] ) ) {
         update_post_meta( $post_id, 'fancy_link_target', sanitize_text_field( $_POST['fancy_link_target'] ) );
+    }
+    if ( isset( $_POST['fancy_keyboard'] ) ) {
+        update_post_meta( $post_id, 'fancy_keyboard', sanitize_text_field( $_POST['fancy_keyboard'] ) );
+    }
+    if ( isset( $_POST['fancy_free_mode'] ) ) {
+        update_post_meta( $post_id, 'fancy_free_mode', sanitize_text_field( $_POST['fancy_free_mode'] ) );
+    }
+    if ( isset( $_POST['fancy_loop'] ) ) {
+        update_post_meta( $post_id, 'fancy_loop', sanitize_text_field( $_POST['fancy_loop'] ) );
+    }
+    if ( isset( $_POST['fancy_autoplay'] ) ) {
+        update_post_meta( $post_id, 'fancy_autoplay', sanitize_text_field( $_POST['fancy_autoplay'] ) );
+    }
+    if ( isset( $_POST['fancy_pagination_clickable'] ) ) {
+        update_post_meta( $post_id, 'fancy_pagination_clickable', sanitize_text_field( $_POST['fancy_pagination_clickable'] ) );
+    }
+    if ( isset( $_POST['fancy_spacebetween'] ) ) {
+        update_post_meta( $post_id, 'fancy_spacebetween', sanitize_text_field( $_POST['fancy_spacebetween'] ) );
     }
     //tab3
     
