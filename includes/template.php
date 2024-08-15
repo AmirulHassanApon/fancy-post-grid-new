@@ -67,9 +67,16 @@ function fpg_shortcode( $atts ) {
 	    $fancy_link_details                         = get_post_meta( $post_id, 'fancy_link_details', true );
     	$fancy_link_target                          = get_post_meta( $post_id, 'fancy_link_target', true );
 
+    	$fancy_autoplay                         	= get_post_meta( $post_id, 'fancy_autoplay', true );
+    	$fancy_free_mode                         	= get_post_meta( $post_id, 'fancy_free_mode', true );
+    	$fancy_loop                         		= get_post_meta( $post_id, 'fancy_loop', true );
+    	$fancy_keyboard                         	= get_post_meta( $post_id, 'fancy_keyboard', true );
+    	$fancy_pagination_clickable                 = get_post_meta( $post_id, 'fancy_pagination_clickable', true );
+    	$fancy_spacebetween                 		= get_post_meta( $post_id, 'fancy_spacebetween', true );
+    	
     	//tab-3 Advanced Settings
     	$fancy_post_title_tag                       = get_post_meta( $post_id, 'fancy_post_title_tag', true );
-    	$fancy_post_title_more_text                = get_post_meta( $post_id, 'fancy_post_title_more_text', true );
+    	$fancy_post_title_more_text                	= get_post_meta( $post_id, 'fancy_post_title_more_text', true );
     	$fancy_post_title_limit                     = get_post_meta( $post_id, 'fancy_post_title_limit', true );
 
     	//feature-image
