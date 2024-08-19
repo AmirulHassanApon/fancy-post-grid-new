@@ -6,17 +6,42 @@ ob_start();
 <section class="rs-blog-layout-1 rs-blog-layout-2 grey">
     <div class="container">
         <div class="row">
+            <?php 
+            $pagination_config = '';
+            echo($pagination_config);
+            if ($fpg_pagination_slider === 'normal') {
+                $pagination_config = '"pagination": {"el": ".swiper-pagination", "clickable": true}';
+            } elseif ($fpg_pagination_slider === 'dynamic') {
+                $pagination_config = '"pagination": {"el": ".swiper-pagination", "dynamicBullets": true, "clickable": true}';
+            } elseif ($fpg_pagination_slider === 'progress') {
+                $pagination_config = '"pagination": {"el": ".swiper-pagination", "type": "progressbar"}';
+            } elseif ($fpg_pagination_slider === 'fraction') {
+                $pagination_config = '"pagination": {"el": ".swiper-pagination", "type": "fraction"}';
+            }
+
+            // If navigation is needed for certain pagination types
+            $navigation_config = '"navigation": {"nextEl": ".swiper-button-next", "prevEl": ".swiper-button-prev"}';
+            ?>
             <div class="col-lg-12">
                 <div class="swiper_wrap">
                     <div class="swiper rs-mySwiper" data-swiper='{
-                        "spaceBetween":0,
-                        "slidesPerView":3,
-                        "freeMode":false,                        
-                        "pagination":{"el":".swiper-pagination-1","clickable": false},
-                        "breakpoints":{
-                            
-                            "768":{"slidesPerView":2,"spaceBetween":0},
-                            "992":{"slidesPerView":3,"spaceBetween":0}
+                        "spaceBetween":<?php echo esc_attr($fancy_spacebetween); ?>,
+                        "slidesPerView":<?php echo esc_attr($fancy_post_cl_lg_slider); ?>,
+                        "freeMode":<?php echo esc_attr($fancy_free_mode); ?>, 
+                        "loop": <?php echo esc_attr($fancy_loop); ?>, 
+                        <?php echo $pagination_config; ?>,
+                        <?php if (in_array($fpg_pagination_slider, ['progress', 'fraction'])) {
+                            echo ',' . $navigation_config;
+                        } ?>,                      
+                        
+                        
+                        "autoplay":{"delay":"<?php echo esc_attr($fancy_autoplay); ?>"},
+                        "keyboard": {"enabled":"<?php echo esc_attr($fancy_keyboard); ?>"},                        
+                        "breakpoints":{                                                       
+                            "10":{"slidesPerView":<?php echo esc_attr($fancy_post_cl_mobile_slider ); ?>,"spaceBetween":<?php echo esc_attr($fancy_spacebetween); ?>},
+                            "576":{"slidesPerView":<?php echo esc_attr($fancy_post_cl_sm_slider ); ?>,"spaceBetween":<?php echo esc_attr($fancy_spacebetween); ?>},
+                            "768":{"slidesPerView":<?php echo esc_attr($fancy_post_cl_md_silder); ?>,"spaceBetween":<?php echo esc_attr($fancy_spacebetween); ?>},
+                            "992":{"slidesPerView":<?php echo esc_attr($fancy_post_cl_lg_slider); ?>,"spaceBetween":<?php echo esc_attr($fancy_spacebetween); ?>}
                         }
                     }'>
                         <div class="swiper-wrapper">
