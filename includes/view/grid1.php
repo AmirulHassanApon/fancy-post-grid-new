@@ -155,10 +155,37 @@ ob_start();
 
                 // Apply hover animation class if needed
                 $hover_class = $hover_animation !== 'none' ? 'hover-' . esc_attr($hover_animation) : '';
+
+                $main_alignment_class = '';
+                if ($fancy_post_main_box_alignment === 'align-start') {
+                    $main_alignment_class = 'align-start';
+                } elseif ($fancy_post_main_box_alignment === 'align-center') {
+                    $main_alignment_class = 'align-center';
+                } elseif ($fancy_post_main_box_alignment === 'align-end') {
+                    $main_alignment_class = 'align-end';
+                }
+
+                $title_alignment_class = '';
+                if ($fancy_post_title_alignment === 'align-start') {
+                    $title_alignment_class = 'align-start';
+                } elseif ($fancy_post_title_alignment === 'align-center') {
+                    $title_alignment_class = 'align-center';
+                } elseif ($fancy_post_title_alignment === 'align-end') {
+                    $title_alignment_class = 'align-end';
+                }
+                $meta_alignment_class = '';
+                if ($fancy_post_meta_alignment === 'align-start') {
+                    $meta_alignment_class = 'align-start';
+                } elseif ($fancy_post_meta_alignment === 'align-center') {
+                    $meta_alignment_class = 'align-center';
+                } elseif ($fancy_post_meta_alignment === 'align-end') {
+                    $meta_alignment_class = 'align-end';
+                }
+
         ?>
 
                 <div class="<?php echo esc_attr($main_cl_lg . ' ' .  $main_cl_md . ' ' . $main_cl_sm . ' ' . $main_cl_mobile); ?>">
-                    <div class="rs-blog__single mt-30 <?php echo esc_attr($hover_class); ?>">
+                    <div class="rs-blog__single mt-30 <?php echo esc_attr($main_alignment_class); ?> <?php echo esc_attr($hover_class); ?>">
                             <?php if (!$hide_feature_image && $fpg_field_group_image) : ?>
                                 <div class="rs-thumb">
                                     <?php if ($feature_image_url) : ?>
@@ -169,7 +196,7 @@ ob_start();
                                 </div>
                             <?php endif; ?>
                         <div class="rs-content">
-                            <ul class="meta-data-list">
+                            <ul class="meta-data-list <?php echo esc_attr($meta_alignment_class); ?>">
                                 <?php if ($fpg_field_group_post_date) : ?>
                                     <li class="meta-date">
                                         <i class="ri-calendar-2-line"></i>
@@ -188,13 +215,14 @@ ob_start();
                                         <?php the_category(', '); ?>
                                     </li>
                                 <?php endif; ?>
-                                <?php if ($fpg_field_group_comment_count) : ?>
+                                <?php if ($fpg_field_group_comment_count && get_comments_number() > 0) : ?>
                                     <li class="meta-comment-count">
                                         <i class="ri-chat-3-line"></i>
                                         <?php comments_number('0 Comments', '1 Comment', '% Comments'); ?>
                                     </li>
                                 <?php endif; ?>
-                                <?php if ($fpg_field_group_tag) : ?>
+
+                                <?php if ($fpg_field_group_tag && has_tag()) : ?>
                                     <li class="meta-tags">
                                         <i class="ri-price-tag-3-line"></i>
                                         <?php the_tags('', ', ', ''); ?>
@@ -203,31 +231,78 @@ ob_start();
                             </ul>
 
                             <?php if ($fpg_field_group_title) : ?>
-                                <<?php echo esc_attr($title_tag); ?> class="title">
+                                <<?php echo esc_attr($title_tag); ?> class="title <?php echo esc_attr($title_alignment_class); ?>" >
                                     <?php if ($fancy_link_details === 'on') : ?>
                                         <a href="<?php the_permalink(); ?>"
                                            <?php echo $target_blank; ?>
                                            class="title-link">
-                                            <?php echo wp_trim_words(get_the_title(), $fancy_post_title_limit, $title_more_text); ?>
+                                            <?php
+                                            if ($fancy_post_title_limit_type === 'words') {
+                                                echo wp_trim_words(get_the_title(), $fancy_post_title_limit, $title_more_text);
+                                            } elseif ($fancy_post_title_limit_type === 'characters') {
+                                                echo esc_html(mb_strimwidth(get_the_title(), 0, $fancy_post_title_limit, $title_more_text));
+                                            }
+                                            ?>
                                         </a>
                                     <?php else : ?>
-                                        <?php echo wp_trim_words(get_the_title(), $fancy_post_title_limit, $title_more_text); ?>
+                                        <?php
+                                        if ($fancy_post_title_limit_type === 'words') {
+                                            echo wp_trim_words(get_the_title(), $fancy_post_title_limit, $title_more_text);
+                                        } elseif ($fancy_post_title_limit_type === 'characters') {
+                                            echo esc_html(mb_strimwidth(get_the_title(), 0, $fancy_post_title_limit, $title_more_text));
+                                        }
+                                        ?>
                                     <?php endif; ?>
                                 </<?php echo esc_attr($title_tag); ?>>
                             <?php endif; ?>
 
                             <?php if ($fpg_field_group_excerpt) : ?>
                                 <div class="fpg-excerpt">
-                                    <?php echo wp_trim_words(get_the_content(), $fancy_post_excerpt_limit, $excerpt_more_text); ?>
+                                    <p>
+                                    <?php
+                                    $excerpt = get_the_content();
+
+                                    if ($fancy_post_excerpt_limit_type === 'words') {
+                                        echo wp_trim_words($excerpt, $fancy_post_excerpt_limit, $excerpt_more_text);
+                                    } else {
+                                        // Strip tags to avoid breaking HTML, then apply character limit
+                                        $excerpt = wp_strip_all_tags($excerpt);
+                                        echo esc_html(mb_strimwidth($excerpt, 0, $fancy_post_excerpt_limit, $excerpt_more_text));
+                                    }
+                                    ?>
+                                    </p>
                                 </div>
                             <?php endif; ?>
                             
-                             <!-- Display the custom excerpt here -->
+                            <!-- Display the custom excerpt here -->
                             <?php if ($fancy_link_details === 'on' && $fpg_field_group_read_more) : ?>
-                                <a class="rs-link read-more" href="<?php the_permalink(); ?>" <?php echo $target_blank; ?>>
-                                    <?php echo esc_html($fancy_post_read_more_text); ?>
-                                    <i class="ri-arrow-right-line"></i>
-                                </a>
+                                <?php
+                                // Determine the class name based on fancy_button_option
+                                $button_class = '';
+                                if ($fancy_button_option === 'filled') {
+                                    $button_class = 'filled';
+                                } elseif ($fancy_button_option === 'flat') {
+                                    $button_class = 'flat';
+                                } elseif ($fancy_button_option === 'border') {
+                                    $button_class = 'border';
+                                }
+
+                                $button_alignment_class = '';
+                                if ($fancy_post_read_more_alignment === 'align-start') {
+                                    $button_alignment_class = 'align-start';
+                                } elseif ($fancy_post_read_more_alignment === 'align-center') {
+                                    $button_alignment_class = 'align-center';
+                                } elseif ($fancy_post_read_more_alignment === 'align-end') {
+                                    $button_alignment_class = 'align-end';
+                                }
+
+                                ?>
+                                <div class="btn-wrapper <?php echo esc_attr($button_alignment_class); ?>">
+                                    <a class="rs-link read-more <?php echo esc_attr($button_class); ?>" href="<?php the_permalink(); ?>" <?php echo $target_blank; ?>>
+                                        <?php echo esc_html($fancy_post_read_more_text); ?>
+                                        <i class="ri-arrow-right-line"></i>
+                                    </a>
+                                </div>
                             <?php endif; ?>
                         </div>
                     </div>
@@ -265,23 +340,24 @@ ob_start();
         padding: <?php echo esc_attr($fpg_section_padding); ?>;
     }
 
+    /* Single Item Styles */
+    .rs-blog-layout-5 .rs-blog__single {
+        background-color: <?php echo esc_attr($fpg_single_section_background_color); ?>;
+        margin: <?php echo esc_attr($fpg_single_section_margin); ?>;
+        padding: <?php echo esc_attr($fpg_single_section_padding); ?>;
+    }
+
     /* Title Styles */
     .rs-blog-layout-5 .rs-blog__single .rs-content .title a {
         color: <?php echo esc_attr($fpg_title_color); ?>;
         font-size: <?php echo esc_attr($fpg_title_font_size); ?>px;
         font-weight: <?php echo esc_attr($fpg_title_font_weight); ?>;
     }
-    .rs-blog-layout-5 .rs-blog__single .rs-content .title {
-        text-align: <?php echo esc_attr($fpg_title_alignment); ?>;
-    }
+
     .rs-blog-layout-5 .rs-blog__single .rs-content .title a:hover {
         color: <?php echo esc_attr($fpg_title_hover_color); ?>;
         font-size: <?php echo esc_attr($fpg_title_hover_font_size); ?>px;
         font-weight: <?php echo esc_attr($fpg_title_hover_font_weight); ?>;
-    }
-    .rs-blog-layout-5 .rs-blog__single .rs-content .title:hover {
-
-        text-align: <?php echo esc_attr($fpg_title_hover_alignment); ?>;
     }
 
     .rs-blog-layout-5 .title-link {
@@ -297,7 +373,6 @@ ob_start();
         color: <?php echo esc_attr($fpg_excerpt_color); ?>;
         font-size: <?php echo esc_attr($fpg_excerpt_size); ?>px;
         font-weight: <?php echo esc_attr($fpg_excerpt_font_weight); ?>;
-        text-align: <?php echo esc_attr($fpg_excerpt_alignment); ?>;
     }
     .rs-blog-layout-5 .rs-blog__single .rs-content .rs-link.read-more {
         border-radius: <?php echo esc_attr($fancy_post_read_more_border_radius); ?>px;
