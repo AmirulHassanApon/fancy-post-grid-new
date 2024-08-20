@@ -134,6 +134,10 @@ function fpg_metabox_shortcode_callback( $post ) {
         $fancy_spacebetween = '10'; 
     }
 
+    $fpg_pagination_slider                          = get_post_meta( $post->ID, 'fpg_pagination_slider', true );
+    if ( empty( $fpg_pagination_slider ) ) {
+        $fpg_pagination_slider = 'normal'; 
+    }
 
 
     // tab-3-Advanced-Settings
@@ -148,10 +152,13 @@ function fpg_metabox_shortcode_callback( $post ) {
         $fancy_post_title_limit = '7'; 
     }
 
-    $fancy_post_title_more_text                       = get_post_meta( $post->ID, 'fancy_post_title_more_text', true ); 
-    if ( empty( $fancy_post_title_more_text ) ) {
-        $fancy_post_title_more_text = '...'; 
+    $fancy_post_title_limit_type               = get_post_meta( $post->ID, 'fancy_post_title_limit_type', true );
+    if ( empty( $fancy_post_title_limit_type ) ) {
+        $fancy_post_title_limit_type = 'words'; 
     }
+
+    $fancy_post_title_more_text                       = get_post_meta( $post->ID, 'fancy_post_title_more_text', true ); 
+    
     //Feature-image
     $fancy_post_hide_feature_image              = get_post_meta( $post->ID, 'fancy_post_hide_feature_image', true );
     if ( empty( $fancy_post_hide_feature_image ) ) {
@@ -169,8 +176,10 @@ function fpg_metabox_shortcode_callback( $post ) {
     $fancy_post_hover_animation                 = get_post_meta( $post->ID, 'fancy_post_hover_animation', true );
 
     $fancy_post_excerpt_more_text               = get_post_meta( $post->ID, 'fancy_post_excerpt_more_text', true );
-    if ( empty( $fancy_post_excerpt_more_text ) ) {
-        $fancy_post_excerpt_more_text = '...'; 
+    
+    $fancy_post_excerpt_limit_type               = get_post_meta( $post->ID, 'fancy_post_excerpt_limit_type', true );
+    if ( empty( $fancy_post_excerpt_limit_type ) ) {
+        $fancy_post_excerpt_limit_type = 'words'; 
     }
     $fancy_post_excerpt_limit                   = get_post_meta( $post->ID, 'fancy_post_excerpt_limit', true );
     if ( empty( $fancy_post_excerpt_limit ) ) {
@@ -193,8 +202,24 @@ function fpg_metabox_shortcode_callback( $post ) {
     
     $fancy_post_read_more_alignment             = get_post_meta( $post->ID, 'fancy_post_read_more_alignment', true );
     if ( empty( $fancy_post_read_more_alignment ) ) {
-        $fancy_post_read_more_alignment = 'left'; 
+        $fancy_post_read_more_alignment = 'align-start'; 
     }
+
+    $fancy_post_main_box_alignment = get_post_meta($post->ID, 'fancy_post_main_box_alignment', true);
+    if (empty($fancy_post_main_box_alignment)) {
+        $fancy_post_main_box_alignment = 'align-start';
+    }
+
+    $fancy_post_title_alignment = get_post_meta($post->ID, 'fancy_post_title_alignment', true);
+    if (empty($fancy_post_title_alignment)) {
+        $fancy_post_title_alignment = 'align-start';
+    }
+
+    $fancy_post_meta_alignment = get_post_meta($post->ID, 'fancy_post_meta_alignment', true);
+    if (empty($fancy_post_meta_alignment)) {
+        $fancy_post_meta_alignment = 'align-start';
+    }
+
     $fancy_post_read_more_text                  = get_post_meta( $post->ID, 'fancy_post_read_more_text', true );
     if ( empty( $fancy_post_read_more_text ) ) {
         $fancy_post_read_more_text = 'Read More'; 
@@ -226,6 +251,11 @@ function fpg_metabox_shortcode_callback( $post ) {
     $fpg_section_background_color               = get_post_meta( $post->ID, 'fpg_section_background_color', true );
     $fpg_section_margin                         = get_post_meta( $post->ID, 'fpg_section_margin', true );
     $fpg_section_padding                        = get_post_meta( $post->ID, 'fpg_section_padding', true );
+
+    //Single Section
+    $fpg_single_section_background_color               = get_post_meta( $post->ID, 'fpg_single_section_background_color', true );
+    $fpg_single_section_margin                         = get_post_meta( $post->ID, 'fpg_single_section_margin', true );
+    $fpg_single_section_padding                        = get_post_meta( $post->ID, 'fpg_single_section_padding', true );
 
     // Title
     $fpg_title_color                            = get_post_meta( $post->ID,'fpg_title_color', true); 
@@ -262,6 +292,7 @@ function fpg_metabox_shortcode_callback( $post ) {
         $fpg_excerpt_font_weight = '400'; 
     }
     $fpg_excerpt_alignment                      = get_post_meta( $post->ID,'fpg_excerpt_alignment', true ); 
+
 
     //Meta Data
     $fpg_meta_color                             = get_post_meta( $post->ID,'fpg_meta_color', true); 
@@ -911,7 +942,7 @@ function fpg_metabox_shortcode_callback( $post ) {
                         
                         
                     </div>
-                    <div class="fpg-post-select-main">                                                                    
+                    <div class="fpg-post-select-main fpg-post-box">                                                                    
                         <!-- Auto Play Speed (ms) -->
                         <div class="fpg-container">
                             <label for="fancy_autoplay"><?php esc_html_e( 'Auto Play Speed (ms):', 'fancy-post-grid' ); ?></label>
@@ -928,6 +959,23 @@ function fpg_metabox_shortcode_callback( $post ) {
                             <input type="number" id="fancy_spacebetween" name="fancy_spacebetween" value="<?php echo esc_attr( $fancy_spacebetween ); ?>" placeholder="10" />
                         </div>
                     </div>
+                </fieldset>
+            </div>
+            <!-- Pagination Slider Option -->
+            <div class="fpg-slider-option fpg-common" id="fpg_slider_pagination_option">
+                <fieldset>
+                    <legend><?php esc_html_e( 'Pagination Option:', 'fancy-post-grid' ); ?></legend>
+                    <!-- Title Tag Select -->
+                        <div class="fpg-post-select">
+                            <label for="fpg_pagination_slider"><?php esc_html_e( 'Pagination Type:', 'fancy-post-grid' ); ?></label>
+                            <select id="fpg_pagination_slider" name="fpg_pagination_slider" style="width: 100%;">
+                                <option value="normal" <?php selected( $fpg_pagination_slider, 'normal' ); ?>><?php esc_html_e( 'Pagination', 'fancy-post-grid' ); ?></option>
+                                <option value="dynamic" <?php selected( $fpg_pagination_slider, 'dynamic' ); ?>><?php esc_html_e( 'Pagination dynamic', 'fancy-post-grid' ); ?></option>
+                                <option value="progress" <?php selected( $fpg_pagination_slider, 'progress' ); ?>><?php esc_html_e( 'Pagination progress', 'fancy-post-grid' ); ?></option>
+                                <option value="fraction" <?php selected( $fpg_pagination_slider, 'fraction' ); ?>><?php esc_html_e( 'Pagination fraction', 'fancy-post-grid' ); ?></option>
+                                
+                            </select>
+                        </div>
                 </fieldset>
             </div>
             <!-- Pagination -->
@@ -995,7 +1043,40 @@ function fpg_metabox_shortcode_callback( $post ) {
             </div>
         </div>
 
-        <div id="tab-4" class="fpg-tab-content">           
+        <div id="tab-4" class="fpg-tab-content">      
+
+            <div class="fpg-content-settings fpg-common">
+                <fieldset>
+                    <legend><?php esc_html_e( 'Content Box Settings', 'fancy-post-grid' ); ?></legend>
+                    <!-- Main Box Alignment -->
+                    <div class="fpg-main-box-alignment fpg-common">
+                        <label for="fancy_post_main_box_alignment"><?php esc_html_e('Main Box Alignment:', 'fancy-post-grid'); ?></label>
+                        <div class="fpg-container">
+                            <div class="fpg-radio-list-wrapper fpg-radio-list">
+                                <input type="radio" id="fancy_post_main_box_alignment_left" name="fancy_post_main_box_alignment" value="align-start" <?php checked($fancy_post_main_box_alignment, 'align-start', true); ?> />
+                                <label for="fancy_post_main_box_alignment_left">
+                                    <span></span>
+                                    <p><?php esc_html_e('Left', 'fancy-post-grid'); ?></p>
+                                </label>
+                            </div>
+                            <div class="fpg-radio-list-wrapper fpg-radio-list">
+                                <input type="radio" id="fancy_post_main_box_alignment_center" name="fancy_post_main_box_alignment" value="align-center" <?php checked($fancy_post_main_box_alignment, 'align-center', true); ?> />
+                                <label for="fancy_post_main_box_alignment_center">
+                                    <span></span>
+                                    <p><?php esc_html_e('Center', 'fancy-post-grid'); ?></p>
+                                </label>
+                            </div>
+                            <div class="fpg-radio-list-wrapper fpg-radio-list">
+                                <input type="radio" id="fancy_post_main_box_alignment_right" name="fancy_post_main_box_alignment" value="align-end" <?php checked($fancy_post_main_box_alignment, 'align-end', true); ?> />
+                                <label for="fancy_post_main_box_alignment_right">
+                                    <span></span>
+                                    <p><?php esc_html_e('Right', 'fancy-post-grid'); ?></p>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+            </div>         
             <div class="fpg-title-settings fpg-common">
                 <fieldset>
                     <legend><?php esc_html_e( 'Title Settings', 'fancy-post-grid' ); ?></legend>
@@ -1012,8 +1093,28 @@ function fpg_metabox_shortcode_callback( $post ) {
                                 <option value="h6" <?php selected( $fancy_post_title_tag, 'h6' ); ?>><?php esc_html_e( 'H6', 'fancy-post-grid' ); ?></option>
                             </select>
                         </div>
+                        <!-- Title Limit Type -->
+                        <div class="fpg-title-limit-type fpg-common">                       
+                            <label><?php esc_html_e( 'Title Limit Type', 'fancy-post-grid' ); ?></label>
+                            <div class="fpg-container">
+                                <div class="fpg-radio-list-wrapper fpg-radio-list">
+                                    <input type="radio" id="fancy_post_title_limit_type_word" name="fancy_post_title_limit_type" value="words" <?php checked( $fancy_post_title_limit_type, 'words', true ); ?> />
+                                    <label for="fancy_post_title_limit_type_word">
+                                        <span></span>
+                                        <p><?php esc_html_e( 'Word', 'fancy-post-grid' ); ?></p>
+                                    </label>
+                                </div>
+                                <div class="fpg-radio-list-wrapper fpg-radio-list">
+                                    <input type="radio" id="fancy_post_title_limit_type_character" name="fancy_post_title_limit_type" value="characters" <?php checked( $fancy_post_title_limit_type, 'characters', true ); ?> />
+                                    <label for="fancy_post_title_limit_type_character">
+                                        <span></span>
+                                        <p><?php esc_html_e( 'Character', 'fancy-post-grid' ); ?></p>
+                                    </label>
+                                </div>
+                            </div>                       
+                        </div>
                         <div class="fpg-title-limit fpg-common">
-                            <label for="fancy_post_title_limit"><?php esc_html_e( 'Title Word Limit:', 'fancy-post-grid' ); ?></label>
+                            <label for="fancy_post_title_limit"><?php esc_html_e( 'Title Limit:', 'fancy-post-grid' ); ?></label>
                             <input type="number" id="fancy_post_title_limit" name="fancy_post_title_limit" value="<?php echo esc_attr( $fancy_post_title_limit ); ?>" />
                         </div>
 
@@ -1021,8 +1122,38 @@ function fpg_metabox_shortcode_callback( $post ) {
                             <label for="fancy_post_title_more_text"><?php esc_html_e( 'Title More Text:', 'fancy-post-grid' ); ?></label>
                             <input type="text" id="fancy_post_title_more_text" name="fancy_post_title_more_text" value="<?php echo esc_attr( $fancy_post_title_more_text ); ?>" placeholder="..." />
                         </div>
-                        
-                    </div>    
+
+                                               
+                    </div> 
+                    <div class="fpg-post-select-main">
+                        <!-- Title Alignment -->
+                        <div class="fpg-title-alignment fpg-common">
+                            <label for="fancy_post_title_alignment"><?php esc_html_e('Title Alignment:', 'fancy-post-grid'); ?></label>
+                            <div class="fpg-container">
+                                <div class="fpg-radio-list-wrapper fpg-radio-list">
+                                    <input type="radio" id="fancy_post_title_alignment_left" name="fancy_post_title_alignment" value="align-start" <?php checked($fancy_post_title_alignment, 'align-start', true); ?> />
+                                    <label for="fancy_post_title_alignment_left">
+                                        <span></span>
+                                        <p><?php esc_html_e('Left', 'fancy-post-grid'); ?></p>
+                                    </label>
+                                </div>
+                                <div class="fpg-radio-list-wrapper fpg-radio-list">
+                                    <input type="radio" id="fancy_post_title_alignment_center" name="fancy_post_title_alignment" value="align-center" <?php checked($fancy_post_title_alignment, 'align-center', true); ?> />
+                                    <label for="fancy_post_title_alignment_center">
+                                        <span></span>
+                                        <p><?php esc_html_e('Center', 'fancy-post-grid'); ?></p>
+                                    </label>
+                                </div>
+                                <div class="fpg-radio-list-wrapper fpg-radio-list">
+                                    <input type="radio" id="fancy_post_title_alignment_right" name="fancy_post_title_alignment" value="align-end" <?php checked($fancy_post_title_alignment, 'align-end', true); ?> />
+                                    <label for="fancy_post_title_alignment_right">
+                                        <span></span>
+                                        <p><?php esc_html_e('Right', 'fancy-post-grid'); ?></p>
+                                    </label>
+                                </div>
+                            </div>
+                        </div> 
+                    </div>   
                 </fieldset>
             </div>
 
@@ -1112,9 +1243,29 @@ function fpg_metabox_shortcode_callback( $post ) {
                 <fieldset>
                     <legend><?php esc_html_e( 'Excerpt Settings', 'fancy-post-grid' ); ?></legend>
                     <div class="fpg-post-select-main">
+                        <!-- Excerpt Limit Type -->
+                        <div class="fpg-excerpt-limit-type fpg-common">                       
+                            <label><?php esc_html_e( 'Excerpt Limit Type', 'fancy-post-grid' ); ?></label>
+                            <div class="fpg-container">
+                                <div class="fpg-radio-list-wrapper fpg-radio-list">
+                                    <input type="radio" id="fancy_post_excerpt_limit_type_word" name="fancy_post_excerpt_limit_type" value="words" <?php checked( $fancy_post_excerpt_limit_type, 'words', true ); ?> />
+                                    <label for="fancy_post_excerpt_limit_type_word">
+                                        <span></span>
+                                        <p><?php esc_html_e( 'Word', 'fancy-post-grid' ); ?></p>
+                                    </label>
+                                </div>
+                                <div class="fpg-radio-list-wrapper fpg-radio-list">
+                                    <input type="radio" id="fancy_post_excerpt_limit_type_character" name="fancy_post_excerpt_limit_type" value="characters" <?php checked( $fancy_post_excerpt_limit_type, 'characters', true ); ?> />
+                                    <label for="fancy_post_excerpt_limit_type_character">
+                                        <span></span>
+                                        <p><?php esc_html_e( 'Character', 'fancy-post-grid' ); ?></p>
+                                    </label>
+                                </div>
+                            </div>                       
+                        </div>
                         <!-- Excerpt Word Limit -->
                         <div class="fpg-excerpt-limit fpg-common">
-                            <label for="fancy_post_excerpt_limit"><?php esc_html_e( 'Excerpt Word Limit:', 'fancy-post-grid' ); ?></label>
+                            <label for="fancy_post_excerpt_limit"><?php esc_html_e( 'Excerpt Limit:', 'fancy-post-grid' ); ?></label>
                             <input type="number" id="fancy_post_excerpt_limit" name="fancy_post_excerpt_limit" value="<?php echo esc_attr( $fancy_post_excerpt_limit ); ?>" />
                         </div>        
                         <!-- Excerpt More Text -->
@@ -1122,6 +1273,34 @@ function fpg_metabox_shortcode_callback( $post ) {
                             <label for="fancy_post_excerpt_more_text"><?php esc_html_e( 'Excerpt More Text:', 'fancy-post-grid' ); ?></label>
                             <input type="text" id="fancy_post_excerpt_more_text" name="fancy_post_excerpt_more_text" value="<?php echo esc_attr( $fancy_post_excerpt_more_text ); ?>" placeholder="..." />
                         </div>
+                        <!-- Meta Alignment -->
+                        <div class="fpg-meta-alignment fpg-common">
+                            <label for="fancy_post_meta_alignment"><?php esc_html_e('Meta Alignment:', 'fancy-post-grid'); ?></label>
+                            <div class="fpg-container">
+                                <div class="fpg-radio-list-wrapper fpg-radio-list">
+                                    <input type="radio" id="fancy_post_meta_alignment_left" name="fancy_post_meta_alignment" value="align-start" <?php checked($fancy_post_meta_alignment, 'align-start', true); ?> />
+                                    <label for="fancy_post_meta_alignment_left">
+                                        <span></span>
+                                        <p><?php esc_html_e('Left', 'fancy-post-grid'); ?></p>
+                                    </label>
+                                </div>
+                                <div class="fpg-radio-list-wrapper fpg-radio-list">
+                                    <input type="radio" id="fancy_post_meta_alignment_center" name="fancy_post_meta_alignment" value="align-center" <?php checked($fancy_post_meta_alignment, 'align-center', true); ?> />
+                                    <label for="fancy_post_meta_alignment_center">
+                                        <span></span>
+                                        <p><?php esc_html_e('Center', 'fancy-post-grid'); ?></p>
+                                    </label>
+                                </div>
+                                <div class="fpg-radio-list-wrapper fpg-radio-list">
+                                    <input type="radio" id="fancy_post_meta_alignment_right" name="fancy_post_meta_alignment" value="align-end" <?php checked($fancy_post_meta_alignment, 'align-end', true); ?> />
+                                    <label for="fancy_post_meta_alignment_right">
+                                        <span></span>
+                                        <p><?php esc_html_e('Right', 'fancy-post-grid'); ?></p>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
                     </div>    
                 </fieldset>
             </div>
@@ -1175,21 +1354,21 @@ function fpg_metabox_shortcode_callback( $post ) {
                             <label for="fancy_post_read_more_alignment"><?php esc_html_e( 'Alignment:', 'fancy-post-grid' ); ?></label>
                             <div class="fpg-container">
                                 <div class="fpg-radio-list-wrapper fpg-radio-list">
-                                    <input type="radio" id="fancy_post_read_more_alignment_left" name="fancy_post_read_more_alignment" value="left" <?php checked( $fancy_post_read_more_alignment, 'left', true ); ?> />
+                                    <input type="radio" id="fancy_post_read_more_alignment_left" name="fancy_post_read_more_alignment" value="align-start" <?php checked( $fancy_post_read_more_alignment, 'align-start', true ); ?> />
                                     <label for="fancy_post_read_more_alignment_left">
                                         <span></span>
                                         <p><?php esc_html_e( 'Left', 'fancy-post-grid' ); ?></p>
                                     </label>
                                 </div>
                                 <div class="fpg-radio-list-wrapper fpg-radio-list">
-                                    <input type="radio" id="fancy_post_read_more_alignment_center" name="fancy_post_read_more_alignment" value="center" <?php checked( $fancy_post_read_more_alignment, 'center', true ); ?> />
+                                    <input type="radio" id="fancy_post_read_more_alignment_center" name="fancy_post_read_more_alignment" value="align-center" <?php checked( $fancy_post_read_more_alignment, 'align-center', true ); ?> />
                                     <label for="fancy_post_read_more_alignment_center">
                                         <span></span>
                                         <p><?php esc_html_e( 'Center', 'fancy-post-grid' ); ?></p>
                                     </label>
                                 </div>
                                 <div class="fpg-radio-list-wrapper fpg-radio-list">
-                                    <input type="radio" id="fancy_post_read_more_alignment_right" name="fancy_post_read_more_alignment" value="right" <?php checked( $fancy_post_read_more_alignment, 'right', true ); ?> />
+                                    <input type="radio" id="fancy_post_read_more_alignment_right" name="fancy_post_read_more_alignment" value="align-end" <?php checked( $fancy_post_read_more_alignment, 'align-end', true ); ?> />
                                     <label for="fancy_post_read_more_alignment_right">
                                         <span></span>
                                         <p><?php esc_html_e( 'Right', 'fancy-post-grid' ); ?></p>
@@ -1210,39 +1389,6 @@ function fpg_metabox_shortcode_callback( $post ) {
 
         <div id="tab-5" class="fpg-tab-content">
             
-            <div class="fancy-post-grid-button fpg-common">
-                <fieldset>
-                    <legend><?php esc_html_e( 'Button Color', 'fancy-post-grid' ); ?></legend>
-                    
-                    <div class="fpg-color-box-wrapper">
-                        <div class="fpg-color-box" id="fpg_button_bg_color">
-                            <label for="fpg_button_background_color"><?php esc_html_e( 'Background:', 'fancy-post-grid' ); ?></label>
-                            <input type="text" class="color-field" id="fpg_button_background_color" name="fpg_button_background_color" value="<?php echo esc_attr( $fpg_button_background_color ); ?>" />
-                        </div>
-
-                        <div class="fpg-color-box" id="fpg_button_bg_hover_color">
-                            <label for="fpg_button_hover_background_color"><?php esc_html_e( 'Hover Background:', 'fancy-post-grid' ); ?></label>
-                            <input type="text" class="color-field" id="fpg_button_hover_background_color" name="fpg_button_hover_background_color" value="<?php echo esc_attr( $fpg_button_hover_background_color ); ?>" />
-                        </div>
-
-                        <div class="fpg-color-box">
-                            <label for="fpg_button_text_color"><?php esc_html_e( 'Text Color:', 'fancy-post-grid' ); ?></label>
-                            <input type="text" class="color-field" id="fpg_button_text_color" name="fpg_button_text_color" value="<?php echo esc_attr( $fpg_button_text_color ); ?>" />
-                        </div>
-
-                        <div class="fpg-color-box">
-                            <label for="fpg_button_text_hover_color"><?php esc_html_e( 'Text Hover Color:', 'fancy-post-grid' ); ?></label>
-                            <input type="text" class="color-field" id="fpg_button_text_hover_color" name="fpg_button_text_hover_color" value="<?php echo esc_attr( $fpg_button_text_hover_color ); ?>" />
-                        </div>
-
-                        <div class="fpg-color-box" id="fpg_button_br_color">
-                            <label for="fpg_button_border_color"><?php esc_html_e( 'Border Color:', 'fancy-post-grid' ); ?></label>
-                            <input type="text" class="color-field" id="fpg_button_border_color" name="fpg_button_border_color" value="<?php echo esc_attr( $fpg_button_border_color ); ?>" />
-                        </div>
-                    </div>
-                       
-                </fieldset>
-            </div>
             <div class="fancy-post-grid-full-area fpg-common">
                 <fieldset>
                     <legend><?php esc_html_e( 'Full Area / Section', 'fancy-post-grid' ); ?></legend>
@@ -1268,6 +1414,33 @@ function fpg_metabox_shortcode_callback( $post ) {
                     </div>    
                 </fieldset>
             </div>
+
+            <div class="fancy-post-grid-single-area fpg-common">
+                <fieldset>
+                    <legend><?php esc_html_e( 'Single Area / Section', 'fancy-post-grid' ); ?></legend>
+                    
+                    <div class="fpg-post-select-main">
+                        <!-- Background Color -->
+                        <div class="fpg-color-box">
+                            <label for="fpg_single_section_background_color"><?php esc_html_e( 'Background Color:', 'fancy-post-grid' ); ?></label>
+                            <input type="text" class="color-field" id="fpg_single_section_background_color" name="fpg_single_section_background_color" value="<?php echo esc_attr( $fpg_single_section_background_color ); ?>" />
+                        </div>
+
+                        <!-- Margin -->
+                        <div class="fpg-margin-box">
+                            <label for="fpg_single_section_margin"><?php esc_html_e( 'Margin (space-separated):', 'fancy-post-grid' ); ?></label>
+                            <input type="text" id="fpg_single_section_margin" name="fpg_single_section_margin" value="<?php echo esc_attr( $fpg_single_section_margin ); ?>" placeholder="e.g., 20px 30px 40px 50px" />
+                        </div>
+
+                        <!-- Padding -->
+                        <div class="fpg-padding-box">
+                            <label for="fpg_single_section_padding"><?php esc_html_e( 'Padding (space-separated):', 'fancy-post-grid' ); ?></label>
+                            <input type="text" id="fpg_single_section_padding" name="fpg_single_section_padding" value="<?php echo esc_attr( $fpg_single_section_padding ); ?>" placeholder="e.g., 10px 15px 20px 25px" />
+                        </div>
+                    </div>    
+                </fieldset>
+            </div>
+
 
             <div class="fancy-post-grid-title fpg-common">
                 <fieldset>
@@ -1308,6 +1481,7 @@ function fpg_metabox_shortcode_callback( $post ) {
                     </div>    
                 </fieldset>
             </div>
+
             <div class="fancy-post-grid-title-hover fpg-common">
                 <fieldset>
                     <legend><?php esc_html_e( 'Title Hover Settings', 'fancy-post-grid' ); ?></legend>
@@ -1347,45 +1521,7 @@ function fpg_metabox_shortcode_callback( $post ) {
                     </div>
                 </fieldset>
             </div>
-            <div class="fancy-post-grid-excerpt fpg-common">
-                <fieldset>
-                    <legend><?php esc_html_e( 'Excerpt Settings', 'fancy-post-grid' ); ?></legend>
-                    
-                    <div class="fpg-post-select-main">
-                        <div class="fpg-color-box">
-                            <label for="fpg_excerpt_color"><?php esc_html_e( 'Color:', 'fancy-post-grid' ); ?></label>
-                            <input type="text" class="color-field" id="fpg_excerpt_color" name="fpg_excerpt_color" value="<?php echo esc_attr( $fpg_excerpt_color ); ?>" />
-                        </div>
 
-                        <div class="fpg-font-size-box">
-                            <label for="fpg_excerpt_size"><?php esc_html_e( 'Font Size (11-50px):', 'fancy-post-grid' ); ?></label>
-                            <input type="number" id="fpg_excerpt_size" name="fpg_excerpt_size" min="11" max="50" value="<?php echo esc_attr( $fpg_excerpt_size ); ?>" />
-                        </div>
-
-                        <div class="fpg-font-weight-box">
-                            <label for="fpg_excerpt_font_weight"><?php esc_html_e( 'Font Weight:', 'fancy-post-grid' ); ?></label>
-                            <select id="fpg_excerpt_font_weight" name="fpg_excerpt_font_weight">
-                                <?php 
-                                $weights = array( '100', '200', '300', '400', '500', '600', '700', '800', '900' );
-                                foreach ( $weights as $weight ) {
-                                    echo '<option value="' . esc_attr( $weight ) . '"' . selected( $fpg_excerpt_font_weight, $weight, false ) . '>' . esc_html( $weight ) . '</option>';
-                                }
-                                ?>
-                            </select>
-                        </div>
-
-                        <div class="fpg-alignment-box">
-                            <label for="fpg_excerpt_alignment"><?php esc_html_e( 'Alignment:', 'fancy-post-grid' ); ?></label>
-                            <select id="fpg_excerpt_alignment" name="fpg_excerpt_alignment">
-                                <option value="left" <?php selected( $fpg_excerpt_alignment, 'left' ); ?>><?php esc_html_e( 'Left', 'fancy-post-grid' ); ?></option>
-                                <option value="center" <?php selected( $fpg_excerpt_alignment, 'center' ); ?>><?php esc_html_e( 'Center', 'fancy-post-grid' ); ?></option>
-                                <option value="right" <?php selected( $fpg_excerpt_alignment, 'right' ); ?>><?php esc_html_e( 'Right', 'fancy-post-grid' ); ?></option>
-                                <option value="justify" <?php selected( $fpg_excerpt_alignment, 'justify' ); ?>><?php esc_html_e( 'Justify', 'fancy-post-grid' ); ?></option>
-                            </select>
-                        </div>
-                    </div>
-                </fieldset>
-            </div>
             <div class="fancy-post-grid-meta-data fpg-common">
                 <fieldset>
                     <legend><?php esc_html_e( 'Meta Data Settings', 'fancy-post-grid' ); ?></legend>
@@ -1425,6 +1561,80 @@ function fpg_metabox_shortcode_callback( $post ) {
                     </div>
                 </fieldset>
             </div>
+
+            <div class="fancy-post-grid-excerpt fpg-common">
+                <fieldset>
+                    <legend><?php esc_html_e( 'Excerpt Settings', 'fancy-post-grid' ); ?></legend>
+                    
+                    <div class="fpg-post-select-main">
+                        <div class="fpg-color-box">
+                            <label for="fpg_excerpt_color"><?php esc_html_e( 'Color:', 'fancy-post-grid' ); ?></label>
+                            <input type="text" class="color-field" id="fpg_excerpt_color" name="fpg_excerpt_color" value="<?php echo esc_attr( $fpg_excerpt_color ); ?>" />
+                        </div>
+
+                        <div class="fpg-font-size-box">
+                            <label for="fpg_excerpt_size"><?php esc_html_e( 'Font Size (11-50px):', 'fancy-post-grid' ); ?></label>
+                            <input type="number" id="fpg_excerpt_size" name="fpg_excerpt_size" min="11" max="50" value="<?php echo esc_attr( $fpg_excerpt_size ); ?>" />
+                        </div>
+
+                        <div class="fpg-font-weight-box">
+                            <label for="fpg_excerpt_font_weight"><?php esc_html_e( 'Font Weight:', 'fancy-post-grid' ); ?></label>
+                            <select id="fpg_excerpt_font_weight" name="fpg_excerpt_font_weight">
+                                <?php 
+                                $weights = array( '100', '200', '300', '400', '500', '600', '700', '800', '900' );
+                                foreach ( $weights as $weight ) {
+                                    echo '<option value="' . esc_attr( $weight ) . '"' . selected( $fpg_excerpt_font_weight, $weight, false ) . '>' . esc_html( $weight ) . '</option>';
+                                }
+                                ?>
+                            </select>
+                        </div>
+
+                        <div class="fpg-alignment-box">
+                            <label for="fpg_excerpt_alignment"><?php esc_html_e( 'Alignment:', 'fancy-post-grid' ); ?></label>
+                            <select id="fpg_excerpt_alignment" name="fpg_excerpt_alignment">
+                                <option value="left" <?php selected( $fpg_excerpt_alignment, 'left' ); ?>><?php esc_html_e( 'Left', 'fancy-post-grid' ); ?></option>
+                                <option value="center" <?php selected( $fpg_excerpt_alignment, 'center' ); ?>><?php esc_html_e( 'Center', 'fancy-post-grid' ); ?></option>
+                                <option value="right" <?php selected( $fpg_excerpt_alignment, 'right' ); ?>><?php esc_html_e( 'Right', 'fancy-post-grid' ); ?></option>
+                                <option value="justify" <?php selected( $fpg_excerpt_alignment, 'justify' ); ?>><?php esc_html_e( 'Justify', 'fancy-post-grid' ); ?></option>
+                            </select>
+                        </div>
+                    </div>
+                </fieldset>
+            </div>  
+
+            <div class="fancy-post-grid-button fpg-common">
+                <fieldset>
+                    <legend><?php esc_html_e( 'Button Color', 'fancy-post-grid' ); ?></legend>
+                    
+                    <div class="fpg-color-box-wrapper">
+                        <div class="fpg-color-box" id="fpg_button_bg_color">
+                            <label for="fpg_button_background_color"><?php esc_html_e( 'Background:', 'fancy-post-grid' ); ?></label>
+                            <input type="text" class="color-field" id="fpg_button_background_color" name="fpg_button_background_color" value="<?php echo esc_attr( $fpg_button_background_color ); ?>" />
+                        </div>
+
+                        <div class="fpg-color-box" id="fpg_button_bg_hover_color">
+                            <label for="fpg_button_hover_background_color"><?php esc_html_e( 'Hover Background:', 'fancy-post-grid' ); ?></label>
+                            <input type="text" class="color-field" id="fpg_button_hover_background_color" name="fpg_button_hover_background_color" value="<?php echo esc_attr( $fpg_button_hover_background_color ); ?>" />
+                        </div>
+
+                        <div class="fpg-color-box">
+                            <label for="fpg_button_text_color"><?php esc_html_e( 'Text Color:', 'fancy-post-grid' ); ?></label>
+                            <input type="text" class="color-field" id="fpg_button_text_color" name="fpg_button_text_color" value="<?php echo esc_attr( $fpg_button_text_color ); ?>" />
+                        </div>
+
+                        <div class="fpg-color-box">
+                            <label for="fpg_button_text_hover_color"><?php esc_html_e( 'Text Hover Color:', 'fancy-post-grid' ); ?></label>
+                            <input type="text" class="color-field" id="fpg_button_text_hover_color" name="fpg_button_text_hover_color" value="<?php echo esc_attr( $fpg_button_text_hover_color ); ?>" />
+                        </div>
+
+                        <div class="fpg-color-box" id="fpg_button_br_color">
+                            <label for="fpg_button_border_color"><?php esc_html_e( 'Border Color:', 'fancy-post-grid' ); ?></label>
+                            <input type="text" class="color-field" id="fpg_button_border_color" name="fpg_button_border_color" value="<?php echo esc_attr( $fpg_button_border_color ); ?>" />
+                        </div>
+                    </div>
+                       
+                </fieldset>
+            </div>    
         </div>
     </div>
     <?php
@@ -1576,6 +1786,9 @@ function fpg_save_metabox_data( $post_id ) {
     if ( isset( $_POST['fancy_spacebetween'] ) ) {
         update_post_meta( $post_id, 'fancy_spacebetween', sanitize_text_field( $_POST['fancy_spacebetween'] ) );
     }
+    if ( isset( $_POST['fpg_pagination_slider'] ) ) {
+        update_post_meta( $post_id, 'fpg_pagination_slider', sanitize_text_field( $_POST['fpg_pagination_slider'] ) );
+    }
     //tab3
     
     if ( isset( $_POST['fancy_post_title_tag'] ) ) {
@@ -1586,6 +1799,12 @@ function fpg_save_metabox_data( $post_id ) {
     }
     if ( isset( $_POST['fancy_post_title_more_text'] ) ) {
         update_post_meta( $post_id, 'fancy_post_title_more_text', sanitize_text_field( $_POST['fancy_post_title_more_text'] ) );
+    }
+    if ( isset( $_POST['fancy_post_title_limit_type'] ) ) {
+        update_post_meta( $post_id, 'fancy_post_title_limit_type', sanitize_text_field( $_POST['fancy_post_title_limit_type'] ) );
+    }
+    if ( isset( $_POST['fancy_post_excerpt_limit_type'] ) ) {
+        update_post_meta( $post_id, 'fancy_post_excerpt_limit_type', sanitize_text_field( $_POST['fancy_post_excerpt_limit_type'] ) );
     }
     
     if ( isset( $_POST['fancy_post_hide_feature_image'] ) ) {
@@ -1624,6 +1843,16 @@ function fpg_save_metabox_data( $post_id ) {
     }
     if ( isset( $_POST['fancy_post_read_more_alignment'] ) ) {
         update_post_meta( $post_id, 'fancy_post_read_more_alignment', sanitize_text_field( $_POST['fancy_post_read_more_alignment'] ) );
+    }
+    // Save the new alignment meta data
+    if (isset($_POST['fancy_post_main_box_alignment'])) {
+        update_post_meta($post_id, 'fancy_post_main_box_alignment', sanitize_text_field($_POST['fancy_post_main_box_alignment']));
+    }
+    if (isset($_POST['fancy_post_title_alignment'])) {
+        update_post_meta($post_id, 'fancy_post_title_alignment', sanitize_text_field($_POST['fancy_post_title_alignment']));
+    }
+    if (isset($_POST['fancy_post_meta_alignment'])) {
+        update_post_meta($post_id, 'fancy_post_meta_alignment', sanitize_text_field($_POST['fancy_post_meta_alignment']));
     }
     if ( isset( $_POST['fancy_post_read_more_text'] ) ) {
         update_post_meta( $post_id, 'fancy_post_read_more_text', sanitize_text_field( $_POST['fancy_post_read_more_text'] ) );
@@ -1689,6 +1918,18 @@ function fpg_save_metabox_data( $post_id ) {
 
     if ( isset( $_POST['fpg_section_padding'] ) ) {
         update_post_meta( $post_id, 'fpg_section_padding', sanitize_text_field( $_POST['fpg_section_padding'] ) );
+    }
+    //Single Sections
+    if ( isset( $_POST['fpg_single_section_background_color'] ) ) {
+        update_post_meta( $post_id, 'fpg_single_section_background_color', sanitize_hex_color( $_POST['fpg_single_section_background_color'] ) );
+    }
+
+    if ( isset( $_POST['fpg_single_section_margin'] ) ) {
+        update_post_meta( $post_id, 'fpg_single_section_margin', sanitize_text_field( $_POST['fpg_single_section_margin'] ) );
+    }
+
+    if ( isset( $_POST['fpg_single_section_padding'] ) ) {
+        update_post_meta( $post_id, 'fpg_single_section_padding', sanitize_text_field( $_POST['fpg_single_section_padding'] ) );
     }
 
     //Title 
