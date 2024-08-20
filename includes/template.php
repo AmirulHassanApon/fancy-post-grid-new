@@ -62,6 +62,8 @@ function fpg_shortcode( $atts ) {
 	    //Pagination
 	    $fancy_post_pagination                      = get_post_meta( $post_id, 'fancy_post_pagination', true );
 	    $fpg_post_per_page                			= get_post_meta($post_id, 'fpg_post_per_page', true);
+	    $fpg_pagination_slider                		= get_post_meta($post_id, 'fpg_pagination_slider', true);
+	    
 
 	    //Link
 	    $fancy_link_details                         = get_post_meta( $post_id, 'fancy_link_details', true );
@@ -78,6 +80,7 @@ function fpg_shortcode( $atts ) {
     	$fancy_post_title_tag                       = get_post_meta( $post_id, 'fancy_post_title_tag', true );
     	$fancy_post_title_more_text                	= get_post_meta( $post_id, 'fancy_post_title_more_text', true );
     	$fancy_post_title_limit                     = get_post_meta( $post_id, 'fancy_post_title_limit', true );
+    	$fancy_post_title_limit_type                     = get_post_meta( $post_id, 'fancy_post_title_limit_type', true );
 
     	//feature-image
     	$fancy_post_hide_feature_image              = get_post_meta( $post_id, 'fancy_post_hide_feature_image', true );	    
@@ -89,6 +92,7 @@ function fpg_shortcode( $atts ) {
 	    $fancy_post_excerpt_limit                   = get_post_meta( $post_id, 'fancy_post_excerpt_limit', true );
 	    $fancy_post_excerpt_type                    = get_post_meta( $post_id, 'fancy_post_excerpt_type', true );
 	    $fancy_post_excerpt_more_text               = get_post_meta( $post_id, 'fancy_post_excerpt_more_text', true );
+	    $fancy_post_excerpt_limit_type               = get_post_meta( $post_id, 'fancy_post_excerpt_limit_type', true );
 	    //Read Button
 	    $fancy_post_read_more_border_radius         = get_post_meta( $post_id, 'fancy_post_read_more_border_radius', true );
 	    $fancy_button_option         				= get_post_meta( $post_id, 'fancy_button_option', true );
@@ -107,6 +111,9 @@ function fpg_shortcode( $atts ) {
 	    $fpg_field_group_tag                       = get_post_meta( $post_id, 'fpg_field_group_tag', true );
 	    $fpg_field_group_comment_count              = get_post_meta( $post_id, 'fpg_field_group_comment_count', true );
 
+	    $fancy_post_main_box_alignment                 = get_post_meta( $post_id, 'fancy_post_main_box_alignment', true );
+	    $fancy_post_title_alignment                       = get_post_meta( $post_id, 'fancy_post_title_alignment', true );
+	    $fancy_post_meta_alignment              = get_post_meta( $post_id, 'fancy_post_meta_alignment', true );
 	    
 	    //Button
 	    $fpg_button_background_color                = get_post_meta( $post_id,'fpg_button_background_color', true); 
@@ -118,6 +125,11 @@ function fpg_shortcode( $atts ) {
 	    $fpg_section_background_color               = get_post_meta( $post_id, 'fpg_section_background_color', true );
 	    $fpg_section_margin                         = get_post_meta( $post_id, 'fpg_section_margin', true );
 	    $fpg_section_padding                        = get_post_meta( $post_id, 'fpg_section_padding', true );
+
+	    //Single Section
+	    $fpg_single_section_background_color               = get_post_meta( $post_id, 'fpg_single_section_background_color', true );
+	    $fpg_single_section_margin                         = get_post_meta( $post_id, 'fpg_single_section_margin', true );
+	    $fpg_single_section_padding                        = get_post_meta( $post_id, 'fpg_single_section_padding', true );
 
 
 	    // Title
@@ -145,7 +157,6 @@ function fpg_shortcode( $atts ) {
 	    $fpg_meta_font_weight                       = get_post_meta( $post_id,'fpg_meta_font_weight', true ); 
 	    $fpg_meta_alignment                         = get_post_meta( $post_id,'fpg_meta_alignment', true ); 
 	    	
-       
 		$dir = plugin_dir_path( __FILE__ );
 
 	 	/*=====================================================================
