@@ -41,7 +41,10 @@ function fpg_shortcode( $atts ) {
 	    $fpg_order                                  = get_post_meta( $post_id, 'fpg_order', true );
 	    $fpg_filter_authors                         = get_post_meta( $post_id, 'fpg_filter_authors', true );
 	    $fpg_filter_statuses                        = get_post_meta( $post_id, 'fpg_filter_statuses', true );
-
+	    $fpg_meta_order                             = get_post_meta( $post_id, 'fpg_meta_order', true );
+	    $fpg_title_order                            = get_post_meta( $post_id, 'fpg_title_order', true );
+	    $fpg_button_order                         	= get_post_meta( $post_id, 'fpg_button_order', true );
+	    $fpg_excerpt_order                        	= get_post_meta( $post_id, 'fpg_excerpt_order', true );
 		//tab-2-Layout Settings
 		//Start
 		$layout_type                   				= get_post_meta($post_id, 'fpg_layout_select', true);
@@ -85,6 +88,7 @@ function fpg_shortcode( $atts ) {
     	//feature-image
     	$fancy_post_hide_feature_image              = get_post_meta( $post_id, 'fancy_post_hide_feature_image', true );	    
 	    $fancy_post_feature_image_size              = get_post_meta( $post_id, 'fancy_post_feature_image_size', true );
+	    echo($fancy_post_feature_image_size );
 	    $fancy_post_media_source                    = get_post_meta( $post_id, 'fancy_post_media_source', true ); 
 	    $fancy_post_hover_animation                 = get_post_meta( $post_id, 'fancy_post_hover_animation', true );
 
@@ -114,6 +118,7 @@ function fpg_shortcode( $atts ) {
 	    $fancy_post_main_box_alignment                 = get_post_meta( $post_id, 'fancy_post_main_box_alignment', true );
 	    $fancy_post_title_alignment                       = get_post_meta( $post_id, 'fancy_post_title_alignment', true );
 	    $fancy_post_meta_alignment              = get_post_meta( $post_id, 'fancy_post_meta_alignment', true );
+	    $fancy_post_excerpt_alignment              = get_post_meta( $post_id, 'fancy_post_excerpt_alignment', true );
 	    
 	    //Button
 	    $fpg_button_background_color                = get_post_meta( $post_id,'fpg_button_background_color', true); 
@@ -126,11 +131,30 @@ function fpg_shortcode( $atts ) {
 	    $fpg_section_margin                         = get_post_meta( $post_id, 'fpg_section_margin', true );
 	    $fpg_section_padding                        = get_post_meta( $post_id, 'fpg_section_padding', true );
 
-	    //Single Section
+	    //Padding & Margin 
+	    $fpg_meta_padding                = get_post_meta( $post_id,'fpg_meta_padding', true); 
+	    $fpg_meta_margin          = get_post_meta( $post_id,'fpg_meta_margin', true); 
+
+	    $fpg_excerpt_padding                      = get_post_meta( $post_id,'fpg_excerpt_padding', true ); 
+	    $fpg_excerpt_margin                = get_post_meta( $post_id,'fpg_excerpt_margin', true ); 
+
+	    $fpg_title_padding                	= get_post_meta( $post_id,'fpg_title_padding', true ); 	    
+	    $fpg_title_margin               = get_post_meta( $post_id, 'fpg_title_margin', true );
+		$fpg_title_border_width                = get_post_meta( $post_id,'fpg_title_border_width', true ); 
+
+	    $fpg_title_border_color                	= get_post_meta( $post_id,'fpg_title_border_color', true ); 	    
+	    $fpg_title_margin               = get_post_meta( $post_id, 'fpg_title_margin', true );
+	    $fpg_button_padding                         = get_post_meta( $post_id, 'fpg_button_padding', true );
+	    $fpg_button_margin                        = get_post_meta( $post_id, 'fpg_button_margin', true );
+
+
 	    $fpg_single_section_background_color               = get_post_meta( $post_id, 'fpg_single_section_background_color', true );
 	    $fpg_single_section_margin                         = get_post_meta( $post_id, 'fpg_single_section_margin', true );
 	    $fpg_single_section_padding                        = get_post_meta( $post_id, 'fpg_single_section_padding', true );
-
+	    $fpg_single_content_section_padding                        = get_post_meta( $post_id, 'fpg_single_content_section_padding', true );
+	    $fpg_single_section_border_color                        = get_post_meta( $post_id, 'fpg_single_section_border_color', true );
+	    $fancy_post_border_width                        = get_post_meta( $post_id, 'fancy_post_border_width', true );
+	    $fancy_post_border_style                        = get_post_meta( $post_id, 'fancy_post_border_style', true );
 
 	    // Title
 	    $fpg_title_color                            = get_post_meta( $post_id,'fpg_title_color', true); 
@@ -153,9 +177,66 @@ function fpg_shortcode( $atts ) {
 
 	    //Meta Data
 	    $fpg_meta_color                             = get_post_meta( $post_id,'fpg_meta_color', true); 
+	    $fpg_meta_hover_color                             = get_post_meta( $post_id,'fpg_meta_hover_color', true); 
+	    $fpg_meta_gap                             = get_post_meta( $post_id,'fpg_meta_gap', true); 
 	    $fpg_meta_size                              = get_post_meta( $post_id,'fpg_meta_size', true); 
 	    $fpg_meta_font_weight                       = get_post_meta( $post_id,'fpg_meta_font_weight', true ); 
 	    $fpg_meta_alignment                         = get_post_meta( $post_id,'fpg_meta_alignment', true ); 
+
+	    $main_alignment_class = '';
+        if ($fancy_post_main_box_alignment === 'align-start') {
+            $main_alignment_class = 'align-start';
+        } elseif ($fancy_post_main_box_alignment === 'align-center') {
+            $main_alignment_class = 'align-center';
+        } elseif ($fancy_post_main_box_alignment === 'align-end') {
+            $main_alignment_class = 'align-end';
+        }
+
+        $title_alignment_class = '';
+        if ($fancy_post_title_alignment === 'align-start') {
+            $title_alignment_class = 'align-start';
+        } elseif ($fancy_post_title_alignment === 'align-center') {
+            $title_alignment_class = 'align-center';
+        } elseif ($fancy_post_title_alignment === 'align-end') {
+            $title_alignment_class = 'align-end';
+        }
+        $meta_alignment_class = '';
+        if ($fancy_post_meta_alignment === 'align-start') {
+            $meta_alignment_class = 'align-start';
+        } elseif ($fancy_post_meta_alignment === 'align-center') {
+            $meta_alignment_class = 'align-center';
+        } elseif ($fancy_post_meta_alignment === 'align-end') {
+            $meta_alignment_class = 'align-end';
+        }
+
+        $excerpt_alignment_class = '';
+        if ($fancy_post_excerpt_alignment === 'align-start') {
+            $excerpt_alignment_class = 'align-start';
+        } elseif ($fancy_post_excerpt_alignment === 'align-center') {
+            $excerpt_alignment_class = 'align-center';
+        } elseif ($fancy_post_excerpt_alignment === 'align-end') {
+            $excerpt_alignment_class = 'align-end';
+        }
+
+        // Determine the class name based on fancy_button_option
+        $button_class = '';
+        if ($fancy_button_option === 'filled') {
+            $button_class = 'filled';
+        } elseif ($fancy_button_option === 'flat') {
+            $button_class = 'flat';
+        } elseif ($fancy_button_option === 'border') {
+            $button_class = 'border';
+        }
+
+        $button_alignment_class = '';
+        if ($fancy_post_read_more_alignment === 'align-start') {
+            $button_alignment_class = 'align-start';
+        } elseif ($fancy_post_read_more_alignment === 'align-center') {
+            $button_alignment_class = 'align-center';
+        } elseif ($fancy_post_read_more_alignment === 'align-end') {
+            $button_alignment_class = 'align-end';
+        }
+        
 	    	
 		$dir = plugin_dir_path( __FILE__ );
 
