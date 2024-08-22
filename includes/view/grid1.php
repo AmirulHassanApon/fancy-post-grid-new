@@ -7,112 +7,112 @@ ob_start();
     <div class="container">
         <div class="row">
 
-        <?php           
-
+        <?php
             // =======Pagination==========
+            $fpg_post_per_page = -1;
             // Check if pagination is on or off
             if ($fancy_post_pagination === 'off') {
                 $fpg_post_per_page = -1;
-            }   
+            }  
 
             //==============STATUS==============
-            // Ensure it's an array
-            if (!is_array($fpg_filter_statuses)) {
-                // Convert string to array if necessary
-                if (is_string($fpg_filter_statuses)) {
-                    $fpg_filter_statuses = explode(',', $fpg_filter_statuses);
-                } else {
-                    $fpg_filter_statuses = array(); // Default to empty array if not an array or string
+                // Ensure it's an array
+                if (!is_array($fpg_filter_statuses)) {
+                    // Convert string to array if necessary
+                    if (is_string($fpg_filter_statuses)) {
+                        $fpg_filter_statuses = explode(',', $fpg_filter_statuses);
+                    } else {
+                        $fpg_filter_statuses = array(); // Default to empty array if not an array or string
+                    }
                 }
-            }
 
-            // ==============AUTHOR==========
-            // Unserialize the data if necessary
-            if (is_string($fpg_filter_authors)) {
-                $fpg_filter_authors = maybe_unserialize($fpg_filter_authors);
-            }
+                // ==============AUTHOR==========
+                // Unserialize the data if necessary
+                if (is_string($fpg_filter_authors)) {
+                    $fpg_filter_authors = maybe_unserialize($fpg_filter_authors);
+                }
 
-            // Ensure it's an array
-            if (!is_array($fpg_filter_authors)) {
-                $fpg_filter_authors = array(); // Default to empty array if not an array
-            }
+                // Ensure it's an array
+                if (!is_array($fpg_filter_authors)) {
+                    $fpg_filter_authors = array(); // Default to empty array if not an array
+                }
 
-            // Sanitize and convert to integers
-            $selected_authors = array_map('intval', $fpg_filter_authors);
+                // Sanitize and convert to integers
+                $selected_authors = array_map('intval', $fpg_filter_authors);
 
-            //==========Include only==========
-            $selected_post_in = !empty($fpg_include_only) ? explode(',', $fpg_include_only) : array();
+                //==========Include only==========
+                $selected_post_in = !empty($fpg_include_only) ? explode(',', $fpg_include_only) : array();
 
-            //=======Exclude===============
-            $selected_post_not_in = !empty($fpg_exclude) ? explode(',', $fpg_exclude) : array();
+                //=======Exclude===============
+                $selected_post_not_in = !empty($fpg_exclude) ? explode(',', $fpg_exclude) : array();
 
-            //=================More Text==========
-            $excerpt_more_text = isset($fancy_post_excerpt_more_text) ? $fancy_post_excerpt_more_text : '...'; 
-            $title_more_text = isset($fancy_post_title_more_text) ? $fancy_post_title_more_text : '...'; 
+                //=================More Text==========
+                $excerpt_more_text = isset($fancy_post_excerpt_more_text) ? $fancy_post_excerpt_more_text : '...'; 
+                $title_more_text = isset($fancy_post_title_more_text) ? $fancy_post_title_more_text : '...'; 
 
-            // ===========Advanced Filter==============
-            // Capture and sanitize category terms if 'category' taxonomy is selected
-            $category_terms = array_map('intval', $fpg_filter_category_terms); 
+                // ===========Advanced Filter==============
+                // Capture and sanitize category terms if 'category' taxonomy is selected
+                $category_terms = array_map('intval', $fpg_filter_category_terms); 
 
-            // Capture and sanitize tag terms if 'tags' taxonomy is selected
-            $tag_terms = array_map('intval', $fpg_filter_tags_terms);           
+                // Capture and sanitize tag terms if 'tags' taxonomy is selected
+                $tag_terms = array_map('intval', $fpg_filter_tags_terms);   
 
-            // Get values from the form inputs           
-            $args = array(
-                'post_type'      => $fancy_post_type,
-                'post_status'    => $fpg_filter_statuses, // Add status filter
-                'posts_per_page' => $fpg_post_per_page, // Number of posts to display
-                'paged'          => get_query_var('paged') ? get_query_var('paged') : 1, // Get current page number
-                'orderby'        => $fpg_order_by, // Order by
-                'order'          => $fpg_order,   // Order direction
-                'author__in'     => $selected_authors, // Add author filter                                          
-            );
-            // Add 'post__in' to the query if not empty
-            if (!empty($selected_post_in)) {
-                $args['post__in'] = $selected_post_in;
-            }
 
-            // Add 'post__not_in' to the query if not empty
-            if (!empty($selected_post_not_in)) {
-                $args['post__not_in'] = $selected_post_not_in;
-            }
 
-            // Run a preliminary query to get all matching post IDs
-            if ($fpg_limit > 0) {
-                $pre_query = new WP_Query(array_merge($args, array('posts_per_page' => $fpg_limit, 'fields' => 'ids')));
-                $post_ids = $pre_query->posts;
-
-                // Modify the main query to limit the posts
-                $args['post__in'] = $post_ids;
-            }
-
-            // Add taxonomy queries
-            $tax_query = array('relation' => $fpg_relation);
-
-            if (!empty($fpg_field_group_taxonomy) && in_array('category', $fpg_field_group_taxonomy) && !empty($category_terms)) {
-                $tax_query[] = array(
-                    'taxonomy' => 'category',
-                    'field'    => 'term_id',
-                    'terms'    => $category_terms,
-                    'operator' => $fpg_category_operator,
+                // Get values from the form inputs           
+                $args = array(
+                    'post_type'      => $fancy_post_type,
+                    'post_status'    => $fpg_filter_statuses, // Add status filter
+                    'posts_per_page' => $fpg_post_per_page, // Number of posts to display
+                    'paged'          => get_query_var('paged') ? get_query_var('paged') : 1, // Get current page number
+                    'orderby'        => $fpg_order_by, // Order by
+                    'order'          => $fpg_order,   // Order direction
+                    'author__in'     => $selected_authors, // Add author filter                                          
                 );
-            }
+                // Add 'post__in' to the query if not empty
+                if (!empty($selected_post_in)) {
+                    $args['post__in'] = $selected_post_in;
+                }
 
-            if (!empty($fpg_field_group_taxonomy) && in_array('tags', $fpg_field_group_taxonomy) && !empty($tag_terms)) {
-                $tax_query[] = array(
-                    'taxonomy' => 'post_tag',
-                    'field'    => 'term_id',
-                    'terms'    => $tag_terms,
-                    'operator' => $fpg_tags_operator,
-                );
-            }
+                // Add 'post__not_in' to the query if not empty
+                if (!empty($selected_post_not_in)) {
+                    $args['post__not_in'] = $selected_post_not_in;
+                }
 
+                // Run a preliminary query to get all matching post IDs
+                if ($fpg_limit > 0) {
+                    $pre_query = new WP_Query(array_merge($args, array('posts_per_page' => $fpg_limit, 'fields' => 'ids')));
+                    $post_ids = $pre_query->posts;
 
-            if (!empty($tax_query)) {
-                $args['tax_query'] = $tax_query;
-            }
-            // echo '<pre>' . print_r($args, true) . '</pre>';
+                    // Modify the main query to limit the posts
+                    $args['post__in'] = $post_ids;
+                }
 
+                // Add taxonomy queries
+                $tax_query = array('relation' => $fpg_relation);
+                if (!empty($fpg_field_group_taxonomy) && in_array('category', $fpg_field_group_taxonomy) && !empty($category_terms)) {
+                    $tax_query[] = array(
+                        'taxonomy' => 'category',
+                        'field'    => 'term_id',
+                        'terms'    => $category_terms,
+                        'operator' => $fpg_category_operator,
+                    );
+                }
+
+                if (!empty($fpg_field_group_taxonomy) && in_array('tags', $fpg_field_group_taxonomy) && !empty($tag_terms)) {
+                    $tax_query[] = array(
+                        'taxonomy' => 'post_tag',
+                        'field'    => 'term_id',
+                        'terms'    => $tag_terms,
+                        'operator' => $fpg_tags_operator,
+                    );
+                }
+
+                if (!empty($tax_query)) {
+                    $args['tax_query'] = $tax_query;
+                }
+                // echo '<pre>' . print_r($args, true) . '</pre>';
+                
             $query = new WP_Query($args);
 
             // Loop through the custom query
@@ -132,8 +132,10 @@ ob_start();
                 // Determine if the feature image should be hidden
                 $hide_feature_image = isset($fancy_post_hide_feature_image) && $fancy_post_hide_feature_image === 'off';
                 
+
                 // Determine the feature image size
-                $feature_image_size = isset($fancy_post_feature_image_size) ? (string) $fancy_post_feature_image_size : 'large';  
+                $feature_image_size = isset($fancy_post_feature_image_size) ? (string) $fancy_post_feature_image_size : '';  
+
                            
                 // Determine the media source
                 $media_source = isset($fancy_post_media_source) ? $fancy_post_media_source : 'feature_image';
@@ -155,33 +157,6 @@ ob_start();
 
                 // Apply hover animation class if needed
                 $hover_class = $hover_animation !== 'none' ? 'hover-' . esc_attr($hover_animation) : '';
-
-                $main_alignment_class = '';
-                if ($fancy_post_main_box_alignment === 'align-start') {
-                    $main_alignment_class = 'align-start';
-                } elseif ($fancy_post_main_box_alignment === 'align-center') {
-                    $main_alignment_class = 'align-center';
-                } elseif ($fancy_post_main_box_alignment === 'align-end') {
-                    $main_alignment_class = 'align-end';
-                }
-
-                $title_alignment_class = '';
-                if ($fancy_post_title_alignment === 'align-start') {
-                    $title_alignment_class = 'align-start';
-                } elseif ($fancy_post_title_alignment === 'align-center') {
-                    $title_alignment_class = 'align-center';
-                } elseif ($fancy_post_title_alignment === 'align-end') {
-                    $title_alignment_class = 'align-end';
-                }
-                $meta_alignment_class = '';
-                if ($fancy_post_meta_alignment === 'align-start') {
-                    $meta_alignment_class = 'align-start';
-                } elseif ($fancy_post_meta_alignment === 'align-center') {
-                    $meta_alignment_class = 'align-center';
-                } elseif ($fancy_post_meta_alignment === 'align-end') {
-                    $meta_alignment_class = 'align-end';
-                }
-
         ?>
 
                 <div class="<?php echo esc_attr($main_cl_lg . ' ' .  $main_cl_md . ' ' . $main_cl_sm . ' ' . $main_cl_mobile); ?>">
@@ -257,7 +232,7 @@ ob_start();
                             <?php endif; ?>
 
                             <?php if ($fpg_field_group_excerpt) : ?>
-                                <div class="fpg-excerpt">
+                                <div class="fpg-excerpt <?php echo esc_attr($excerpt_alignment_class); ?>">
                                     <p>
                                     <?php
                                     $excerpt = get_the_content();
@@ -275,28 +250,8 @@ ob_start();
                             <?php endif; ?>
                             
                             <!-- Display the custom excerpt here -->
-                            <?php if ($fancy_link_details === 'on' && $fpg_field_group_read_more) : ?>
-                                <?php
-                                // Determine the class name based on fancy_button_option
-                                $button_class = '';
-                                if ($fancy_button_option === 'filled') {
-                                    $button_class = 'filled';
-                                } elseif ($fancy_button_option === 'flat') {
-                                    $button_class = 'flat';
-                                } elseif ($fancy_button_option === 'border') {
-                                    $button_class = 'border';
-                                }
-
-                                $button_alignment_class = '';
-                                if ($fancy_post_read_more_alignment === 'align-start') {
-                                    $button_alignment_class = 'align-start';
-                                } elseif ($fancy_post_read_more_alignment === 'align-center') {
-                                    $button_alignment_class = 'align-center';
-                                } elseif ($fancy_post_read_more_alignment === 'align-end') {
-                                    $button_alignment_class = 'align-end';
-                                }
-
-                                ?>
+                            <?php if ($fpg_field_group_read_more) : ?>
+                                
                                 <div class="btn-wrapper <?php echo esc_attr($button_alignment_class); ?>">
                                     <a class="rs-link read-more <?php echo esc_attr($button_class); ?>" href="<?php the_permalink(); ?>" <?php echo $target_blank; ?>>
                                         <?php echo esc_html($fancy_post_read_more_text); ?>
@@ -332,80 +287,228 @@ ob_start();
 
     </div>
 </section>
+
 <style type="text/css">
     /* General Styles */
     .rs-blog-layout-5 {
-        background-color: <?php echo esc_attr($fpg_section_background_color); ?>;
-        margin: <?php echo esc_attr($fpg_section_margin); ?>;
-        padding: <?php echo esc_attr($fpg_section_padding); ?>;
+        <?php if (!empty($fpg_section_background_color)) : ?>
+            background-color: <?php echo esc_attr($fpg_section_background_color); ?>;
+        <?php endif; ?>
+        <?php if (!empty($fpg_section_margin)) : ?>
+            margin: <?php echo esc_attr($fpg_section_margin); ?>;
+        <?php endif; ?>
+        <?php if (!empty($fpg_section_padding)) : ?>
+            padding: <?php echo esc_attr($fpg_section_padding); ?>;
+        <?php endif; ?>
     }
 
     /* Single Item Styles */
     .rs-blog-layout-5 .rs-blog__single {
-        background-color: <?php echo esc_attr($fpg_single_section_background_color); ?>;
-        margin: <?php echo esc_attr($fpg_single_section_margin); ?>;
-        padding: <?php echo esc_attr($fpg_single_section_padding); ?>;
+        <?php if (!empty($fpg_single_section_background_color)) : ?>
+            background-color: <?php echo esc_attr($fpg_single_section_background_color); ?>;
+        <?php endif; ?>
+        <?php if (!empty($fpg_single_section_margin)) : ?>
+            margin: <?php echo esc_attr($fpg_single_section_margin); ?>;
+        <?php endif; ?>
+        <?php if (!empty($fpg_single_section_padding)) : ?>
+            padding: <?php echo esc_attr($fpg_single_section_padding); ?>;
+        <?php endif; ?>
+    }
+
+    .rs-blog-layout-5 .rs-blog__single .rs-content {
+        <?php if (!empty($fpg_single_section_border_color)) : ?>
+            border-color: <?php echo esc_attr($fpg_single_section_border_color); ?>;
+        <?php endif; ?>
+        <?php if (!empty($fancy_post_border_style)) : ?>
+            border-style: <?php echo esc_attr($fancy_post_border_style); ?>;
+        <?php endif; ?>
+        <?php if (!empty($fancy_post_border_width)) : ?>
+            border-width: <?php echo esc_attr($fancy_post_border_width); ?>;
+        <?php endif; ?>
+        <?php if (!empty($fpg_single_content_section_padding)) : ?>
+            padding: <?php echo esc_attr($fpg_single_content_section_padding); ?>;
+        <?php endif; ?>
+    }
+
+    /* Title Styles */
+    .rs-blog-layout-5 .rs-blog__single .rs-content .title {
+        
+        <?php if (!empty($fpg_title_order)) : ?>
+            order: <?php echo esc_attr($fpg_title_order); ?>;
+        <?php endif; ?>
+        padding: <?php echo esc_attr($fpg_title_padding); ?>;
+        margin: <?php echo esc_attr($fpg_title_margin); ?>;
+        <?php if (!empty($fpg_title_border_color)) : ?>
+            border-color: <?php echo esc_attr($fpg_title_border_color); ?>;
+        <?php endif; ?>
+        <?php if (!empty($fpg_title_border_style)) : ?>
+            border-style: <?php echo esc_attr($fpg_title_border_style); ?>;
+        <?php endif; ?>
+        <?php if (!empty($fpg_title_border_width)) : ?>
+            border-width: <?php echo esc_attr($fpg_title_border_width); ?>;
+        <?php endif; ?>
+        
+        
     }
 
     /* Title Styles */
     .rs-blog-layout-5 .rs-blog__single .rs-content .title a {
-        color: <?php echo esc_attr($fpg_title_color); ?>;
-        font-size: <?php echo esc_attr($fpg_title_font_size); ?>px;
-        font-weight: <?php echo esc_attr($fpg_title_font_weight); ?>;
+        <?php if (!empty($fpg_title_color)) : ?>
+            color: <?php echo esc_attr($fpg_title_color); ?>;
+        <?php endif; ?>
+        <?php if (!empty($fpg_title_font_size)) : ?>
+            font-size: <?php echo esc_attr($fpg_title_font_size); ?>px;
+        <?php endif; ?>
+        <?php if (!empty($fpg_title_font_weight)) : ?>
+            font-weight: <?php echo esc_attr($fpg_title_font_weight); ?>;
+        <?php endif; ?>
+        
+        
     }
 
     .rs-blog-layout-5 .rs-blog__single .rs-content .title a:hover {
-        color: <?php echo esc_attr($fpg_title_hover_color); ?>;
-        font-size: <?php echo esc_attr($fpg_title_hover_font_size); ?>px;
-        font-weight: <?php echo esc_attr($fpg_title_hover_font_weight); ?>;
+        <?php if (!empty($fpg_title_hover_color)) : ?>
+            color: <?php echo esc_attr($fpg_title_hover_color); ?>;
+        <?php endif; ?>
     }
 
     .rs-blog-layout-5 .title-link {
-        color: <?php echo esc_attr($fpg_title_color); ?>;
+        <?php if (!empty($fpg_title_color)) : ?>
+            color: <?php echo esc_attr($fpg_title_color); ?>;
+        <?php endif; ?>
     }
 
     .rs-blog-layout-5 .title-link:hover {
-        color: <?php echo esc_attr($fpg_title_hover_color); ?>;
+        <?php if (!empty($fpg_title_hover_color)) : ?>
+            color: <?php echo esc_attr($fpg_title_hover_color); ?>;
+        <?php endif; ?>
     }
 
     /* Excerpt Styles */
     .rs-blog-layout-5 .fpg-excerpt {
-        color: <?php echo esc_attr($fpg_excerpt_color); ?>;
-        font-size: <?php echo esc_attr($fpg_excerpt_size); ?>px;
-        font-weight: <?php echo esc_attr($fpg_excerpt_font_weight); ?>;
+        <?php if (!empty($fpg_excerpt_color)) : ?>
+            color: <?php echo esc_attr($fpg_excerpt_color); ?>;
+        <?php endif; ?>
+        <?php if (!empty($fpg_excerpt_size)) : ?>
+            font-size: <?php echo esc_attr($fpg_excerpt_size); ?>px;
+        <?php endif; ?>
+        <?php if (!empty($fpg_excerpt_font_weight)) : ?>
+            font-weight: <?php echo esc_attr($fpg_excerpt_font_weight); ?>;
+        <?php endif; ?>
+        
+        
+    }
+    .rs-blog-layout-5 .rs-blog__single .rs-content .fpg-excerpt{
+        <?php if (!empty($fpg_excerpt_order)) : ?>
+            order: <?php echo esc_attr($fpg_excerpt_order); ?>;
+        <?php endif; ?>
+        <?php if (!empty($fpg_excerpt_padding)) : ?>
+            padding: <?php echo esc_attr($fpg_excerpt_padding); ?>;
+        <?php endif; ?>
+        <?php if (!empty($fpg_excerpt_margin)) : ?>
+            margin: <?php echo esc_attr($fpg_excerpt_margin); ?>;
+        <?php endif; ?>
+
+    }
+
+    .rs-blog-layout-5 .rs-blog__single .rs-content .btn-wrapper{
+        <?php if (!empty($fpg_button_padding)) : ?>
+            padding: <?php echo esc_attr($fpg_button_padding); ?>;
+        <?php endif; ?>
+        <?php if (!empty($fpg_button_margin)) : ?>
+            margin: <?php echo esc_attr($fpg_button_margin); ?>;
+        <?php endif; ?>
     }
     .rs-blog-layout-5 .rs-blog__single .rs-content .rs-link.read-more {
-        border-radius: <?php echo esc_attr($fancy_post_read_more_border_radius); ?>px;
-        text-align: <?php echo esc_attr($fancy_post_read_more_alignment); ?>;
+        <?php if (!empty($fancy_post_read_more_border_radius)) : ?>
+            border-radius: <?php echo esc_attr($fancy_post_read_more_border_radius); ?>px;
+        <?php endif; ?>
+        
+        
     }
+
     /* Meta Data Styles */
-    .rs-blog-layout-5 .rs-blog__single .rs-content ul li ,
+
+    .rs-blog-layout-5 .rs-blog__single .rs-content ul{
+        <?php if (!empty($fpg_meta_order)) : ?>
+            order: <?php echo esc_attr($fpg_meta_order); ?>;
+        <?php endif; ?>
+        <?php if (!empty($fpg_meta_padding)) : ?>
+            padding: <?php echo esc_attr($fpg_meta_padding); ?>;
+        <?php endif; ?>
+        <?php if (!empty($fpg_meta_margin)) : ?>
+            margin: <?php echo esc_attr($fpg_meta_margin); ?>;
+        <?php endif; ?>
+    }
+
+    .rs-blog-layout-5 .rs-blog__single .rs-content ul{
+        <?php if (!empty($fpg_meta_gap)) : ?>
+            gap: <?php echo esc_attr($fpg_meta_gap); ?>;
+        <?php endif; ?>
+        
+    }
+
+    .rs-blog-layout-5 .rs-blog__single .rs-content ul li,
     .rs-blog-layout-5 .rs-blog__single .rs-content ul li i,
     .rs-blog-layout-5 .rs-blog__single .rs-content ul li a,
     .rs-blog-layout-5 .meta-data-list .meta-date i,
     .rs-blog-layout-5 .meta-data-list .meta-author i,
     .rs-blog-layout-5 .meta-data-list .meta-categories i,
     .rs-blog-layout-5 .meta-data-list .meta-comment-count i,
-    .rs-blog-layout-5 .meta-data-list .meta-tags i ,
-    .rs-blog-layout-5 .fpg-pagination{
-        color: <?php echo esc_attr($fpg_meta_color); ?>;
-        font-size: <?php echo esc_attr($fpg_meta_size); ?>px;
-        font-weight: <?php echo esc_attr($fpg_meta_font_weight); ?>;
-        text-align: <?php echo esc_attr($fpg_meta_alignment); ?>;
+    .rs-blog-layout-5 .meta-data-list .meta-tags i,
+    .rs-blog-layout-5 .fpg-pagination {
+        <?php if (!empty($fpg_meta_color)) : ?>
+            color: <?php echo esc_attr($fpg_meta_color); ?>;
+        <?php endif; ?>
+        <?php if (!empty($fpg_meta_size)) : ?>
+            font-size: <?php echo esc_attr($fpg_meta_size); ?>px;
+        <?php endif; ?>
+        <?php if (!empty($fpg_meta_font_weight)) : ?>
+            font-weight: <?php echo esc_attr($fpg_meta_font_weight); ?>;
+        <?php endif; ?>
+        
+    }
+
+    
+    .rs-blog-layout-5 .rs-blog__single .rs-content ul li a:hover{
+        
+        <?php if (!empty($fpg_meta_hover_color)) : ?>
+            color: <?php echo esc_attr($fpg_meta_hover_color); ?>;
+        <?php endif; ?>
     }
 
     /* Button Styles */
-    .rs-blog-layout-5 .rs-blog__single .rs-content .rs-link {
-        background-color: <?php echo esc_attr($fpg_button_background_color); ?>;
-        color: <?php echo esc_attr($fpg_button_text_color); ?>;
+    .rs-blog-layout-5 .rs-blog__single .rs-content .rs-link.<?php echo esc_attr($button_class); ?>{
+        <?php if (!empty($fpg_button_background_color)) : ?>
+            background-color: <?php echo esc_attr($fpg_button_background_color); ?>;
+        <?php endif; ?>
+        <?php if (!empty($fpg_button_text_color)) : ?>
+            color: <?php echo esc_attr($fpg_button_text_color); ?>;
+        <?php endif; ?>
+        
     }
 
-    .rs-blog-layout-5 .rs-blog__single .rs-content .rs-link:hover {
-        background-color: <?php echo esc_attr($fpg_button_hover_background_color); ?>;
-        color: <?php echo esc_attr($fpg_button_text_hover_color); ?>;
-    }
+    .rs-blog-layout-5 .rs-blog__single .rs-content .btn-wrapper{
+        <?php if (!empty($fpg_button_order)) : ?>
+            order: <?php echo esc_attr($fpg_button_order); ?>;
+        <?php endif; ?>
 
+    }
+    .rs-blog-layout-5 .rs-blog__single .rs-content .rs-link.<?php echo esc_attr($button_class); ?>:hover {
+        <?php if (!empty($fpg_button_hover_background_color)) : ?>
+            background-color: <?php echo esc_attr($fpg_button_hover_background_color); ?>;
+        <?php endif; ?>
+        <?php if (!empty($fpg_button_text_hover_color)) : ?>
+            color: <?php echo esc_attr($fpg_button_text_hover_color); ?>;
+        <?php endif; ?>
+    }
+    .rs-blog-layout-5 .rs-blog__single .rs-content .rs-link.<?php echo esc_attr($button_class); ?>::before{
+        <?php if (!empty($fpg_button_border_color)) : ?>
+            background: <?php echo esc_attr($fpg_button_border_color); ?>;
+        <?php endif; ?>
+    }
 </style>
+
 
 <!-- End Blog Grid Layout 1 -->
 <?php
