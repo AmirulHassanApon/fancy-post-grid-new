@@ -7,6 +7,58 @@
      *
      */
     jQuery(document).ready(function($) {
+
+        function toggleLayoutActiveFields() {
+            var selectedLayout = $('input[name="fpg_layout_select"]:checked').val();
+            var selectedStyle = $('input[name="fancy_post_grid_style"]:checked').val();
+            
+            if (selectedLayout === 'grid') {
+                if (selectedStyle === 'style1') {
+                     
+                }else if (selectedStyle === 'style6') {
+                    $('#fpg_field_group_excerpt_main').hide(); 
+                    $('#fpg_excerpt_order_main').hide(); 
+                    $('#fpg_field_group_categories_main').hide(); 
+                    $('#fpg_field_group_tag_main').hide(); 
+                    $('#fpg_field_group_comment_count_main').hide(); 
+                    $('#fpg_excerpt_setting_main').hide(); 
+                    $('#fpg_excerpt_main').hide(); 
+                    $('#fpg_meta_hover_color_main').hide();
+                     
+                }else if (selectedStyle === 'style7') {
+                    $('#fpg_field_group_excerpt_main').hide(); 
+                    $('#fpg_excerpt_order_main').hide(); 
+                    $('#fpg_field_group_categories_main').hide(); 
+                    $('#fpg_field_group_tag_main').hide(); 
+                    $('#fpg_field_group_comment_count_main').hide(); 
+                    $('#fpg_excerpt_setting_main').hide(); 
+                    $('#fpg_excerpt_main').hide(); 
+                    $('#fpg_meta_hover_color_main').hide();
+                    $('#fpg_field_group_button_main').hide();
+                    $('#fpg_button_settings_main').hide();
+                    $('#fancy_button_option_main').hide();
+                     
+                } else {
+                    $('#fancy_post_cl_lg_main').show();
+                    $('#fpg_field_group_excerpt_main').show();
+                    $('#fpg_excerpt_order_main').show(); 
+                    $('#fpg_field_group_categories_main').show();
+                    $('#fpg_field_group_tag_main').show();
+                    $('#fpg_field_group_comment_count_main').show(); 
+                    $('#fpg_excerpt_setting_main').show(); 
+                    $('#fpg_excerpt_main').show(); 
+                    $('#fpg_meta_hover_color_main').show();
+                    $('#fpg_field_group_button_main').show(); 
+                    $('#fpg_button_settings_main').show();
+                    $('#fancy_button_option_main').show();
+                    
+                }
+            } else if (selectedLayout === 'slider') {
+                // Handle the slider layout if needed
+                $('#fancy_post_cl_lg_main').show(); // Ensure it shows for slider
+            }
+        }
+
         function toggleLayoutFields() {
             var selectedLayout = $('input[name="fpg_layout_select"]:checked').val();
             if (selectedLayout === 'grid') {
@@ -14,15 +66,21 @@
                 $('#fancy_post_column_grid').show();
                 $('#fancy_post_slider_style').hide();
                 $('#fancy_post_column_slider').hide();
+                $('#fpg_slider_option').hide();
+                $('#fpg_slider_pagination_option').hide();
+                $('#fpg_pagination').show();
             } else if (selectedLayout === 'slider') {
                 $('#fancy_post_grid_style').hide();
                 $('#fpg_pagination').hide();
                 $('#fancy_post_column_grid').hide();
                 $('#fancy_post_slider_style').show();
                 $('#fancy_post_column_slider').show();
+                $('#fpg_slider_option').show();
+                $('#fpg_slider_pagination_option').show();
 
             }
         }
+
         function toggleButtonFields() {
             var selectedLayout = $('#fancy_button_option').val();
             if (selectedLayout === 'filled') {
@@ -54,11 +112,16 @@
         }
     
         // Initialize the visibility on page load
+        toggleLayoutActiveFields();
         toggleLayoutFields();
         toggleButtonFields();
         togglePaginationFields();
     
-        // Change event for the layout selection
+        // Bind the function to the change event for both layout and style radio buttons
+        $('input[name="fpg_layout_select"], input[name="fancy_post_grid_style"]').on('change', function() {
+            toggleLayoutActiveFields();
+        });
+
         $('input[name="fpg_layout_select"]').change(function() {
             toggleLayoutFields();
         });
@@ -91,10 +154,12 @@
                 $('.fpg-feature-image-size').hide();
                 $('.fpg-media-source').hide();
                 $('.fpg-hover-animation').hide();
+                $('.fpg-image-border-radius').hide();
             } else {
                 $('.fpg-feature-image-size').show();
                 $('.fpg-media-source').show();
                 $('.fpg-hover-animation').show();
+                $('.fpg-image-border-radius').show();
             }
         }
 
