@@ -206,7 +206,8 @@ function fpg_metabox_shortcode_callback( $post ) {
 
     $fancy_post_read_more_border_radius         = get_post_meta( $post->ID, 'fancy_post_read_more_border_radius', true );
     $fancy_post_button_padding                  = get_post_meta( $post->ID, 'fancy_post_button_padding', true );
-    $fancy_post_border_width                    = get_post_meta( $post->ID, 'fancy_post_border_width', true );
+    $fancy_post_button_border_width                    = get_post_meta( $post->ID, 'fancy_post_button_border_width', true );
+    $fpg_border_color                    = get_post_meta( $post->ID, 'fpg_border_color', true );
     
     $fancy_post_read_more_alignment             = get_post_meta( $post->ID, 'fancy_post_read_more_alignment', true );
     if ( empty( $fancy_post_read_more_alignment ) ) {
@@ -359,9 +360,6 @@ function fpg_metabox_shortcode_callback( $post ) {
     if ( empty( $fpg_meta_font_weight ) ) {
         $fpg_meta_font_weight = '400'; 
     }
-    
-
-
 
     // Output for the metabox content
     ?>
@@ -670,63 +668,63 @@ function fpg_metabox_shortcode_callback( $post ) {
                     <legend><?php esc_html_e( 'Field Selection', 'fancy-post-grid' ); ?></legend>
 
                     <!-- Field Group Checkboxes -->
-                    <div class="fpg-field-group fpg-common">
+                    <div class="fpg-field-group fpg-common" id="fpg_field_group_title_main">
                         <input type="checkbox" id="fpg_field_group_title" name="fpg_field_group_title" value="1" <?php checked( $fpg_field_group_title, '1' ); ?> />
                         <label for="fpg_field_group_title">
                             <span></span>
                             <?php esc_html_e( 'Title', 'fancy-post-grid' ); ?>
                         </label>
                     </div>
-                    <div class="fpg-field-group fpg-common">
+                    <div class="fpg-field-group fpg-common" id="fpg_field_group_excerpt_main">
                         <input type="checkbox" id="fpg_field_group_excerpt" name="fpg_field_group_excerpt" value="1" <?php checked( $fpg_field_group_excerpt, '1' ); ?> />
                         <label for="fpg_field_group_excerpt">
                             <span></span>
                             <?php esc_html_e( 'Excerpt', 'fancy-post-grid' ); ?>
                         </label>
                     </div>
-                    <div class="fpg-field-group fpg-common">
+                    <div class="fpg-field-group fpg-common" id="fpg_field_group_button_main">
                         <input type="checkbox" id="fpg_field_group_read_more" name="fpg_field_group_read_more" value="1" <?php checked( $fpg_field_group_read_more, '1' ); ?> />
                         <label for="fpg_field_group_read_more">
                             <span></span>
-                            <?php esc_html_e( 'Read More', 'fancy-post-grid' ); ?>
+                            <?php esc_html_e( 'Button', 'fancy-post-grid' ); ?>
                         </label>
                     </div>
-                    <div class="fpg-field-group fpg-common">
+                    <div class="fpg-field-group fpg-common" id="fpg_field_group_image_main">
                         <input type="checkbox" id="fpg_field_group_image" name="fpg_field_group_image" value="1" <?php checked( $fpg_field_group_image, '1' ); ?> />
                         <label for="fpg_field_group_image">
                             <span></span>
                             <?php esc_html_e( 'Image', 'fancy-post-grid' ); ?>
                         </label>
                     </div>
-                    <div class="fpg-field-group fpg-common">
+                    <div class="fpg-field-group fpg-common" id="fpg_field_group_post_date_main">
                         <input type="checkbox" id="fpg_field_group_post_date" name="fpg_field_group_post_date" value="1" <?php checked( $fpg_field_group_post_date, '1' ); ?> />
                         <label for="fpg_field_group_post_date">
                             <span></span>
                             <?php esc_html_e( 'Post Date', 'fancy-post-grid' ); ?>
                         </label>
                     </div>
-                    <div class="fpg-field-group fpg-common">
+                    <div class="fpg-field-group fpg-common" id="fpg_field_group_author_main">
                         <input type="checkbox" id="fpg_field_group_author" name="fpg_field_group_author" value="1" <?php checked( $fpg_field_group_author, '1' ); ?> />
                         <label for="fpg_field_group_author">
                             <span></span>
                             <?php esc_html_e( 'Author', 'fancy-post-grid' ); ?>
                         </label>
                     </div>
-                    <div class="fpg-field-group fpg-common">
+                    <div class="fpg-field-group fpg-common" id="fpg_field_group_categories_main">
                         <input type="checkbox" id="fpg_field_group_categories" name="fpg_field_group_categories" value="1" <?php checked( $fpg_field_group_categories, '1' ); ?> />
                         <label for="fpg_field_group_categories">
                             <span></span>
                             <?php esc_html_e( 'Categories', 'fancy-post-grid' ); ?>
                         </label>
                     </div>
-                    <div class="fpg-field-group fpg-common">
+                    <div class="fpg-field-group fpg-common" id="fpg_field_group_tag_main">
                         <input type="checkbox" id="fpg_field_group_tag" name="fpg_field_group_tag" value="1" <?php checked( $fpg_field_group_tag, '1' ); ?> />
                         <label for="fpg_field_group_tag">                            
                             <span></span>
                             <?php esc_html_e( 'Tags', 'fancy-post-grid' ); ?>
                         </label>
                     </div>
-                    <div class="fpg-field-group fpg-common">
+                    <div class="fpg-field-group fpg-common" id="fpg_field_group_comment_count_main">
                         <input type="checkbox" id="fpg_field_group_comment_count" name="fpg_field_group_comment_count" value="1" <?php checked( $fpg_field_group_comment_count, '1' ); ?> />
                         <label for="fpg_field_group_comment_count">
                             <span></span>
@@ -736,7 +734,6 @@ function fpg_metabox_shortcode_callback( $post ) {
                 </fieldset>
             </div>
         </div>
-
 
         <div id="tab-3" class="fpg-tab-content">
             
@@ -834,7 +831,7 @@ function fpg_metabox_shortcode_callback( $post ) {
                 <fieldset>
                     <legend><?php esc_html_e( 'Column Settings:', 'fancy-post-grid' ); ?></legend>
                     <div class="fpg-post-select-main">
-                        <div class="fpg-post-select">
+                        <div class="fpg-post-select" id="fancy_post_cl_lg_main">
                             <label for="fancy_post_cl_lg"><?php esc_html_e( 'Large Screen Column:', 'fancy-post-grid' ); ?></label>
                             <select id="fancy_post_cl_lg" name="fancy_post_cl_lg" style="width: 100%;">
                                 <option value="12" <?php selected( $fancy_post_cl_lg, '12' ); ?>><?php esc_html_e( '1 Column', 'fancy-post-grid' ); ?></option>
@@ -947,7 +944,7 @@ function fpg_metabox_shortcode_callback( $post ) {
                             <input type="number" id="fpg_title_order" name="fpg_title_order" value="<?php echo esc_attr( $fpg_title_order ); ?>" placeholder="2" />
                         </div>
                         <!-- Excerpt Order -->
-                        <div class="fpg-margin-box">
+                        <div class="fpg-margin-box" id="fpg_excerpt_order_main">
                             <label for="fpg_excerpt_order"><?php esc_html_e( 'Excerpt:', 'fancy-post-grid' ); ?></label>
                             <input type="number" id="fpg_excerpt_order" name="fpg_excerpt_order" value="<?php echo esc_attr( $fpg_excerpt_order ); ?>" placeholder="3" />
                         </div>                   
@@ -1375,7 +1372,7 @@ function fpg_metabox_shortcode_callback( $post ) {
                     </div>   
                 </fieldset>
             </div>
-            <div class="fpg-excerpt-settings fpg-common">
+            <div class="fpg-excerpt-settings fpg-common" id="fpg_excerpt_setting_main">
                 <fieldset>
                     <legend><?php esc_html_e( 'Excerpt Settings', 'fancy-post-grid' ); ?></legend>
                     <div class="fpg-post-select-main">
@@ -1446,7 +1443,7 @@ function fpg_metabox_shortcode_callback( $post ) {
                     </div>    
                 </fieldset>
             </div>
-            <div class="fpg-read-more-button-settings fpg-common">
+            <div class="fpg-read-more-button-settings fpg-common" id="fancy_button_option_main">
                 <fieldset>
                     <legend><?php esc_html_e( 'Read More Button Settings', 'fancy-post-grid' ); ?></legend>
 
@@ -1471,15 +1468,21 @@ function fpg_metabox_shortcode_callback( $post ) {
                             <label for="fancy_post_button_padding"><?php esc_html_e( 'Padding:', 'fancy-post-grid' ); ?></label>
                             <input type="text" id="fancy_post_button_padding" name="fancy_post_button_padding" value="<?php echo esc_attr( $fancy_post_button_padding ); ?>"placeholder="e.g., 2px 3px 4px 5px"  />
                         </div>
+                        <!-- Background Color -->
+                        <div class="fpg-color-box">
+                            <label for="fpg_border_color"><?php esc_html_e( 'Border Color:', 'fancy-post-grid' ); ?></label>
+                            <input type="text" class="color-field" id="fpg_border_color" name="fpg_border_color" value="<?php echo esc_attr( $fpg_border_color ); ?>" />
+                        </div> 
                         <!-- Border width -->
                         <div class="fpg-read-more-button-width fpg-common">
-                            <label for="fancy_post_border_width"><?php esc_html_e( 'Border Width:', 'fancy-post-grid' ); ?></label>
-                            <input type="text" id="fancy_post_border_width" name="fancy_post_border_width" value="<?php echo esc_attr( $fancy_post_border_width ); ?>"placeholder="e.g., 2px 3px 4px 5px"  />
+                            <label for="fancy_post_button_border_width"><?php esc_html_e( 'Border Width:', 'fancy-post-grid' ); ?></label>
+                            <input type="text" id="fancy_post_button_border_width" name="fancy_post_button_border_width" value="<?php echo esc_attr( $fancy_post_button_border_width ); ?>"placeholder="e.g., 2px 3px 4px 5px"  />
                         </div>
 
                         <div class="fpg-button-border-style fpg-common" id="fpg-button-border-style">
                             <label for="fancy_button_border_style"><?php esc_html_e( 'Border Style:', 'fancy-post-grid' ); ?></label>
                             <select id="fancy_button_border_style" name="fancy_button_border_style">
+                                <option value="unset" <?php selected( $fancy_button_border_style, 'unset' ); ?>><?php esc_html_e( 'Unset', 'fancy-post-grid' ); ?></option>
                                 <option value="dotted" <?php selected( $fancy_button_border_style, 'dotted' ); ?>><?php esc_html_e( 'Dotted', 'fancy-post-grid' ); ?></option>
                                 <option value="dashed" <?php selected( $fancy_button_border_style, 'dashed' ); ?>><?php esc_html_e( 'Dashed', 'fancy-post-grid' ); ?></option>
                                 <option value="solid" <?php selected( $fancy_button_border_style, 'solid' ); ?>><?php esc_html_e( 'Solid', 'fancy-post-grid' ); ?></option>
@@ -1608,6 +1611,7 @@ function fpg_metabox_shortcode_callback( $post ) {
                             <label for="fancy_post_border_style"><?php esc_html_e( 'Border Style:', 'fancy-post-grid' ); ?></label>
                             <select id="fancy_post_border_style" name="fancy_post_border_style">
                                 
+                                <option value="unset" <?php selected( $fancy_post_border_style, 'unset' ); ?>><?php esc_html_e( 'Unset', 'fancy-post-grid' ); ?></option>
                                 <option value="solid" <?php selected( $fancy_post_border_style, 'solid' ); ?>><?php esc_html_e( 'Solid', 'fancy-post-grid' ); ?></option>
                                 <option value="dashed" <?php selected( $fancy_post_border_style, 'dashed' ); ?>><?php esc_html_e( 'Dashed', 'fancy-post-grid' ); ?></option>
                                 <option value="dotted" <?php selected( $fancy_post_border_style, 'dotted' ); ?>><?php esc_html_e( 'Dotted', 'fancy-post-grid' ); ?></option>
@@ -1651,8 +1655,8 @@ function fpg_metabox_shortcode_callback( $post ) {
                         </div>  
 
                         <div class="fpg-font-size-box">
-                            <label for="fpg_title_font_size"><?php esc_html_e( 'Font Size (11-50px):', 'fancy-post-grid' ); ?></label>
-                            <input type="number" id="fpg_title_font_size" name="fpg_title_font_size" min="11" max="50" value="<?php echo esc_attr( $fpg_title_font_size ); ?>" />
+                            <label for="fpg_title_font_size"><?php esc_html_e( 'Font Size:', 'fancy-post-grid' ); ?></label>
+                            <input type="number" id="fpg_title_font_size" name="fpg_title_font_size" value="<?php echo esc_attr( $fpg_title_font_size ); ?>" placeholder="e.g., 50px " />
                         </div>
 
                         <div class="fpg-font-weight-box">
@@ -1702,14 +1706,14 @@ function fpg_metabox_shortcode_callback( $post ) {
                             <input type="text" class="color-field" id="fpg_meta_color" name="fpg_meta_color" value="<?php echo esc_attr( $fpg_meta_color ); ?>" />
                         </div>
 
-                        <div class="fpg-color-box">
+                        <div class="fpg-color-box" id="fpg_meta_hover_color_main">
                             <label for="fpg_meta_hover_color"><?php esc_html_e( 'Hover Color:', 'fancy-post-grid' ); ?></label>
                             <input type="text" class="color-field" id="fpg_meta_hover_color" name="fpg_meta_hover_color" value="<?php echo esc_attr( $fpg_meta_hover_color ); ?>" />
                         </div>
 
                         <div class="fpg-font-size-box">
-                            <label for="fpg_meta_size"><?php esc_html_e( 'Font Size (11-50px):', 'fancy-post-grid' ); ?></label>
-                            <input type="number" id="fpg_meta_size" name="fpg_meta_size" min="11" max="50" value="<?php echo esc_attr( $fpg_meta_size ); ?>" />
+                            <label for="fpg_meta_size"><?php esc_html_e( 'Font Size:', 'fancy-post-grid' ); ?></label>
+                            <input type="number" id="fpg_meta_size" name="fpg_meta_size"  value="<?php echo esc_attr( $fpg_meta_size ); ?>" placeholder="e.g., 20px " />
                         </div>
 
                         <div class="fpg-font-weight-box">
@@ -1745,7 +1749,7 @@ function fpg_metabox_shortcode_callback( $post ) {
                 </fieldset>
             </div>
 
-            <div class="fancy-post-grid-excerpt fpg-common">
+            <div class="fancy-post-grid-excerpt fpg-common" id="fpg_excerpt_main">
                 <fieldset>
                     <legend><?php esc_html_e( 'Excerpt Settings', 'fancy-post-grid' ); ?></legend>
                     
@@ -1756,8 +1760,8 @@ function fpg_metabox_shortcode_callback( $post ) {
                         </div>
 
                         <div class="fpg-font-size-box">
-                            <label for="fpg_excerpt_size"><?php esc_html_e( 'Font Size (11-50px):', 'fancy-post-grid' ); ?></label>
-                            <input type="number" id="fpg_excerpt_size" name="fpg_excerpt_size" min="11" max="50" value="<?php echo esc_attr( $fpg_excerpt_size ); ?>" />
+                            <label for="fpg_excerpt_size"><?php esc_html_e( 'Font Size:', 'fancy-post-grid' ); ?></label>
+                            <input type="number" id="fpg_excerpt_size" name="fpg_excerpt_size"  value="<?php echo esc_attr( $fpg_excerpt_size ); ?>"placeholder="e.g., 16px " />
                         </div>
 
                         <div class="fpg-font-weight-box">
@@ -1787,7 +1791,7 @@ function fpg_metabox_shortcode_callback( $post ) {
                 </fieldset>
             </div>  
 
-            <div class="fancy-post-grid-button fpg-common">
+            <div class="fancy-post-grid-button fpg-common" id="fpg_button_settings_main">
                 <fieldset>
                     <legend><?php esc_html_e( 'Button Settings', 'fancy-post-grid' ); ?></legend>
                     
@@ -2171,6 +2175,9 @@ function fpg_save_metabox_data( $post_id ) {
     if ( isset( $_POST['fancy_post_button_padding'] ) ) {
         update_post_meta( $post_id, 'fancy_post_button_padding', sanitize_text_field( $_POST['fancy_post_button_padding'] ) );
     }
+    if ( isset( $_POST['fpg_border_color'] ) ) {
+        update_post_meta( $post_id, 'fpg_border_color', sanitize_hex_color( $_POST['fpg_border_color'] ) );
+    }
     if ( isset( $_POST['fancy_post_border_width'] ) ) {
         update_post_meta( $post_id, 'fancy_post_border_width', sanitize_text_field( $_POST['fancy_post_border_width'] ) );
     }
@@ -2331,8 +2338,8 @@ function fpg_save_metabox_data( $post_id ) {
         update_post_meta( $post_id, 'fpg_single_section_border_color', sanitize_text_field( $_POST['fpg_single_section_border_color'] ) );
     }
     // Save Border Width
-    if ( isset( $_POST['fancy_post_border_width'] ) ) {
-        update_post_meta( $post_id, 'fancy_post_border_width', sanitize_text_field( $_POST['fancy_post_border_width'] ) );
+    if ( isset( $_POST['fancy_post_button_border_width'] ) ) {
+        update_post_meta( $post_id, 'fancy_post_button_border_width', sanitize_text_field( $_POST['fancy_post_button_border_width'] ) );
     }
 
     // Save Border Style
