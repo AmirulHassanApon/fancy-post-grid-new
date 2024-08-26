@@ -88,7 +88,8 @@ function fpg_shortcode( $atts ) {
     	//feature-image
     	$fancy_post_hide_feature_image              = get_post_meta( $post_id, 'fancy_post_hide_feature_image', true );	    
 	    $fancy_post_feature_image_size              = get_post_meta( $post_id, 'fancy_post_feature_image_size', true );
-	    echo($fancy_post_feature_image_size );
+	    $fpg_title_border_style              = get_post_meta( $post_id, 'fpg_title_border_style', true );
+	    
 	    $fancy_post_media_source                    = get_post_meta( $post_id, 'fancy_post_media_source', true ); 
 	    $fancy_post_hover_animation                 = get_post_meta( $post_id, 'fancy_post_hover_animation', true );
 
@@ -130,6 +131,8 @@ function fpg_shortcode( $atts ) {
 	    $fpg_section_background_color               = get_post_meta( $post_id, 'fpg_section_background_color', true );
 	    $fpg_section_margin                         = get_post_meta( $post_id, 'fpg_section_margin', true );
 	    $fpg_section_padding                        = get_post_meta( $post_id, 'fpg_section_padding', true );
+	    $fancy_post_section_border_radius                         = get_post_meta( $post_id, 'fancy_post_section_border_radius', true );
+	    $fancy_post_image_border_radius                        = get_post_meta( $post_id, 'fancy_post_image_border_radius', true );
 
 	    //Padding & Margin 
 	    $fpg_meta_padding                = get_post_meta( $post_id,'fpg_meta_padding', true); 
@@ -154,6 +157,7 @@ function fpg_shortcode( $atts ) {
 	    $fpg_single_content_section_padding                        = get_post_meta( $post_id, 'fpg_single_content_section_padding', true );
 	    $fpg_single_section_border_color                        = get_post_meta( $post_id, 'fpg_single_section_border_color', true );
 	    $fancy_post_border_width                        = get_post_meta( $post_id, 'fancy_post_border_width', true );
+	    $fancy_post_button_border_width                        = get_post_meta( $post_id, 'fancy_post_button_border_width', true );
 	    $fancy_post_border_style                        = get_post_meta( $post_id, 'fancy_post_border_style', true );
 
 	    // Title
@@ -182,7 +186,27 @@ function fpg_shortcode( $atts ) {
 	    $fpg_meta_size                              = get_post_meta( $post_id,'fpg_meta_size', true); 
 	    $fpg_meta_font_weight                       = get_post_meta( $post_id,'fpg_meta_font_weight', true ); 
 	    $fpg_meta_alignment                         = get_post_meta( $post_id,'fpg_meta_alignment', true ); 
+	    // Pagination Style Values
+		$fpg_pagination_color                     = get_post_meta( $post_id, 'fpg_pagination_color', true );
+		$fpg_pagination_background                = get_post_meta( $post_id, 'fpg_pagination_background', true );
+		$fpg_pagination_border_color              = get_post_meta( $post_id, 'fpg_pagination_border_color', true );
+		$fpg_pagination_border_style              = get_post_meta( $post_id, 'fpg_pagination_border_style', true );
+		$fpg_pagination_border_radius             = get_post_meta( $post_id, 'fpg_pagination_border_radius', true );
+		$fpg_pagination_padding                   = get_post_meta( $post_id, 'fpg_pagination_padding', true );
+		$fpg_pagination_margin                    = get_post_meta( $post_id, 'fpg_pagination_margin', true );
+		$fpg_pagination_gap                       = get_post_meta( $post_id, 'fpg_pagination_gap', true );
+		$fpg_pagination_hover_color               = get_post_meta( $post_id, 'fpg_pagination_hover_color', true );
+		$fpg_pagination_hover_background          = get_post_meta( $post_id, 'fpg_pagination_hover_background', true );
+		$fpg_pagination_hover_border_color        = get_post_meta( $post_id, 'fpg_pagination_hover_border_color', true );
+		$fpg_pagination_active_color              = get_post_meta( $post_id, 'fpg_pagination_active_color', true );
+		$fpg_pagination_active_background         = get_post_meta( $post_id, 'fpg_pagination_active_background', true );
+		$fpg_pagination_active_border_color       = get_post_meta( $post_id, 'fpg_pagination_active_border_color', true );
 
+		$fpg_pagination_border_width              = get_post_meta( $post_id, 'fpg_pagination_border_width', true );
+		$fpg_pagination_height         = get_post_meta( $post_id, 'fpg_pagination_height', true );
+		$fpg_pagination_width       = get_post_meta( $post_id, 'fpg_pagination_width', true );
+
+		$fpg_border_color       = get_post_meta( $post_id, 'fpg_border_color', true );
 	    $main_alignment_class = '';
         if ($fancy_post_main_box_alignment === 'align-start') {
             $main_alignment_class = 'align-start';
