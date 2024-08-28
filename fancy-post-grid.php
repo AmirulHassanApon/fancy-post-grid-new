@@ -47,27 +47,15 @@ include_once FPG_PATH . 'admin/fpg-admin.php';
 include_once  FPG_PATH.'includes/template.php';
 include_once  FPG_PATH.'includes/shortcode_generate.php';
 include_once  FPG_PATH.'includes/metabox/fancy-post-gird-metabox.php';
-include_once  FPG_PATH .'admin/settings/plugin-settings.php';
 
 
-/**
- * Link to settings page from plugins admin page
- *
- */
-function fpg_add_action_links ( $links ) {
-    $setting_links = array(
-        '<a href="' . admin_url( 'edit.php?post_type=wp-fpg&page=fpgsettings' ) . '">'.esc_html( "Settings", "fancy-post-grid" ).'</a>',
-    );
-    return array_merge( $links, $setting_links );
-}
-add_filter( 'plugin_action_links_' . plugin_basename(__FILE__), 'fpg_add_action_links' );
 /**
  * Register custom image sizes for Fancy Post Grid
  */
 function fancy_post_register_image_sizes() {
-    add_image_size( 'fancy_post_custom_size', 666, 450, true ); // Custom size with 666x450 dimensions and hard crop
+    add_image_size( 'fancy_post_custom_size', 768, 500, true ); // Custom size with 666x450 dimensions and hard crop
     add_image_size( 'fancy_post_square', 500, 500, true );      // Square size with 500x500 dimensions
-    add_image_size( 'fancy_post_landscape', 800, 400, true );   // Landscape size with 800x400 dimensions
-    add_image_size( 'fancy_post_portrait', 400, 800, true );    // Portrait size with 400x800 dimensions
+    add_image_size( 'fancy_post_landscape', 834, 550, true );   // Landscape size with 800x400 dimensions
+    add_image_size( 'fancy_post_portrait', 421, 550, true );    // Portrait size with 400x800 dimensions
 }
 add_action( 'after_setup_theme', 'fancy_post_register_image_sizes' );
