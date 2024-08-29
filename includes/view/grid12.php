@@ -1,14 +1,15 @@
 <?php
 ob_start();
 ?>
-<!-- ==== Blog Layout 11 ==== -->
+<!-- ==== Blog Layout 12 ==== -->
 <section class="rs-blog-layout-26">
     <div class="container">
         <div class="row">
 
-            <?php
+        <?php
+            // =======Pagination==========
+            
             // Check if pagination is on or off
-            $fpg_post_per_page = -1;
             if ($fancy_post_pagination === 'off') {
                 $fpg_post_per_page = -1;
             }  
@@ -109,8 +110,8 @@ ob_start();
                 if (!empty($tax_query)) {
                     $args['tax_query'] = $tax_query;
                 }
-                // echo '<pre>' . print_r($args, true) . '</pre>';
-
+                
+                
             $query = new WP_Query($args);
 
             // Loop through the custom query
@@ -130,8 +131,10 @@ ob_start();
                 // Determine if the feature image should be hidden
                 $hide_feature_image = isset($fancy_post_hide_feature_image) && $fancy_post_hide_feature_image === 'off';
                 
+
                 // Determine the feature image size
-                $feature_image_size = isset($fancy_post_feature_image_size) ? (string) $fancy_post_feature_image_size : 'large';  
+                $feature_image_size = isset($fancy_post_feature_image_size) ? (string) $fancy_post_feature_image_size : '';  
+
                            
                 // Determine the media source
                 $media_source = isset($fancy_post_media_source) ? $fancy_post_media_source : 'feature_image';
@@ -153,56 +156,76 @@ ob_start();
 
                 // Apply hover animation class if needed
                 $hover_class = $hover_animation !== 'none' ? 'hover-' . esc_attr($hover_animation) : '';
-            ?>
+        ?>
 
+            <div class="<?php echo esc_attr($main_cl_lg . ' ' .  $main_cl_md . ' ' . $main_cl_sm . ' ' . $main_cl_mobile); ?>">
+                <div class="rs-blog-layout-26-item <?php echo esc_attr($main_alignment_class); ?> <?php echo esc_attr($hover_class); ?>">
+                    <!-- Image -->
+                    <?php if (!$hide_feature_image && $fpg_field_group_image) : ?>
+                        <div class="rs-thumb">
+                            <?php if ($feature_image_url) : ?>
 
-                    <div class="<?php echo esc_attr($main_cl_lg . ' ' .  $main_cl_md . ' ' . $main_cl_sm . ' ' . $main_cl_mobile); ?>">
-                        <div class="rs-blog-layout-26-item">
-                            <div class="rs-thumb">
-                                <a href="<?php the_permalink(); ?>">
-                                    <img src="<?php echo esc_url(get_the_post_thumbnail_url(get_the_ID(), 'full')); ?>" alt="">
-                                </a>
-                                <svg viewBox="0 0 410 32" fill="none" xmlns="http://www.w3.org/2000/svg" class="shape__rs_course">
-                                    <path fill-rule="evenodd" clip-rule="evenodd" d="M346.69 23.5159C371.59 23.3769 398.013 17.3185 410 4.85404V32H0V9.75773C2.99658 0.284217 26.1914 -2.12936 41.5898 1.81449C49.0762 3.72855 55.7041 6.53361 62.3281 9.33695C69.3286 12.2997 76.3247 15.2605 84.3242 17.1654C111.49 25.8323 134.405 18.6565 157.427 11.4472C171.419 7.06559 185.451 2.67167 200.5 1.81449C217.549 0.842933 234.721 5.15653 251.493 9.36967C259.098 11.2798 266.62 13.1693 274.011 14.5363C278.288 15.3272 282.339 16.1309 286.297 16.9161C304.269 20.4812 320.31 23.6632 346.69 23.5159Z" fill="#ffffff"></path>
-                                </svg>
-                            </div>
-                            <div class="rs-content">
-                                <div class="rs-meta">
-                                    <div class="meta-date" >
-                                            <span><?php echo esc_html(get_the_date('d M Y')); ?></span>
-                                    </div>
-                                    <div class="meta-category">
-                                        <?php the_category('<a href="#">', '</a>'); ?>
-                                    </div>
+                                <?php
+
+                                    $post_id = get_the_ID();
+                                    // Get the thumbnail ID
+                                    $thumbnail_id = get_post_thumbnail_id($post_id);
                                     
-                                </div>
-                                <?php if ($fpg_field_group_title) : ?>
-                                    <<?php echo esc_attr($title_tag); ?> class="title">
-                                        <?php if ($fancy_link_details === 'on') : ?>
-                                            <a href="<?php the_permalink(); ?>"
-                                               <?php echo $target_blank; ?>
-                                               class="title-link">
-                                                <?php echo wp_trim_words(get_the_title(), $fancy_post_title_limit, $title_more_text); ?>
-                                            </a>
-                                        <?php else : ?>
-                                            <?php echo wp_trim_words(get_the_title(), $fancy_post_title_limit, $title_more_text); ?>
-                                        <?php endif; ?>
-                                    </<?php echo esc_attr($title_tag); ?>>
-                                <?php endif; ?>
-                                <?php if ($fpg_field_group_excerpt) : ?>
-                                    <p>
-                                        <?php echo wp_trim_words(get_the_content(), $fancy_post_excerpt_limit, $excerpt_more_text); ?>
-                                    </p>
-                                <?php endif; ?>
-                                <?php if ($fancy_link_details === 'on' && $fpg_field_group_read_more) : ?>
-                                    <a class="rs-btn" href="<?php the_permalink(); ?>" <?php echo $target_blank; ?>>
-                                        <?php echo esc_html($fancy_post_read_more_text); ?>
-                                        <i class="ri-arrow-right-line"></i>
-                                    </a>
-                                <?php endif; ?>
-                            </div>
+                                    // Get the image alt text and title text
+                                    $image_alt = get_post_meta($thumbnail_id, '_wp_attachment_image_alt', true);
+                                    $image_title = get_the_title($thumbnail_id);
+                                    // Use alt text if available; otherwise, use title text
+                                    $alt_text = !empty($image_alt) ? esc_attr($image_alt) : esc_attr($image_title);
+
+                                ?>
+                                <a href="<?php the_permalink(); ?>" <?php echo esc_attr($target_blank); ?>>
+                                    <img src="<?php echo esc_url($feature_image_url); ?>" alt="<?php echo $alt_text; ?>">
+                                </a>
+                            <?php endif; ?>
                         </div>
+                    <?php endif; ?>
+                    <div class="rs-content">
+                        <div class="rs-meta <?php echo esc_attr($meta_alignment_class); ?>">
+                            <?php if ($fpg_field_group_post_date) : ?>
+                            <div class="meta-date" >
+                                    <span><?php echo esc_html(get_the_date('d M Y')); ?></span>
+                            </div>
+                            <?php endif; ?>
+                            <?php if ($fpg_field_group_categories) : ?>
+                            <div class="meta-category">
+                                <?php the_category('<a href="#">', '</a>'); ?>
+                            </div>
+                            <?php endif; ?>                            
+                        </div>
+                        <?php if ($fpg_field_group_title) : ?>
+                            <<?php echo esc_attr($title_tag); ?> class="title <?php echo esc_attr($title_alignment_class); ?>">
+                                <?php if ($fancy_link_details === 'on') : ?>
+                                    <a href="<?php the_permalink(); ?>"
+                                       <?php echo $target_blank; ?>
+                                       class="title-link">
+                                        <?php echo wp_trim_words(get_the_title(), $fancy_post_title_limit, $title_more_text); ?>
+                                    </a>
+                                <?php else : ?>
+                                    <?php echo wp_trim_words(get_the_title(), $fancy_post_title_limit, $title_more_text); ?>
+                                <?php endif; ?>
+                            </<?php echo esc_attr($title_tag); ?>>
+                        <?php endif; ?>
+                        <?php if ($fpg_field_group_excerpt) : ?>
+                            <p class="<?php echo esc_attr($excerpt_alignment_class); ?>">
+                                <?php echo wp_trim_words(get_the_content(), $fancy_post_excerpt_limit, $excerpt_more_text); ?>
+                            </p>
+                        <?php endif; ?>
+                        <?php if ($fancy_link_details === 'on' && $fpg_field_group_read_more) : ?>
+                            <div class="btn-wrapper <?php echo esc_attr($button_alignment_class); ?>">
+                                <a class="rs-btn <?php echo esc_attr($button_class); ?>" href="<?php the_permalink(); ?>" <?php echo $target_blank; ?>>
+                                    <?php echo esc_html($fancy_post_read_more_text); ?>
+                                    <i class="ri-arrow-right-line"></i>
+                                </a>
+                            </div>
+                        <?php endif; ?>
                     </div>
+                </div>
+            </div>
 
             <?php
                 endwhile;
@@ -228,6 +251,252 @@ ob_start();
         <?php endif; ?>
     </div>
 </section>
+<style type="text/css">
+    /* General Styles */
+    .rs-blog-layout-26 {
+        <?php if (!empty($fpg_section_background_color)) : ?>
+            background-color: <?php echo esc_attr($fpg_section_background_color); ?>;
+        <?php endif; ?>
+        <?php if (!empty($fpg_section_margin)) : ?>
+            margin: <?php echo esc_attr($fpg_section_margin); ?>;
+        <?php endif; ?>
+        <?php if (!empty($fpg_section_padding)) : ?>
+            padding: <?php echo esc_attr($fpg_section_padding); ?>;
+        <?php endif; ?>
+    }
+    .rs-blog-layout-26 .rs-blog-layout-26-item{
+        <?php if (!empty($fancy_post_section_border_radius)) : ?>
+            border-radius: <?php echo esc_attr($fancy_post_section_border_radius); ?>;
+        <?php endif; ?>
+    }
+    .rs-blog-layout-26 .rs-blog-layout-26-item .rs-content{
+        <?php if (!empty($fpg_single_section_background_color)) : ?>
+            background-color: <?php echo esc_attr($fpg_single_section_background_color); ?>;
+        <?php endif; ?>
+        <?php if (!empty($fpg_single_section_margin)) : ?>
+            margin: <?php echo esc_attr($fpg_single_section_margin); ?>;
+        <?php endif; ?>
+        <?php if (!empty($fpg_single_section_padding)) : ?>
+            padding: <?php echo esc_attr($fpg_single_section_padding); ?>;
+        <?php endif; ?>
+        <?php if (!empty($fpg_single_section_border_color)) : ?>
+            border-color: <?php echo esc_attr($fpg_single_section_border_color); ?>;
+        <?php endif; ?>
+        <?php if (!empty($fancy_post_border_style)) : ?>
+            border-style: <?php echo esc_attr($fancy_post_border_style); ?>;
+        <?php endif; ?>
+        <?php if (!empty($fancy_post_border_width)) : ?>
+            border-width: <?php echo esc_attr($fancy_post_border_width); ?>;
+        <?php endif; ?>
+        <?php if (!empty($fancy_post_section_border_radius)) : ?>
+            border-radius: <?php echo esc_attr($fancy_post_section_border_radius); ?>;
+        <?php endif; ?>
+    }
+    .rs-blog-layout-26 .rs-blog-layout-26-item:hover .rs-content{
+        <?php if (!empty($fpg_single_section_background_color)) : ?>
+            background-color: <?php echo esc_attr($fpg_single_section_background_color); ?>DE;
+        <?php endif; ?>
+    }
+
+
+    .rs-blog-layout-26-item .rs-content .rs-meta{
+        <?php if (!empty($fpg_meta_order)) : ?>
+            order: <?php echo esc_attr($fpg_meta_order); ?>;
+        <?php endif; ?>
+        <?php if (!empty($fpg_meta_margin)) : ?>
+            margin: <?php echo esc_attr($fpg_meta_margin); ?>;
+        <?php endif; ?>
+        <?php if (!empty($fpg_meta_padding)) : ?>
+            padding: <?php echo esc_attr($fpg_meta_padding); ?>;
+        <?php endif; ?>
+    }
+    .rs-blog-layout-26-item .rs-content .rs-meta .meta-date span{
+        <?php if (!empty($fpg_meta_color)) : ?>
+            color: <?php echo esc_attr($fpg_meta_color); ?>;
+        <?php endif; ?>
+        <?php if (!empty($fpg_meta_size)) : ?>
+            font-size: <?php echo esc_attr($fpg_meta_size); ?>px;
+        <?php endif; ?>
+        <?php if (!empty($fpg_meta_font_weight)) : ?>
+            font-weight: <?php echo esc_attr($fpg_meta_font_weight); ?>;
+        <?php endif; ?>
+    }
+    .rs-blog-layout-26-item .rs-content .rs-meta .meta-category a{
+        <?php if (!empty($fpg_author_color)) : ?>
+            color: <?php echo esc_attr($fpg_author_color); ?>;
+        <?php endif; ?>
+        <?php if (!empty($fpg_author_padding)) : ?>
+            padding: <?php echo esc_attr($fpg_author_padding); ?>;
+        <?php endif; ?>
+    }
+    .rs-blog-layout-26-item .rs-content .title{
+        <?php if (!empty($fpg_title_order)) : ?>
+            order: <?php echo esc_attr($fpg_title_order); ?>;
+        <?php endif; ?>
+        <?php if (!empty($fpg_title_padding)) : ?>
+            padding: <?php echo esc_attr($fpg_title_padding); ?>;
+        <?php endif; ?>
+        <?php if (!empty($fpg_title_margin)) : ?>
+            margin: <?php echo esc_attr($fpg_title_margin); ?>;
+        <?php endif; ?>
+        <?php if (!empty($fpg_title_border_color)) : ?>
+            border-color: <?php echo esc_attr($fpg_title_border_color); ?>;
+        <?php endif; ?>
+        <?php if (!empty($fpg_title_border_style)) : ?>
+            border-style: <?php echo esc_attr($fpg_title_border_style); ?>;
+        <?php endif; ?>
+        <?php if (!empty($fpg_title_border_width)) : ?>
+            border-width: <?php echo esc_attr($fpg_title_border_width); ?>;
+        <?php endif; ?>
+    }
+    .rs-blog-layout-26-item .rs-content .title a{
+        <?php if (!empty($fpg_title_color)) : ?>
+            color: <?php echo esc_attr($fpg_title_color); ?>;
+        <?php endif; ?>
+        <?php if (!empty($fpg_title_font_size)) : ?>
+            font-size: <?php echo esc_attr($fpg_title_font_size); ?>px;
+        <?php endif; ?>
+        <?php if (!empty($fpg_title_font_weight)) : ?>
+            font-weight: <?php echo esc_attr($fpg_title_font_weight); ?>;
+        <?php endif; ?>
+    }
+    .rs-blog-layout-26-item .rs-content p{
+        <?php if (!empty($fpg_excerpt_order)) : ?>
+            order: <?php echo esc_attr($fpg_excerpt_order); ?>;
+        <?php endif; ?>
+        <?php if (!empty($fpg_excerpt_color)) : ?>
+            color: <?php echo esc_attr($fpg_excerpt_color); ?>;
+        <?php endif; ?>
+        <?php if (!empty($fpg_excerpt_size)) : ?>
+            font-size: <?php echo esc_attr($fpg_excerpt_size); ?>px;
+        <?php endif; ?>
+        <?php if (!empty($fpg_excerpt_font_weight)) : ?>
+            font-weight: <?php echo esc_attr($fpg_excerpt_font_weight); ?>;
+        <?php endif; ?>
+        <?php if (!empty($fpg_excerpt_padding)) : ?>
+            padding: <?php echo esc_attr($fpg_excerpt_padding); ?>;
+        <?php endif; ?>
+        <?php if (!empty($fpg_excerpt_margin)) : ?>
+            margin: <?php echo esc_attr($fpg_excerpt_margin); ?>;
+        <?php endif; ?>
+    }
+    .rs-blog-layout-26-item .rs-content .btn-wrapper{
+        <?php if (!empty($fpg_button_order)) : ?>
+            order: <?php echo esc_attr($fpg_button_order); ?>;
+        <?php endif; ?>
+    }
+
+    .rs-blog-layout-26-item .rs-content .rs-btn.<?php echo esc_attr($button_class); ?>{
+        <?php if (!empty($fpg_button_background_color)) : ?>
+            background-color: <?php echo esc_attr($fpg_button_background_color); ?>;
+        <?php endif; ?>
+        <?php if (!empty($fpg_button_text_color)) : ?>
+            color: <?php echo esc_attr($fpg_button_text_color); ?>;
+        <?php endif; ?>
+        <?php if (!empty($fancy_post_read_more_border_radius)) : ?>
+            border-radius: <?php echo esc_attr($fancy_post_read_more_border_radius); ?>;
+        <?php endif; ?> 
+        
+        <?php if (!empty($fpg_border_color)) : ?>
+            border-color: <?php echo esc_attr($fpg_border_color); ?>;
+        <?php endif; ?>
+        <?php if (!empty($fancy_post_button_border_width)) : ?>
+            border-width: <?php echo esc_attr($fancy_post_button_border_width); ?>;
+        <?php endif; ?>
+
+        <?php if (!empty($fancy_button_border_style)) : ?>
+            border-style: <?php echo esc_attr($fancy_button_border_style); ?>;
+        <?php endif; ?>
+        <?php if (!empty($fpg_button_padding)) : ?>
+            padding: <?php echo esc_attr($fpg_button_padding); ?>;
+        <?php endif; ?>
+        <?php if (!empty($fpg_button_margin)) : ?>
+            margin: <?php echo esc_attr($fpg_button_margin); ?>;
+        <?php endif; ?>         
+    }
+    .rs-blog-layout-26-item:hover .rs-content .rs-btn.<?php echo esc_attr($button_class); ?> {
+        <?php if (!empty($fpg_button_hover_background_color)) : ?>
+            background-color: <?php echo esc_attr($fpg_button_hover_background_color); ?>;
+        <?php endif; ?>
+        <?php if (!empty($fpg_button_text_hover_color)) : ?>
+            color: <?php echo esc_attr($fpg_button_text_hover_color); ?>;
+        <?php endif; ?>
+    }
+    .rs-blog-layout-26-item .rs-content .rs-btn.<?php echo esc_attr($button_class); ?>::before{
+        <?php if (!empty($fpg_button_border_color)) : ?>
+            background: <?php echo esc_attr($fpg_button_border_color); ?>;
+        <?php endif; ?>
+    }
+    /*Pagination*/
+    .fpg-pagination ul.page-numbers{
+        <?php if (!empty($fpg_pagination_gap)) : ?>
+            gap: <?php echo esc_attr($fpg_pagination_gap); ?>;
+        <?php endif; ?> 
+    }
+    .fpg-pagination ul.page-numbers li .page-numbers {
+
+        <?php if (!empty($fpg_pagination_background)) : ?>
+            background-color: <?php echo esc_attr($fpg_pagination_background); ?>;
+        <?php endif; ?>
+        <?php if (!empty($fpg_pagination_color)) : ?>
+            color: <?php echo esc_attr($fpg_pagination_color); ?>;
+        <?php endif; ?>
+        <?php if (!empty($fpg_pagination_border_color)) : ?>
+            border-color: <?php echo esc_attr($fpg_pagination_border_color); ?>;
+        <?php endif; ?>
+        
+
+        <?php if (!empty($fpg_pagination_border_width)) : ?>
+            border-width: <?php echo esc_attr($fpg_pagination_border_width); ?>;
+        <?php endif; ?>
+
+        <?php if (!empty($fpg_pagination_border_style)) : ?>
+            border-style: <?php echo esc_attr($fpg_pagination_border_style); ?>;
+        <?php endif; ?>
+
+        <?php if (!empty($fpg_pagination_border_radius)) : ?>
+            border-radius: <?php echo esc_attr($fpg_pagination_border_radius); ?>;
+        <?php endif; ?>
+        <?php if (!empty($fpg_pagination_height)) : ?>
+            height: <?php echo esc_attr($fpg_pagination_height); ?>;
+        <?php endif; ?>
+
+        <?php if (!empty($fpg_pagination_width)) : ?>
+            width: <?php echo esc_attr($fpg_pagination_width); ?>;
+        <?php endif; ?>
+
+        <?php if (!empty($fpg_pagination_padding)) : ?>
+            padding: <?php echo esc_attr($fpg_pagination_padding); ?>;
+        <?php endif; ?>
+        <?php if (!empty($fpg_pagination_margin)) : ?>
+            margin: <?php echo esc_attr($fpg_pagination_margin); ?>;
+        <?php endif; ?> 
+    }
+    .fpg-pagination ul.page-numbers li .page-numbers:hover{
+        <?php if (!empty($fpg_pagination_hover_background)) : ?>
+            background-color: <?php echo esc_attr($fpg_pagination_hover_background); ?>;
+        <?php endif; ?>
+        <?php if (!empty($fpg_pagination_hover_color)) : ?>
+            color: <?php echo esc_attr($fpg_pagination_hover_color); ?>;
+        <?php endif; ?>
+        <?php if (!empty($fpg_pagination_hover_border_color)) : ?>
+            border-color: <?php echo esc_attr($fpg_pagination_hover_border_color); ?>;
+        <?php endif; ?>
+    }
+    .fpg-pagination ul.page-numbers li .page-numbers.current{
+        <?php if (!empty($fpg_pagination_active_background)) : ?>
+            background-color: <?php echo esc_attr($fpg_pagination_active_background); ?>;
+        <?php endif; ?>
+        <?php if (!empty($fpg_pagination_active_color)) : ?>
+            color: <?php echo esc_attr($fpg_pagination_active_color); ?>;
+        <?php endif; ?>
+        <?php if (!empty($fpg_pagination_active_border_color)) : ?>
+            border-color: <?php echo esc_attr($fpg_pagination_active_border_color); ?>;
+        <?php endif; ?>
+    }
+
+
+</style>
 <?php
 $grid12 = ob_get_clean();
 ?>
