@@ -163,8 +163,21 @@ ob_start();
                     <?php if (!$hide_feature_image && $fpg_field_group_image) : ?>
                         <div class="rs-thumb">
                             <?php if ($feature_image_url) : ?>
-                                <a href="<?php the_permalink(); ?>" <?php echo $target_blank; ?>>
-                                    <img src="<?php echo esc_url($feature_image_url); ?>" alt="">
+                                <?php
+
+                                    $post_id = get_the_ID();
+                                    // Get the thumbnail ID
+                                    $thumbnail_id = get_post_thumbnail_id($post_id);
+                                    
+                                    // Get the image alt text and title text
+                                    $image_alt = get_post_meta($thumbnail_id, '_wp_attachment_image_alt', true);
+                                    $image_title = get_the_title($thumbnail_id);
+                                    // Use alt text if available; otherwise, use title text
+                                    $alt_text = !empty($image_alt) ? esc_attr($image_alt) : esc_attr($image_title);
+
+                                ?>
+                                <a href="<?php the_permalink(); ?>" <?php echo esc_attr($target_blank); ?>>
+                                    <img src="<?php echo esc_url($feature_image_url); ?>" alt="<?php echo $alt_text; ?>">
                                 </a>
                                 <svg viewBox="0 0 410 32" fill="none" xmlns="http://www.w3.org/2000/svg" class="shape__rs_course">
                                     <path fill-rule="evenodd" clip-rule="evenodd" d="M346.69 23.5159C371.59 23.3769 398.013 17.3185 410 4.85404V32H0V9.75773C2.99658 0.284217 26.1914 -2.12936 41.5898 1.81449C49.0762 3.72855 55.7041 6.53361 62.3281 9.33695C69.3286 12.2997 76.3247 15.2605 84.3242 17.1654C111.49 25.8323 134.405 18.6565 157.427 11.4472C171.419 7.06559 185.451 2.67167 200.5 1.81449C217.549 0.842933 234.721 5.15653 251.493 9.36967C259.098 11.2798 266.62 13.1693 274.011 14.5363C278.288 15.3272 282.339 16.1309 286.297 16.9161C304.269 20.4812 320.31 23.6632 346.69 23.5159Z" fill="#ffffff"></path>
