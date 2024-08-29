@@ -159,8 +159,21 @@ ob_start();
                         <?php if (!$hide_feature_image && $fpg_field_group_image) : ?>
                         <div class="pre-image-wrap">
                             <?php if ($feature_image_url) : ?>
-                                <a class="pre-pointer-events"href="<?php the_permalink(); ?>" <?php echo $target_blank; ?>>
-                                    <img src="<?php echo esc_url($feature_image_url); ?>" alt="">
+                                <?php
+
+                                    $post_id = get_the_ID();
+                                    // Get the thumbnail ID
+                                    $thumbnail_id = get_post_thumbnail_id($post_id);
+                                    
+                                    // Get the image alt text and title text
+                                    $image_alt = get_post_meta($thumbnail_id, '_wp_attachment_image_alt', true);
+                                    $image_title = get_the_title($thumbnail_id);
+                                    // Use alt text if available; otherwise, use title text
+                                    $alt_text = !empty($image_alt) ? esc_attr($image_alt) : esc_attr($image_title);
+
+                                ?>
+                                <a class="pre-pointer-events"href="<?php the_permalink(); ?>" <?php echo esc_attr($target_blank); ?>>
+                                    <img src="<?php echo esc_url($feature_image_url); ?>" alt="<?php echo $alt_text; ?>">
                                 </a>
                             <?php endif; ?>
                         </div>
