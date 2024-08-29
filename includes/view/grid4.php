@@ -370,7 +370,6 @@ ob_start();
     }
 
 
-
     /* Excerpt Styles */
 
     .rs-blog-layout-30-item .rs-content .fpg-excerpt{
